@@ -1,7 +1,7 @@
 from django.contrib.auth import update_session_auth_hash
 from rest_framework import serializers
 
-from .models import Account, AccountManager
+from api.models.user import Account, AccountManager
 
 
 class AccountSerializer(serializers.ModelSerializer):
