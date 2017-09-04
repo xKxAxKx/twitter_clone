@@ -9,4 +9,7 @@ urlpatterns = [
     url(r'^user/mypage/$', AuthInfoGetView.as_view()),
     url(r'^user/auth_update/$', AuthInfoUpdateView.as_view()),
     url(r'^user/delete/$', AuthInfoDeleteView.as_view()),
+    url(r'^user/login/$', obtain_jwt_token),
+    url(r'^user/token-refresh/$', refresh_jwt_token),
+    url(r'^user/token-verify/$', verify_jwt_token),
 ]
