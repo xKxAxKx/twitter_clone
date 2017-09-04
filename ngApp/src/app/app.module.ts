@@ -11,16 +11,19 @@ import { MainComponent } from './components/main.component';
 import { MainService } from './services/main.service';
 import { MainStore } from './stores/main.store';
 
+import { HeaderComponent }  from './components/header.component';
+
 @NgModule({
   declarations: [
     AppComponent,
-    MainComponent
+    HeaderComponent,
+    MainComponent,
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
-    AppRoutingModule
+    AppRoutingModule,
   ],
   providers: [
     AuthGuard,

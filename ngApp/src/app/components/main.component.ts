@@ -4,7 +4,7 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import { MainService } from '../services/main.service';
 
 @Component({
-  selector: 'main-component',
+  selector: 'main',
   template: `
   <div class="container">
     <div class="center">
