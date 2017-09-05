@@ -26,7 +26,7 @@ class AuthRegister(generics.CreateAPIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-# ユーザ情報取得のView(GET)
+# ログインユーザ情報取得のView(GET)
 class AuthInfoGetView(generics.RetrieveAPIView):
     permission_classes = (permissions.IsAuthenticated,)
     queryset = Account.objects.all()
@@ -34,9 +34,28 @@ class AuthInfoGetView(generics.RetrieveAPIView):
 
     def get(self, request, format=None):
         return Response(data={
+            'id': request.user.id,
             'username': request.user.username,
             'email': request.user.email,
             'profile': request.user.profile,
+            },
+            status=status.HTTP_200_OK)
+
+# 指定されたidのユーザ情報を返す
+class UserInfoGetView(generics.RetrieveAPIView):
+    permission_classes = (permissions.AllowAny,)
+
+    def get(self, request, id):
+        try:
+            user = Account.objects.get(id=id)
+        except Account.DoesNotExist:
+            raise Http404
+
+        return Response(data={
+            'id': user.id,
+            'username': user.username,
+            'email': user.email,
+            'profile': user.profile,
             },
             status=status.HTTP_200_OK)
 

@@ -1,12 +1,13 @@
 from django.conf.urls import include, url
 from rest_framework import routers
 from rest_framework_jwt.views import obtain_jwt_token, refresh_jwt_token, verify_jwt_token
-from api.views.user import (AuthRegister, AuthInfoGetView, AuthInfoUpdateView, AuthInfoDeleteView)
+from api.views.user import (AuthRegister, AuthInfoGetView, AuthInfoUpdateView, AuthInfoDeleteView, UserInfoGetView)
 
 urlpatterns = [
     # ユーザー関連
     url(r'^user/register/$', AuthRegister.as_view()),
     url(r'^user/mypage/$', AuthInfoGetView.as_view()),
+    url(r'^user/(?P<id>\d+)$', UserInfoGetView.as_view()),
     url(r'^user/auth_update/$', AuthInfoUpdateView.as_view()),
     url(r'^user/delete/$', AuthInfoDeleteView.as_view()),
     url(r'^user/login/$', obtain_jwt_token),
