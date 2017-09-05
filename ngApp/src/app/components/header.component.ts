@@ -9,16 +9,16 @@ import { Router, ActivatedRoute, Params }   from '@angular/router';
         <a routerLink="/" class="title navbar-brand">Twitter Clone</a>
         <ul class="nav navbar-nav navbar-right">
           <li>
-            <a class="cursor_pointer">@UserName</a>
+            <a routerLink="/mypage" class="cursor_pointer">@UserName</a>
           </li>
           <li>
-            <a class="cursor_pointer">LogOut</a>
+            <a routerLink="/logout" class="cursor_pointer">LogOut</a>
           </li>
           <li>
-            <a class="cursor_pointer">Login</a>
+            <a routerLink="/login" class="cursor_pointer">Login</a>
           </li>
           <li>
-            <a class="cursor_pointer">Signup</a>
+            <a routerLink="/signup"  class="cursor_pointer">Signup</a>
           </li>
         </ul>
       </div>
@@ -26,5 +26,5 @@ import { Router, ActivatedRoute, Params }   from '@angular/router';
   `
 })
 export class HeaderComponent {
-
+  
 }
