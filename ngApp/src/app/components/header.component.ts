@@ -12,7 +12,7 @@ import { Router, ActivatedRoute, Params }   from '@angular/router';
             <a routerLink="/mypage" class="cursor_pointer">@UserName</a>
           </li>
           <li>
-            <a routerLink="/logout" class="cursor_pointer">LogOut</a>
+            <a routerLink="/logout" class="cursor_pointer">Logout</a>
           </li>
           <li>
             <a routerLink="/login" class="cursor_pointer">Login</a>
@@ -26,5 +26,5 @@ import { Router, ActivatedRoute, Params }   from '@angular/router';
   `
 })
 export class HeaderComponent {
-  
+
 }
