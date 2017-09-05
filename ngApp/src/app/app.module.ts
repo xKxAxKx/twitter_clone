@@ -11,6 +11,8 @@ import { MainComponent } from './components/main.component';
 import { MainService } from './services/main.service';
 import { MainStore } from './stores/main.store';
 
+import { LoginComponent } from './components/login.component';
+
 import { HeaderComponent }  from './components/header.component';
 
 @NgModule({
@@ -18,6 +20,7 @@ import { HeaderComponent }  from './components/header.component';
     AppComponent,
     HeaderComponent,
     MainComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,

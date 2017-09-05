@@ -4,7 +4,19 @@ import { Component } from '@angular/core';
   selector: 'app-root',
   template: `
     <header header></header>
-    <router-outlet></router-outlet>
+    <div class="container">
+      <div class="center">
+        <div class="row">
+        <div class="alert alert-danger">
+          {{ ErrorMessage }}
+        </div>
+        <div class="alert alert-success">
+          {{ ValidMessage }}
+        </div>
+        </div>
+      </div>
+      <router-outlet></router-outlet>
+    </div>
   `,
 })
 export class AppComponent {
