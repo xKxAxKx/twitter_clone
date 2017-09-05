@@ -24,7 +24,6 @@ export class UserStore {
     // userService.checkLogin()が呼ばれたら流れてくる
     this.userService.completeUserLoginSubject.subscribe( () => {
       this.userLogin = true;
-      console.log(this.userLogin);
     });
 
 

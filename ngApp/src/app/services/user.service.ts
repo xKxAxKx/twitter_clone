@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { Http, Headers, Response, RequestOptions } from '@angular/http';
 import { Observable, Subject } from 'rxjs';
 
-import { MainService } from './main.service';
+import { CommonService } from './common.service';
 
 @Injectable()
 export class UserService {
@@ -16,17 +16,17 @@ export class UserService {
   fetchLoginUserInfoSubjct: Subject<any> = new Subject<any>();
 
   // ログインが確認できたときのSubject
-  // UserStoreとMainStoreに送る
+  // UserStoreとCommonStoreに送る
   completeUserLoginSubject: Subject<any> = new Subject<any>();
 
   // ログインが失敗したときのSubject
-  // MainStoreに送る
+  // CommonStoreに送る
   errorUserLoginSubject: Subject<any> = new Subject<any>();
 
   constructor(
     private http: Http,
     private router: Router,
-    private mainService: MainService,
+    private commonService: CommonService,
   ){}
 
 
@@ -48,7 +48,7 @@ export class UserService {
 
   // トークンをローカルストレージに保存する
   saveToken(token) {
-    localStorage.setItem(this.mainService.loginTokenName, token)
+    localStorage.setItem(this.commonService.loginTokenName, token)
     this.checkLogin();
   }
 
@@ -56,7 +56,7 @@ export class UserService {
   // ローカルストレージにtokenがあるかを確認
   // OKであれば、ユーザ情報の取得、トークンの値をstoreに格納、ログインフラグをTrueにする
   checkLogin(){
-    if (localStorage.getItem(this.mainService.loginTokenName)) {
+    if (localStorage.getItem(this.commonService.loginTokenName)) {
       this.completeUserLoginSubject.next();
       this.fetchLoginUserInfo();
     } else {
@@ -67,7 +67,7 @@ export class UserService {
   // ログインしているユーザの情報を取得する
   fetchLoginUserInfo() {
     return this.http
-      .get(this.FetchLoginUserApi, this.mainService.jwt())
+      .get(this.FetchLoginUserApi, this.commonService.jwt())
       .subscribe(
         (res) => {
           console.log(res);

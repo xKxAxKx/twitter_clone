@@ -7,6 +7,8 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule }   from './app-routing.module';
 import { AuthGuard }      from './guards/auth.guard';
 
+import { CommonService } from './services/common.service';
+
 import { MainComponent } from './components/main.component';
 import { MainService } from './services/main.service';
 import { MainStore } from './stores/main.store';
@@ -32,6 +34,7 @@ import { HeaderComponent }  from './components/header.component';
   ],
   providers: [
     AuthGuard,
+    CommonService,
     MainService,
     MainStore,
     UserService,
