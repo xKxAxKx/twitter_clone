@@ -12,6 +12,8 @@ import { MainService } from './services/main.service';
 import { MainStore } from './stores/main.store';
 
 import { LoginComponent } from './components/login.component';
+import { UserService } from './services/user.service';
+import { UserStore } from './stores/user.store';
 
 import { HeaderComponent }  from './components/header.component';
 
@@ -32,6 +34,8 @@ import { HeaderComponent }  from './components/header.component';
     AuthGuard,
     MainService,
     MainStore,
+    UserService,
+    UserStore,
   ],
   bootstrap: [AppComponent]
 })

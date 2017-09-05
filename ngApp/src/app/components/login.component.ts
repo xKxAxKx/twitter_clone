@@ -2,6 +2,7 @@ import { Component,Input } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 
 import { UserService } from '../services/user.service';
+import { UserStore } from '../stores/user.store';
 
 @Component({
   selector: 'login',
@@ -9,14 +10,14 @@ import { UserService } from '../services/user.service';
   <div class="center">
     <div class="row">
       <h3>Login</h3>
-      <form name="form" (ngSubmit)="login()" #f="ngForm" novalidate>
+      <form name="form" (ngSubmit)="passwordLogin()" #f="ngForm" novalidate>
         <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !email.valid }">
           <input
             type="text"
             class="form-control login-form"
             placeholder="email"
             name="email"
-            [(ngModel)]="loginuser.email"
+            [(ngModel)]="loginUserInput.email"
             #email="ngModel"
             required
           />
@@ -27,7 +28,7 @@ import { UserService } from '../services/user.service';
             class="form-control login-form"
             placeholder="password"
             name="password"
-            [(ngModel)]="loginuser.password"
+            [(ngModel)]="loginUserInput.password"
             #password="ngModel"
             required
           />
@@ -41,5 +42,20 @@ import { UserService } from '../services/user.service';
   `
 })
 export class LoginComponent {
+  loginUserInput: any = {};
 
+  constructor(
+    private userService: UserService,
+    private userStore: UserStore,
+    private route: ActivatedRoute,
+    private router: Router,
+  ){}
+
+  ngOnInit() {
+
+  }
+
+  passwordLogin() {
+    this.userService.passwordLogin(this.loginUserInput.email, this.loginUserInput.password);
+  }
 }
