@@ -29,5 +29,12 @@ export class UserStore {
 
     // ログインユーザーの情報を格納する
     // userService.fetchLoginUserInfo()が呼ばれたら流れてくる
+    this.userService.fetchLoginUserInfoSubjct.subscribe(
+      (res) => {
+        this.loginUserInfo = res;
+        console.log(this.loginUserInfo);
+      }
+    );
+
   }
 }
