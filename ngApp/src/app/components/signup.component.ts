@@ -1,26 +1,82 @@
 import { Component,Input } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 
-import { MainService } from '../services/main.service';
+import { UserService } from '../services/user.service';
+import { UserStore } from '../stores/user.store';
 
 @Component({
-  selector: 'main',
+  selector: 'signup',
   template: `
-  <div class="container">
-    <div class="center">
-      <div class="row">
-        <div class="col-sm-8">
-          ここはメインページ。<br>
-          コンポーネントは以下に分ける<br>
-          1)自分のプロフィール表示<br>
-          2)タイムラインの表示<br>
-          3)つぶやくフィールド<br>
+  <div class="center">
+    <div class="row">
+      <h3>Sign Up</h3>
+      <form name="form" (ngSubmit)="signup()" #f="ngForm" novalidate>
+        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !email.valid }">
+          <label>Email</label>
+          <input
+            type="text"
+            class="form-control login-form"
+            placeholder="email"
+            name="email"
+            [(ngModel)]="SignupUserInput.email"
+            #email="ngModel"
+            required
+          />
         </div>
-      <div>
+        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !username.valid }">
+          <label>Username</label>
+          <input
+            type="text"
+            class="form-control login-form"
+            placeholder="username"
+            name="username"
+            [(ngModel)]="SignupUserInput.username"
+            #username="ngModel"
+            required
+          />
+        </div>
+        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !password.valid }">
+          <label>Password</label>
+          <input
+            type="password"
+            class="form-control login-form"
+            placeholder="password"
+            name="password"
+            [(ngModel)]="SignupUserInput.password"
+            #password="ngModel"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label>Profile</label>
+          <textarea
+            class="form-control login-form"
+            placeholder="profile"
+            name="profile"
+            [(ngModel)]="SignupUserInput.profile"
+            #profile="ngModel"
+          ></textarea>
+        </div>
+        <button class="btn btn-success pull-right login-form">
+          SignUP
+        </button>
+      </form>
     </div>
   </div>
   `
 })
-export class MainComponent {
+export class SignupComponent {
+  SignupUserInput: any = {};
+
+  constructor(
+    private userService: UserService,
+    private userStore: UserStore,
+    private route: ActivatedRoute,
+    private router: Router,
+  ){}
+
+  signup() {
+    
+  }
 
 }

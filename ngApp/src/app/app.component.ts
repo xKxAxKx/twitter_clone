@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 
 import { CommonStore } from './stores/common.store';
+import { UserService } from './services/user.service';
 
 @Component({
   selector: 'app-root',
@@ -24,10 +25,11 @@ import { CommonStore } from './stores/common.store';
 export class AppComponent {
   constructor (
     private commonStore: CommonStore,
+    private userService: UserService,
   ){}
 
   ngOnInit() {
-    
+    this.userService.checkLogin();
   }
 
 }
