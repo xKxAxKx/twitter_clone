@@ -3,6 +3,7 @@ import { Router, ActivatedRoute, Params }   from '@angular/router';
 
 import { CommonStore } from '../stores/common.store';
 import { UserStore } from '../stores/user.store';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'header',
@@ -15,7 +16,7 @@ import { UserStore } from '../stores/user.store';
             <a routerLink="/mypage" class="cursor_pointer">@{{ userStore.loginUserInfo.username }}</a>
           </li>
           <li>
-            <a routerLink="/logout" class="cursor_pointer">Logout</a>
+            <a (click)="logout()" class="cursor_pointer">Logout</a>
           </li>
           <li>
             <a routerLink="/login" class="cursor_pointer">Login</a>
@@ -31,6 +32,11 @@ import { UserStore } from '../stores/user.store';
 export class HeaderComponent {
   constructor (
     private userStore: UserStore,
+    private userService: UserService,
   ){}
+
+  logout() {
+    this.userService.logout();
+  }
 
 }

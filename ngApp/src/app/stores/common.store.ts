@@ -32,6 +32,7 @@ export class CommonStore {
       this.errorMessage = '';
     });
 
+    // ユーザ作成に失敗したメッセージを表示する
     this.userService.errorRegisterSubject.subscribe(
       (err) => {
         this.errorMessage = 'Failed Signup...';
@@ -42,8 +43,12 @@ export class CommonStore {
           console.log(err.email);
         }
         this.successMessage = '';
-
     });
+
+    // ログアウトしたメッセージを表示する
+    this.userService.logoutUserSubject.subscribe( () => {
+      this.successMessage = 'Logged out';
+    })
 
   }
 }

@@ -35,5 +35,13 @@ export class UserStore {
       }
     );
 
+    // ログアウト状態にする
+    // userService.logoutUserSubjectが呼ばれたら流れてくる
+    this.userService.logoutUserSubject.subscribe( () => {
+      this.userLogin = false;
+      this.loginUserToken = {};
+      this.loginUserInfo = {};
+    });
+
   }
 }

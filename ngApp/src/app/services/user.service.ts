@@ -32,6 +32,10 @@ export class UserService {
   // UserStoreとCommonStoreに送る
   errorRegisterSubject: Subject<any> = new Subject<any>();
 
+  // ログアウトするときのSubject
+  // UserStoreとCommonStoreに送る
+  logoutUserSubject: Subject<any> = new Subject<any>();
+
   constructor(
     private http: Http,
     private router: Router,
@@ -101,6 +105,13 @@ export class UserService {
           this.errorRegisterSubject.next(JSON.parse(err._body));
         }
       );;
+  }
+
+  // ログアウトする
+  logout() {
+    localStorage.removeItem(this.loginTokenName);
+    this.logoutUserSubject.next();
+    this.router.navigate(['/login']);
   }
 
 }
