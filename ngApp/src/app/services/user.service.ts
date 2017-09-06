@@ -52,6 +52,7 @@ export class UserService {
           let token = JSON.stringify(res.json());
           this.saveToken(token);
           this.completeUserLoginSubject.next();
+          this.router.navigate(['/']);
         },
         (err) => {
           this.errorUserLoginSubject.next();
