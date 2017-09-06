@@ -31,8 +31,7 @@ export class UserStore {
     // userService.fetchLoginUserInfo()が呼ばれたら流れてくる
     this.userService.fetchLoginUserInfoSubjct.subscribe(
       (res) => {
-        this.loginUserInfo = res;
-        console.log(this.loginUserInfo);
+        this.loginUserInfo = res.json();
       }
     );
 
