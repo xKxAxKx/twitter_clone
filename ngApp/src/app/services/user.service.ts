@@ -94,9 +94,11 @@ export class UserService {
       .subscribe(
         (res) => {
           this.completeRegisterSubject.next();
+          this.router.navigate(['/login']);
         },
         (err) => {
-          this.errorRegisterSubject.next();
+          console.log(JSON.parse(err._body));
+          this.errorRegisterSubject.next(JSON.parse(err._body));
         }
       );;
   }
