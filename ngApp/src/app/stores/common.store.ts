@@ -48,7 +48,13 @@ export class CommonStore {
     // ログアウトしたメッセージを表示する
     this.userService.logoutUserSubject.subscribe( () => {
       this.successMessage = 'Logged out';
-    })
+    });
+
+    // ログアウトしたメッセージを表示する
+    this.userService.errorUserInfoSubjct.subscribe(
+      (err) => {
+        this.errorMessage = 'There is no account that does not exist';
+    });
 
   }
 }

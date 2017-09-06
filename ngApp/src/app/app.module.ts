@@ -16,6 +16,7 @@ import { MainStore } from './stores/main.store';
 
 import { LoginComponent } from './components/login.component';
 import { SignupComponent } from './components/signup.component';
+import { UserpageComponent } from './components/userpage.component';
 import { UserService } from './services/user.service';
 import { UserStore } from './stores/user.store';
 
@@ -28,6 +29,7 @@ import { HeaderComponent }  from './components/header.component';
     MainComponent,
     LoginComponent,
     SignupComponent,
+    UserpageComponent,
   ],
   imports: [
     BrowserModule,

@@ -16,6 +16,9 @@ export class UserStore {
   // ログインユーザの情報
   loginUserInfo: any = {};
 
+  // 指定したidのユーザの情報
+  fetchUserInfo: any = {};
+
   constructor (
     private userService: UserService
   ) {
@@ -42,6 +45,19 @@ export class UserStore {
       this.loginUserToken = {};
       this.loginUserInfo = {};
     });
+
+    // 指定したidのユーザーの情報を格納する
+    this.userService.successUserInfoSubjct.subscribe(
+      (res) => {
+        this.fetchUserInfo = res.json();
+      }
+    );
+
+    this.userService.errorUserInfoSubjct.subscribe(
+      (res) => {
+        this.fetchUserInfo = {};
+      }
+    );
 
   }
 }

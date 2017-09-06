@@ -12,6 +12,7 @@ export class UserService {
   private LoginApi = `http://127.0.0.1:8000/api/user/login/`;
   private FetchLoginUserApi = `http://127.0.0.1:8000/api/user/mypage/`;
   private RegisterApi = `http://127.0.0.1:8000/api/user/register/`;
+  private FetchUserApi = `http://127.0.0.1:8000/api/user/`;
 
   // ログインユーザを取得するときのSubject
   fetchLoginUserInfoSubjct: Subject<any> = new Subject<any>();
@@ -35,6 +36,12 @@ export class UserService {
   // ログアウトするときのSubject
   // UserStoreとCommonStoreに送る
   logoutUserSubject: Subject<any> = new Subject<any>();
+
+  // ユーザ情報を取得が成功したときのSubject
+  successUserInfoSubjct: Subject<any> = new Subject<any>();
+
+  // ユーザ情報取得が失敗したときのSubject
+  errorUserInfoSubjct: Subject<any> = new Subject<any>();
 
   constructor(
     private http: Http,
@@ -78,6 +85,7 @@ export class UserService {
     }
   }
 
+
   // ログインしているユーザの情報を取得する
   fetchLoginUserInfo() {
     return this.http
@@ -92,21 +100,37 @@ export class UserService {
       );
   }
 
+
+  // idで指定したユーザの情報を取得する
+  fetchUserInfo(user_id) {
+    return this.http
+      .get(this.FetchUserApi + user_id)
+      .subscribe(
+        (res) => {
+          this.successUserInfoSubjct.next(res);
+        },
+        (err) => {
+          this.errorUserInfoSubjct.next(JSON.parse(err._body));
+        }
+      );
+  }
+
+
   // ユーザ登録画面から登録する
   siginUp(registerInfo) {
     return this.http
-      .post(this.RegisterApi, registerInfo)
+      .post(this.FetchUserApi, registerInfo)
       .subscribe(
         (res) => {
           this.completeRegisterSubject.next();
           this.router.navigate(['/login']);
         },
         (err) => {
-          console.log(JSON.parse(err._body));
           this.errorRegisterSubject.next(JSON.parse(err._body));
         }
       );;
   }
+
 
   // ログアウトする
   logout() {
