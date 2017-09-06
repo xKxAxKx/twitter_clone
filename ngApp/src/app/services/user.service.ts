@@ -11,6 +11,7 @@ export class UserService {
   LoginToken: any = {};
   private LoginApi = `http://127.0.0.1:8000/api/user/login/`;
   private FetchLoginUserApi = `http://127.0.0.1:8000/api/user/mypage/`;
+  private RegisterApi = `http://127.0.0.1:8000/api/user/register/`;
 
   // ログインユーザを取得するときのSubject
   fetchLoginUserInfoSubjct: Subject<any> = new Subject<any>();
@@ -22,6 +23,14 @@ export class UserService {
   // ログインが失敗したときのSubject
   // CommonStoreに送る
   errorUserLoginSubject: Subject<any> = new Subject<any>();
+
+  // ユーザー登録が成功したときのSubject
+  // CommonStoreに送る
+  completeRegisterSubject: Subject<any> = new Subject<any>();
+
+  // ユーザー登録が失敗したときのSubject
+  // UserStoreとCommonStoreに送る
+  errorRegisterSubject: Subject<any> = new Subject<any>();
 
   constructor(
     private http: Http,
@@ -76,6 +85,20 @@ export class UserService {
           console.log("ユーザ情報の取得に失敗");
         }
       );
+  }
+
+  // ユーザ登録画面から登録する
+  siginUp(registerInfo) {
+    return this.http
+      .post(this.RegisterApi, registerInfo)
+      .subscribe(
+        (res) => {
+          this.completeRegisterSubject.next();
+        },
+        (err) => {
+          this.errorRegisterSubject.next();
+        }
+      );;
   }
 
 }

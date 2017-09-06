@@ -26,5 +26,16 @@ export class CommonStore {
       this.successMessage = '';
     });
 
+    // ユーザ作成に成功したメッセージを表示する
+    this.userService.completeRegisterSubject.subscribe( () => {
+      this.successMessage = 'ユーザ作成が完了しました';
+      this.errorMessage = '';
+    });
+
+    this.userService.errorRegisterSubject.subscribe( () => {
+      this.errorMessage = 'ユーザ作成に失敗しました';
+      this.successMessage = '';
+    });
+
   }
 }

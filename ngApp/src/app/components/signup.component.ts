@@ -76,7 +76,7 @@ export class SignupComponent {
   ){}
 
   signup() {
-    
+    this.userService.siginUp(this.SignupUserInput)
   }
 
 }
