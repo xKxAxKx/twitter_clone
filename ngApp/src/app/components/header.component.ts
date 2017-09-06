@@ -13,7 +13,7 @@ import { UserService } from '../services/user.service';
         <a routerLink="/" class="title navbar-brand">Twitter Clone</a>
         <ul class="nav navbar-nav navbar-right">
           <li>
-            <a routerLink="/mypage" class="cursor_pointer">@{{ userStore.loginUserInfo.username }}</a>
+            <a [routerLink]="['user', userStore.loginUserInfo.id]" class="cursor_pointer">@{{ userStore.loginUserInfo.username }}</a>
           </li>
           <li>
             <a (click)="logout()" class="cursor_pointer">Logout</a>
