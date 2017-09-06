@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 
+import { CommonStore } from './stores/common.store';
+
 @Component({
   selector: 'app-root',
   template: `
@@ -7,11 +9,11 @@ import { Component } from '@angular/core';
     <div class="container">
       <div class="center">
         <div class="row">
-        <div class="alert alert-danger">
-          {{ ErrorMessage }}
+        <div class="alert alert-danger" *ngIf="commonStore.errorMessage">
+          {{ commonStore.errorMessage }}
         </div>
-        <div class="alert alert-success">
-          {{ ValidMessage }}
+        <div class="alert alert-success" *ngIf="commonStore.successMessage">
+          {{ commonStore.successMessage }}
         </div>
         </div>
       </div>
@@ -20,6 +22,12 @@ import { Component } from '@angular/core';
   `,
 })
 export class AppComponent {
+  constructor (
+    private commonStore: CommonStore,
+  ){}
+
   ngOnInit() {
+
   }
+
 }

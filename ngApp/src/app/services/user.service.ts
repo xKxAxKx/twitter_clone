@@ -40,7 +40,7 @@ export class UserService {
           this.saveToken(token);
         },
         (err) => {
-          console.log(err);
+          this.errorUserLoginSubject.next();
         }
       );
   }

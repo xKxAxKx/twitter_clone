@@ -1,6 +1,8 @@
 import { Component,Input } from '@angular/core';
 import { Router, ActivatedRoute, Params }   from '@angular/router';
 
+import { CommonStore } from '../stores/common.store';
+
 @Component({
   selector: 'header',
   template: `
@@ -26,5 +28,8 @@ import { Router, ActivatedRoute, Params }   from '@angular/router';
   `
 })
 export class HeaderComponent {
+  constructor (
+
+  ){}
 
 }
