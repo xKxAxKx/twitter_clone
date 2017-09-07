@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 
 import { UserService } from '../services/user.service';
+import { TweetService } from '../services/tweet.service';
 
 @Injectable()
 export class CommonStore {
@@ -10,7 +11,8 @@ export class CommonStore {
   successMessage: string = '';
 
   constructor (
-    private userService: UserService
+    private userService: UserService,
+    private tweetService: TweetService,
   ) {
 
     // ログインに成功したメッセージを表示する
@@ -54,6 +56,19 @@ export class CommonStore {
     this.userService.errorUserInfoSubjct.subscribe(
       (err) => {
         this.errorMessage = 'There is no account that does not exist';
+    });
+
+    // ツイート成功したメッセージを表示する
+    this.tweetService.completePostTweetSubject.subscribe(
+      (tweet) => {
+        this.successMessage = `Tweeted that "${tweet}".`;
+        this.errorMessage = '';
+    });
+
+    // ツイート失敗したメッセージを表示する
+    this.tweetService.errorPostTweetSubject.subscribe( () => {
+      this.successMessage = '';
+      this.errorMessage = 'Tweet Failed...';
     });
 
   }

@@ -29,14 +29,13 @@ export class TweetService {
   postTweet(postData) {
     return this.http
       .post(this.PostTweetApi, postData, this.commonService.jwt())
+      .map((res) => res.json())
       .subscribe(
         (res) => {
-          // console.log(res);
-          this.completePostTweetSubject.next(res);
+          this.completePostTweetSubject.next(res.tweet);
         },
         (err) => {
-          // console.log(err);
-          this.errorPostTweetSubject.next(err);
+          this.errorPostTweetSubject.next();
         }
       );
   }
