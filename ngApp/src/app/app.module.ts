@@ -21,6 +21,8 @@ import { UserService } from './services/user.service';
 import { UserStore } from './stores/user.store';
 
 import { TweetPostComponent } from './components/tweet_post.component';
+import { TweetService } from './services/tweet.service';
+import { TweetStore } from './stores/tweet.store';
 
 import { HeaderComponent }  from './components/header.component';
 
@@ -48,6 +50,8 @@ import { HeaderComponent }  from './components/header.component';
     MainStore,
     UserService,
     UserStore,
+    TweetService,
+    TweetStore,
   ],
   bootstrap: [AppComponent]
 })

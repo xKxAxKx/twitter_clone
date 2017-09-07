@@ -2,6 +2,8 @@ import { Component,Input } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 
 import { MainService } from '../services/main.service';
+import { TweetService } from '../services/tweet.service';
+import { UserStore } from '../stores/user.store';
 
 @Component({
   selector: 'tweet-post',
@@ -18,10 +20,21 @@ import { MainService } from '../services/main.service';
 })
 export class TweetPostComponent {
 
+  constructor (
+    private tweetService: TweetService,
+    private userStore: UserStore,
+    private activatedRoute: ActivatedRoute,
+  ){}
+
   // 入力されたツイートが入る
   tweet = '';
 
   postTweet() {
-    console.log(this.tweet);
+    let postData = {
+      tweet: this.tweet,
+      user: this.userStore.loginUserInfo.id
+    }
+    this.tweetService.postTweet(postData);
+    this.tweet = '';
   }
 }
