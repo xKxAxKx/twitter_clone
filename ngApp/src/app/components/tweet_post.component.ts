@@ -6,14 +6,13 @@ import { MainService } from '../services/main.service';
 @Component({
   selector: 'tweet-post',
   template: `
-  <input [(ngModel)]="tweet"
+  <textarea [(ngModel)]="tweet"
     id="input_text"
-    type="textarea"
     length="140"
     class="form-control"
-    placeholder="tweet"
+    placeholder="What are you doing now?"
     required
-  ><br>
+  ></textarea><br>
   <button (click)="postTweet()" class="btn btn-success pull-right">tweet</button>
   `
 })
