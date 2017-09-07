@@ -20,6 +20,8 @@ import { UserpageComponent } from './components/userpage.component';
 import { UserService } from './services/user.service';
 import { UserStore } from './stores/user.store';
 
+import { TweetPostComponent } from './components/tweet_post.component';
+
 import { HeaderComponent }  from './components/header.component';
 
 @NgModule({
@@ -30,6 +32,7 @@ import { HeaderComponent }  from './components/header.component';
     LoginComponent,
     SignupComponent,
     UserpageComponent,
+    TweetPostComponent,
   ],
   imports: [
     BrowserModule,

@@ -8,12 +8,14 @@ import { MainService } from '../services/main.service';
   template: `
   <div class="center">
     <div class="row">
+      <div class="col-sm-4">
+        <div class="panel panel-primary">
+          <div class="panel-heading">@ログインユーザ名</div>
+          <div class="panel-body">プロフィールが入る</div>
+        </div>
+      </div>
       <div class="col-sm-8">
-        ここはメインページ。<br>
-        コンポーネントは以下に分ける<br>
-        1)自分のプロフィール表示<br>
-        2)タイムラインの表示<br>
-        3)つぶやくフィールド<br>
+        <tweet-post></tweet-post>
       </div>
     <div>
   </div>
