@@ -12,5 +12,25 @@ from rest_framework.views import APIView
 from api.models.tweet import Tweet
 
 # ツイート作成のView(POST)
+class TweetPostView(generics.CreateAPIView):
+    permission_classes = (permissions.IsAuthenticated,)
+
+    @transaction.atomic
+    def create(self, request, *args, **kwargs):
+        return super().create(request, *args, **kwargs)
+    pass
+
+
+# 指定したユーザのツイートをGETする
+class TweetListGetView(generics.RetrieveAPIView):
+    pass
+
+
+# 指定したidのツイートをGETする
+class TweetGetView(generics.RetrieveAPIView):
+    pass
+
 
 # ツイート削除のView(DELETE)
+class TweetDeleteView(generics.DestroyAPIView):
+    pass
