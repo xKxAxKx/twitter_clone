@@ -119,7 +119,7 @@ export class UserService {
   // ユーザ登録画面から登録する
   siginUp(registerInfo) {
     return this.http
-      .post(this.FetchUserApi, registerInfo)
+      .post(this.RegisterApi, registerInfo)
       .subscribe(
         (res) => {
           this.completeRegisterSubject.next();
