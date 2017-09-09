@@ -33,16 +33,13 @@ class TweetGetByIdView(generics.RetrieveAPIView):
 
     def get(self, request, id):
         try:
-            tweet = Tweet.objects.get(id=id)
+            tweet = Tweet.objects.select_related('user').get(id=id)
         except Tweet.DoesNotExist:
             raise Http404
 
-        return Response(data={
-            'id': tweet.id,
-            'tweet': tweet.tweet,
-            'created': tweet.created_at,
-            },
-            status=status.HTTP_200_OK)
+        serializer = TweetSerializer(tweet)
+        
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 # ツイート削除のView(DELETE)
