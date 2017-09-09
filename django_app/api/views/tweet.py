@@ -14,7 +14,7 @@ from api.models.tweet import Tweet
 
 # ツイート作成のView(POST)
 class TweetPostView(generics.CreateAPIView):
-    permission_classes = (permissions.AllowAny,)
+    permission_classes = (permissions.IsAuthenticated,)
     serializer_class = TweetSerializer
 
     @transaction.atomic
