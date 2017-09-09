@@ -2,11 +2,12 @@ from django.conf.urls import include, url
 from rest_framework import routers
 from rest_framework_jwt.views import obtain_jwt_token, refresh_jwt_token, verify_jwt_token
 from api.views.user import (AuthRegister, AuthInfoGetView, AuthInfoUpdateView, AuthInfoDeleteView, UserInfoGetView)
-from api.views.tweet import (TweetPostView, TweetListGetView, TweetGetView, TweetDeleteView)
+from api.views.tweet import (TweetPostView, TweetListGetView, TweetGetByIdView, TweetDeleteView)
 
 urlpatterns = [
     # ユーザー関連
     url(r'^tweet/post/$', TweetPostView.as_view()),
+    url(r'^tweet/(?P<id>\d+)$', TweetGetByIdView.as_view()),
     url(r'^user/register/$', AuthRegister.as_view()),
     url(r'^user/mypage/$', AuthInfoGetView.as_view()),
     url(r'^user/(?P<id>\d+)$', UserInfoGetView.as_view()),

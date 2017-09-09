@@ -29,7 +29,20 @@ class TweetListGetView(generics.RetrieveAPIView):
 
 # 指定したidのツイートをGETする
 class TweetGetByIdView(generics.RetrieveAPIView):
-    pass
+    permission_classes = (permissions.AllowAny,)
+
+    def get(self, request, id):
+        try:
+            tweet = Tweet.objects.get(id=id)
+        except Tweet.DoesNotExist:
+            raise Http404
+
+        return Response(data={
+            'id': tweet.id,
+            'tweet': tweet.tweet,
+            'created': tweet.created_at,
+            },
+            status=status.HTTP_200_OK)
 
 
 # ツイート削除のView(DELETE)
