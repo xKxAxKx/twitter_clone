@@ -31,14 +31,14 @@ class TweetListGetView(generics.RetrieveAPIView):
 class TweetGetByIdView(generics.RetrieveAPIView):
     permission_classes = (permissions.AllowAny,)
 
-    def get(self, request, id):
+    def get(self, request, tweet_id):
         try:
-            tweet = Tweet.objects.select_related('user').get(id=id)
+            tweet = Tweet.objects.select_related('user').get(id=tweet_id)
         except Tweet.DoesNotExist:
             raise Http404
 
         serializer = TweetSerializer(tweet)
-        
+
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 

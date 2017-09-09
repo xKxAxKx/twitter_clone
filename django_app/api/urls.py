@@ -7,10 +7,10 @@ from api.views.tweet import (TweetPostView, TweetListGetView, TweetGetByIdView, 
 urlpatterns = [
     # ユーザー関連
     url(r'^tweet/post/$', TweetPostView.as_view()),
-    url(r'^tweet/(?P<id>\d+)$', TweetGetByIdView.as_view()),
+    url(r'^tweet/(?P<tweet_id>\d+)$', TweetGetByIdView.as_view()),
     url(r'^user/register/$', AuthRegister.as_view()),
     url(r'^user/mypage/$', AuthInfoGetView.as_view()),
-    url(r'^user/(?P<id>\d+)$', UserInfoGetView.as_view()),
+    url(r'^user/(?P<user_id>\d+)$', UserInfoGetView.as_view()),
     url(r'^user/auth_update/$', AuthInfoUpdateView.as_view()),
     url(r'^user/delete/$', AuthInfoDeleteView.as_view()),
     url(r'^user/login/$', obtain_jwt_token),

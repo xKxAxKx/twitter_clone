@@ -45,9 +45,9 @@ class AuthInfoGetView(generics.RetrieveAPIView):
 class UserInfoGetView(generics.RetrieveAPIView):
     permission_classes = (permissions.AllowAny,)
 
-    def get(self, request, id):
+    def get(self, request, user_id):
         try:
-            user = Account.objects.get(id=id)
+            user = Account.objects.get(id=user_id)
         except Account.DoesNotExist:
             raise Http404
 
