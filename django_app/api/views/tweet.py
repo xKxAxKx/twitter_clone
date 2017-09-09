@@ -28,7 +28,7 @@ class TweetListGetView(generics.RetrieveAPIView):
 
 
 # 指定したidのツイートをGETする
-class TweetGetView(generics.RetrieveAPIView):
+class TweetGetByIdView(generics.RetrieveAPIView):
     pass
 
 
