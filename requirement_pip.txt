@@ -8,3 +8,4 @@ requests
 requests_oauthlib
 python-social-auth[django]
 twitter
+django-rest-swagger
