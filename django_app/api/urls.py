@@ -7,6 +7,7 @@ from api.views.tweet import (TweetPostView, TweetListGetView, TweetGetByIdView, 
 urlpatterns = [
     # ユーザー関連
     url(r'^tweet/post/$', TweetPostView.as_view()),
+    url(r'^tweet/list/$', TweetListGetView.as_view()),
     url(r'^tweet/(?P<tweet_id>\d+)$', TweetGetByIdView.as_view()),
     url(r'^user/register/$', AuthRegister.as_view()),
     url(r'^user/mypage/$', AuthInfoGetView.as_view()),
