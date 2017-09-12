@@ -8,9 +8,9 @@ from django.http import HttpResponse, Http404
 from rest_framework.pagination import PageNumberPagination
 from rest_framework import status, viewsets, filters
 from rest_framework.views import APIView
-
 from api.serializers.tweet import TweetSerializer
 from api.models.tweet import Tweet
+
 
 # ツイート作成のView(POST)
 class TweetPostView(generics.CreateAPIView):
@@ -38,7 +38,6 @@ class TweetListGetView(generics.RetrieveAPIView):
             tweet = Tweet.objects.all()
         except Tweet.DoesNotExist:
             raise Http404
-
         serializer = TweetSerializer(tweet)
 
         return Response(serializer.data, status=status.HTTP_200_OK)

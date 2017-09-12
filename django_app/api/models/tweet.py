@@ -1,6 +1,7 @@
 from django.db import models
 from django.conf import settings
 
+
 class Tweet(models.Model):
     tweet = models.CharField(max_length=140, blank=False)
     user = models.ForeignKey(

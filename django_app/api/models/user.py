@@ -6,6 +6,7 @@ from django.core import validators
 from django.utils.translation import ugettext_lazy as _
 from django.utils import timezone
 
+
 class AccountManager(BaseUserManager):
     def create_user(self, request_data, **kwargs):
         now = timezone.now()

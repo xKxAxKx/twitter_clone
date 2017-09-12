@@ -1,5 +1,4 @@
 from rest_framework import serializers
-
 from api.serializers.user import AccountSerializer
 from api.models.tweet import Tweet
 
