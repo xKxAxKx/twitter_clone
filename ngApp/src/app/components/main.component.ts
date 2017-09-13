@@ -2,6 +2,7 @@ import { Component,Input } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 
 import { MainService } from '../services/main.service';
+import { UserStore } from '../stores/user.store';
 
 @Component({
   selector: 'main',
@@ -10,8 +11,8 @@ import { MainService } from '../services/main.service';
     <div class="row">
       <div class="col-sm-4">
         <div class="panel panel-primary">
-          <div class="panel-heading">@ログインユーザ名</div>
-          <div class="panel-body">プロフィールが入る</div>
+          <div class="panel-heading">@{{ userStore.fetchUserInfo.username }}</div>
+          <div class="panel-body">{{ userStore.fetchUserInfo.profile }}</div>
         </div>
       </div>
       <div class="col-sm-8">
@@ -22,5 +23,9 @@ import { MainService } from '../services/main.service';
   `
 })
 export class MainComponent {
-
+  constructor (
+    private mainService: MainService,
+    private userStore: UserStore,
+    private activatedRoute: ActivatedRoute,
+  ){}
 }

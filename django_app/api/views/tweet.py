@@ -27,7 +27,7 @@ class TweetListPagination(PageNumberPagination):
     page_size_query_param = 'unit'
 
 
-# 指定したidのツイートをGETする
+# 指定したユーザのツイートをGETする
 # object.all()でfilterでユーザidを指定すればいいか
 class TweetListGetView(generics.RetrieveAPIView):
     permission_classes = (permissions.AllowAny,)
