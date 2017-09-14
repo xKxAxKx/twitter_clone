@@ -32,7 +32,7 @@ export class TweetPostComponent {
   postTweet() {
     let postData = {
       tweet: this.tweet,
-      user: this.userStore.loginUserInfo.id
+      user: null,
     }
     this.tweetService.postTweet(postData);
     this.tweet = '';
