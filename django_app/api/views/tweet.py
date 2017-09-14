@@ -28,7 +28,7 @@ class TweetListPagination(PageNumberPagination):
 
 
 # 指定したユーザのツイートをGETする
-# object.all()でfilterでユーザidを指定すればいいか
+# object.all()でfilterでユーザidを指定する
 class TweetListGetView(generics.RetrieveAPIView):
     permission_classes = (permissions.AllowAny,)
     pagination_class = TweetListPagination

@@ -11,8 +11,8 @@ import { UserStore } from '../stores/user.store';
     <div class="row">
       <div class="col-sm-4">
         <div class="panel panel-primary">
-          <div class="panel-heading">@{{ userStore.fetchUserInfo.username }}</div>
-          <div class="panel-body">{{ userStore.fetchUserInfo.profile }}</div>
+          <div class="panel-heading">@{{ userStore.loginUserInfo.username }}</div>
+          <div class="panel-body">{{userStore.loginUserInfo.profile }}</div>
         </div>
       </div>
       <div class="col-sm-8">
