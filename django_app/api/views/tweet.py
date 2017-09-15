@@ -18,9 +18,11 @@ class TweetPostView(generics.CreateAPIView):
     serializer_class = TweetSerializer
 
     @transaction.atomic
-    def create(self, request, *args, **kwargs):
+    def post(self, request, format=None):
         request.data['user'] = request.user.id
-        return super().create(request, *args, **kwargs)
+        serializer = TweetSerializer(data=request.data)
+        # request.data['user'] = request.user.id
+        # return super().create(request, *args, **kwargs)
 
 
 class TweetListPagination(PageNumberPagination):

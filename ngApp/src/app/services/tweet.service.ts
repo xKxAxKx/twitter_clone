@@ -27,6 +27,7 @@ export class TweetService {
 
   // Tweetをpostする
   postTweet(postData) {
+    console.log(postData);
     return this.http
       .post(this.PostTweetApi, postData, this.commonService.jwt())
       .map((res) => res.json())
