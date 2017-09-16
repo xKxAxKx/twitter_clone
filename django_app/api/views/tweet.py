@@ -14,17 +14,13 @@ from api.models.tweet import Tweet
 
 # ツイート作成のView(POST)
 class TweetPostView(generics.CreateAPIView):
-    permission_classes = (permissions.IsAuthenticated,)
+    permission_classes = (permissions.AllowAny,) #あとでpermissions.IsAuthenticatedに戻す
     serializer_class = TweetSerializer
 
     @transaction.atomic
-    def post(self, request, *args, **kwargs):
-        request.data['user'] = request.user.id
-        serializer = TweetSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    def create(self, request, *args, **kwargs):
+        request.data['user'] = request.user
+        return super().create(request, *args, **kwargs)
 
 
 class TweetListPagination(PageNumberPagination):
@@ -32,8 +28,7 @@ class TweetListPagination(PageNumberPagination):
     page_size_query_param = 'unit'
 
 
-# 指定したユーザのツイートをGETする
-# object.all()でfilterでユーザidを指定する
+# 指定したユーザidのツイートをGETする
 class TweetListGetView(generics.RetrieveAPIView):
     permission_classes = (permissions.AllowAny,)
     pagination_class = TweetListPagination
