@@ -9,6 +9,3 @@ class TweetSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tweet
         fields = ('id', 'tweet', 'user', 'created_at')
-
-    def create(self, validated_data):
-        return Tweet.objects.create(request_data=validated_data)
