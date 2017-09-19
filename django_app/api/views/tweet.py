@@ -15,12 +15,13 @@ from api.models.user import Account
 
 # ツイート作成のView(POST)
 class TweetPostView(generics.CreateAPIView):
-    permission_classes = (permissions.IsAuthenticated,)
+    permission_classes = (permissions.AllowAny,)
+    queryset = Tweet.objects.all()
     serializer_class = TweetSerializer
 
     @transaction.atomic
     def create(self, request, *args, **kwargs):
-        request.data['user'] = self.request.user
+        request.data['user'] = request.user
         return super().create(request)
 
 
