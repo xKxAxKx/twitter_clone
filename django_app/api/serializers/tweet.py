@@ -9,3 +9,9 @@ class TweetSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tweet
         fields = ('id', 'tweet', 'user', 'created_at')
+
+
+class TweetPostSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Tweet
+        fields = ('id', 'tweet', 'user', 'created_at')

@@ -8,7 +8,7 @@ from django.http import HttpResponse, Http404
 from rest_framework.pagination import PageNumberPagination
 from rest_framework import status, viewsets, filters
 from rest_framework.views import APIView
-from api.serializers.tweet import TweetSerializer
+from api.serializers.tweet import TweetSerializer, TweetPostSerializer
 from api.models.tweet import Tweet
 from api.models.user import Account
 
@@ -17,7 +17,7 @@ from api.models.user import Account
 class TweetPostView(generics.CreateAPIView):
     permission_classes = (permissions.AllowAny,)
     queryset = Tweet.objects.all()
-    serializer_class = TweetSerializer
+    serializer_class = TweetPostSerializer
 
     @transaction.atomic
     def create(self, request, *args, **kwargs):
