@@ -28,4 +28,20 @@ export class TweetListComponent {
     private activatedRoute: ActivatedRoute,
   ){}
 
+  user_id = null
+
+  ngOnInit() {
+    // URLのパラメータのidを取得する
+    this.activatedRoute.params.subscribe((params: Params) => {
+        this.user_id = params['user_id'];
+    });
+
+    if (this.user_id) {
+      console.log("ユーザーページだよ");
+    } else {
+      console.log("ユーザーページじゃないよ");
+    }
+
+  }
+
 }
