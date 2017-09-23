@@ -26,20 +26,22 @@ class TweetPostView(generics.CreateAPIView):
 
 
 class TweetListPagination(PageNumberPagination):
-    page_size = 100
+    page_size = 10
     page_size_query_param = 'unit'
 
 
-# 指定したユーザidのツイートをGETする
+# 指定したユーザid(複数可)のツイートをGETする
 class TweetListGetByUserIdView(generics.RetrieveAPIView):
     permission_classes = (permissions.AllowAny,)
     pagination_class = TweetListPagination
 
     def get(self, request, *args, **kwargs):
+        user_ids = request.data.user_ids
         try:
-            tweet = Tweet.objects.all()
+            tweet = Tweet.objects.filter(user__in=user_ids)
         except Tweet.DoesNotExist:
             raise Http404
+
         serializer = TweetSerializer(tweet)
 
         return Response(serializer.data, status=status.HTTP_200_OK)
