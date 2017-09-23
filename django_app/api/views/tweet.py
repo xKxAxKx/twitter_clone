@@ -31,7 +31,7 @@ class TweetListPagination(PageNumberPagination):
 
 
 # 指定したユーザidのツイートをGETする
-class TweetListGetView(generics.RetrieveAPIView):
+class TweetListGetByUserIdView(generics.RetrieveAPIView):
     permission_classes = (permissions.AllowAny,)
     pagination_class = TweetListPagination
 
@@ -46,7 +46,7 @@ class TweetListGetView(generics.RetrieveAPIView):
 
 
 # 指定したidのツイートをGETする
-class TweetGetByIdView(generics.RetrieveAPIView):
+class TweetGetByTweetIdView(generics.RetrieveAPIView):
     permission_classes = (permissions.AllowAny,)
 
     def get(self, request, tweet_id):
