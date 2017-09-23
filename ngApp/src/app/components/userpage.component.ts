@@ -9,9 +9,16 @@ import { UserStore } from '../stores/user.store';
   template: `
   <div class="center">
     <div class="row">
-      <div class="panel panel-primary" *ngIf="userStore.fetchUserInfo.id">
-        <div class="panel-heading">@{{ userStore.fetchUserInfo.username }}</div>
-        <div class="panel-body">{{ userStore.fetchUserInfo.profile }}</div>
+      <div class="col-sm-4">
+        <div class="panel panel-primary" *ngIf="userStore.fetchUserInfo.id">
+          <div class="panel-heading">@{{ userStore.fetchUserInfo.username }}</div>
+          <div class="panel-body">
+            {{ userStore.fetchUserInfo.profile }}
+            <p *ngIf="userStore.fetchUserInfo.id === userStore.loginUserInfo.id">
+              ユーザ情報を編集する
+            </p>
+          </div>
+        </div>
       </div>
     <div>
   </div>
