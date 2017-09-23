@@ -21,6 +21,7 @@ import { UserService } from './services/user.service';
 import { UserStore } from './stores/user.store';
 
 import { TweetPostComponent } from './components/tweet_post.component';
+import { TweetListComponent } from './components/tweet_list.component';
 import { TweetService } from './services/tweet.service';
 import { TweetStore } from './stores/tweet.store';
 
@@ -35,6 +36,7 @@ import { HeaderComponent }  from './components/header.component';
     SignupComponent,
     UserpageComponent,
     TweetPostComponent,
+    TweetListComponent,
   ],
   imports: [
     BrowserModule,

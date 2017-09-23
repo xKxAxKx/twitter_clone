@@ -20,6 +20,9 @@ import { UserStore } from '../stores/user.store';
           </div>
         </div>
       </div>
+      <div class="col-sm-8">
+        <tweet-list></tweet-list>
+      </div>
     <div>
   </div>
   `

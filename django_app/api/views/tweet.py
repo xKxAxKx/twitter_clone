@@ -36,6 +36,7 @@ class TweetListGetByUserIdView(generics.RetrieveAPIView):
     pagination_class = TweetListPagination
 
     def get(self, request, *args, **kwargs):
+        print(request.data)
         user_ids = request.data.user_ids
         try:
             tweet = Tweet.objects.filter(user__in=user_ids)

@@ -16,7 +16,12 @@ import { UserStore } from '../stores/user.store';
         </div>
       </div>
       <div class="col-sm-8">
-        <tweet-post></tweet-post>
+        <div class="tweet_post">
+          <tweet-post></tweet-post>
+        </div>
+        <div style="margin-top: 50px;"class="tweet_list">
+          <tweet-list></tweet-list>
+        </div>
       </div>
     <div>
   </div>

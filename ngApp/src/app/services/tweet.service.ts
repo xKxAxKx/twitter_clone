@@ -8,7 +8,8 @@ import { CommonService } from './common.service';
 @Injectable()
 export class TweetService {
 
-  private PostTweetApi = `http://127.0.0.1:8000/api/tweet/post/`
+  private PostTweetApi = `http://127.0.0.1:8000/api/tweet/post/`;
+  private GetTweetListByUserIds = `http://127.0.0.1:8000/api/tweet/list/`;
 
   // ツイートのPostが成功した時のSubject
   // tweet.storeとcommon.storeに送る
@@ -17,6 +18,10 @@ export class TweetService {
   // ツイートのPostが失敗した時のSubject
   // tweet.storeとcommon.storeに送る
   errorPostTweetSubject: Subject<any> = new Subject<any>();
+
+  // ツイートリストの取得が成功した時のSubject
+  // tweet.storeに送る
+  fetchTweetListSubjct: Subject<any> = new Subject<any>();
 
   constructor(
     private http: Http,
@@ -27,7 +32,6 @@ export class TweetService {
 
   // Tweetをpostする
   postTweet(postData) {
-    console.log(postData);
     return this.http
       .post(this.PostTweetApi, postData, this.commonService.jwt())
       .map((res) => res.json())
@@ -39,6 +43,21 @@ export class TweetService {
           this.errorPostTweetSubject.next();
         }
       );
+  }
+
+  // 指定したuserのツイートをgetする
+  getTweetByUserIds(userIds) {
+    return this.http
+      .get(this.GetTweetListByUserIds, userIds)
+      .subscribe(
+        (res) => {
+          this.fetchTweetListSubjct.next(res);
+        },
+        (err) => {
+          console.log("ツイートリストの取得に失敗");
+        }
+      );
+
   }
 
 }
