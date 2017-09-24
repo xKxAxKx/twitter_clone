@@ -52,7 +52,6 @@ export class TweetService {
 
     return this.http
       .get(this.GetTweetListByUserIds, {search: params})
-      .map(res => res.json())
       .subscribe(
         (res) => {
           this.fetchTweetListSubjct.next(res);
