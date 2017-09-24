@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Http, Headers, Response, RequestOptions } from '@angular/http';
+import { Http, Headers, Response, RequestOptions, URLSearchParams } from '@angular/http';
 import { Observable, Subject } from 'rxjs';
 
 import { CommonService } from './common.service';
@@ -48,7 +48,6 @@ export class TweetService {
   // 指定したuser_id(複数でもOK)のツイートをgetする
   getTweetByUserIds(users) {
     let params = new URLSearchParams();
-    console.log(users);
     params.set("users", users);
 
     return this.http
