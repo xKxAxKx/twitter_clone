@@ -45,10 +45,15 @@ export class TweetService {
       );
   }
 
-  // 指定したuserのツイートをgetする
-  getTweetByUserIds(userIds) {
+  // 指定したuser_id(複数でもOK)のツイートをgetする
+  getTweetByUserIds(users) {
+    let params = new URLSearchParams();
+    console.log(users);
+    params.set("users", users);
+
     return this.http
-      .get(this.GetTweetListByUserIds, userIds)
+      .get(this.GetTweetListByUserIds, {search: params})
+      .map(res => res.json())
       .subscribe(
         (res) => {
           this.fetchTweetListSubjct.next(res);

@@ -35,9 +35,9 @@ class TweetListGetByUserIdView(generics.RetrieveAPIView):
     permission_classes = (permissions.AllowAny,)
     pagination_class = TweetListPagination
 
-    def get(self, request, *args, **kwargs):
-        print(request.data)
-        user_ids = request.data.user_ids
+    def get_queryset(self):
+        user_ids = self.request.query_params.get('users', None)
+        print(user_ids)
         try:
             tweet = Tweet.objects.filter(user__in=user_ids)
         except Tweet.DoesNotExist:
