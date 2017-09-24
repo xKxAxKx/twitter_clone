@@ -7,14 +7,14 @@ import { TweetService } from '../services/tweet.service';
 export class TweetStore {
 
   // 取得したツイートのリスト
-  tweetlist: any = {};
+  tweetlist: any;
 
   constructor (
     private tweetService: TweetService,
   ) {
     this.tweetService.fetchTweetListSubjct.subscribe(
       (res) => {
-        this.tweetlist = res.json();
+        this.tweetlist = res;
     });
   }
 }

@@ -11,14 +11,6 @@ class TweetSerializer(serializers.ModelSerializer):
         fields = ('id', 'tweet', 'user', 'created_at')
 
 
-class TweetListSerializer(serializers.ModelSerializer):
-    user = AccountSerializer()
-
-    class Meta:
-        model = Tweet
-        fields = ('id', 'tweet', 'user', 'created_at')
-
-
 class TweetPostSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tweet
