@@ -34,16 +34,17 @@ class TweetListPagination(PageNumberPagination):
 class TweetListGetByUserIdView(generics.RetrieveAPIView):
     permission_classes = (permissions.AllowAny,)
     pagination_class = TweetListPagination
+    serializer_class = TweetSerializer
 
-    def get_queryset(self):
-        user_ids = self.request.query_params.get('users', None)
-        print(user_ids)
+    def get(self, request):
+        if "users" in request.GET:
+            users = request.GET.get("users")
+
         try:
-            tweet = Tweet.objects.filter(user__in=user_ids)
+            tweet = Tweet.objects.filter(user__in=users).order_by('-id')
         except Tweet.DoesNotExist:
             raise Http404
-
-        serializer = TweetSerializer(tweet)
+        serializer = TweetSerializer(tweet, many=True)
 
         return Response(serializer.data, status=status.HTTP_200_OK)
 
