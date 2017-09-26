@@ -41,7 +41,9 @@ class TweetListGetByUserIdView(generics.ListAPIView):
             users = request.GET.get("users")
 
         try:
-            tweet = Tweet.objects.filter(user__in=users).order_by('-id')
+            tweet = Tweet.objects.select_related('user') \
+                    .filter(user__in=users) \
+                    .order_by('-id')
         except Tweet.DoesNotExist:
             raise Http404
         serializer = TweetSerializer(tweet, many=True)
