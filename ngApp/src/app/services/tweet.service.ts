@@ -54,8 +54,7 @@ export class TweetService {
       .get(this.GetTweetListByUserIds, {search: params})
       .subscribe(
         (res) => {
-          console.log(res);
-          this.fetchTweetListSubjct.next(res.json());
+          this.fetchTweetListSubjct.next(res);
         },
         (err) => {
           console.log("ツイートリストの取得に失敗");

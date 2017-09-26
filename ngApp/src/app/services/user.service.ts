@@ -92,7 +92,6 @@ export class UserService {
       .get(this.FetchLoginUserApi, this.commonService.jwt())
       .subscribe(
         (res) => {
-          console.log(res);
           this.fetchLoginUserInfoSubjct.next(res);
         },
         (err) => {
