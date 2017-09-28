@@ -11,6 +11,7 @@ from rest_framework.views import APIView
 from api.serializers.tweet import TweetSerializer, TweetPostSerializer
 from api.models.tweet import Tweet
 from api.models.user import Account
+import json
 
 
 # ツイート作成のView(POST)
@@ -34,7 +35,6 @@ class TweetListPagination(PageNumberPagination):
 class TweetListGetByUserIdView(generics.ListAPIView):
     permission_classes = (permissions.AllowAny,)
     pagination_class = TweetListPagination
-    serializer_class = TweetSerializer
 
     def get(self, request):
         if "users" in request.GET:
@@ -48,7 +48,7 @@ class TweetListGetByUserIdView(generics.ListAPIView):
             raise Http404
         serializer = TweetSerializer(tweet, many=True)
 
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(json.loads(json.dumps(serializer.data)), status=status.HTTP_200_OK)
 
 
 # 指定したidのツイートをGETする
