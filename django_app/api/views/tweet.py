@@ -32,9 +32,10 @@ class TweetListPagination(PageNumberPagination):
 
 
 # 指定したユーザid(複数可)のツイートをGETする
-class TweetListGetByUserIdView(generics.ListAPIView):
+class TweetListGetByUserIdView(generics.RetrieveAPIView):
     permission_classes = (permissions.AllowAny,)
     pagination_class = TweetListPagination
+    queryset = Tweet.objects.all()
 
     def get(self, request):
         if "users" in request.GET:
@@ -48,8 +49,7 @@ class TweetListGetByUserIdView(generics.ListAPIView):
             raise Http404
         serializer = TweetSerializer(tweet, many=True)
 
-        return Response(json.loads(json.dumps(serializer.data)),
-                        status=status.HTTP_200_OK)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 # 指定したidのツイートをGETする

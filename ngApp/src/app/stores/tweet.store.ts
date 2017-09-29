@@ -7,7 +7,7 @@ import { TweetService } from '../services/tweet.service';
 export class TweetStore {
 
   // 取得したツイートのリスト
-  tweetlist: any = {};
+  tweetlist: any = [];
 
   constructor (
     private tweetService: TweetService,
