@@ -48,7 +48,8 @@ class TweetListGetByUserIdView(generics.ListAPIView):
             raise Http404
         serializer = TweetSerializer(tweet, many=True)
 
-        return Response(json.loads(json.dumps(serializer.data)), status=status.HTTP_200_OK)
+        return Response(json.loads(json.dumps(serializer.data)),
+                        status=status.HTTP_200_OK)
 
 
 # 指定したidのツイートをGETする

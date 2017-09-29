@@ -47,14 +47,16 @@ class AccountManager(BaseUserManager):
 
 
 class Account(AbstractBaseUser):
-    username    = models.CharField(_('username'), max_length=30, unique=True)
-    first_name  = models.CharField(_('first name'), max_length=30, blank=True)
-    last_name   = models.CharField(_('last name'), max_length=30, blank=True)
-    email       = models.EmailField(verbose_name='email address', max_length=255, unique=True)
-    profile     = models.CharField(_('profile'), max_length=255, blank=True)
-    is_active   = models.BooleanField(default=True)
-    is_staff    = models.BooleanField(default=False)
-    is_admin    = models.BooleanField(default=False)
+    username = models.CharField(_('username'), max_length=30, unique=True)
+    first_name = models.CharField(_('first name'), max_length=30, blank=True)
+    last_name = models.CharField(_('last name'), max_length=30, blank=True)
+    email = models.EmailField(verbose_name='email address',
+                              max_length=255,
+                              unique=True)
+    profile = models.CharField(_('profile'), max_length=255, blank=True)
+    is_active = models.BooleanField(default=True)
+    is_staff = models.BooleanField(default=False)
+    is_admin = models.BooleanField(default=False)
     date_joined = models.DateTimeField(_('date joined'), default=timezone.now)
 
     objects = AccountManager()
