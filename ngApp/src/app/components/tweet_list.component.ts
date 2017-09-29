@@ -8,7 +8,7 @@ import { TweetStore } from '../stores/tweet.store';
 @Component({
   selector: 'tweet-list',
   template: `
-    <div *ngFor="let tweet of tweetStore.tweetlist;">
+    <div *ngFor="let tweet of tweetStore.tweetlist">
       <div class="panel panel-primary">
         <div class="panel-body">
           <p>
