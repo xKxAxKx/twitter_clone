@@ -9,13 +9,58 @@ import { UserStore } from '../stores/user.store';
   template: `
   <div class="center">
     <div class="row">
-      ユーザ編集画面
+      <div class="edit_user">
+        <h3>Edit User Info</h3>
+        <form name="form" (ngSubmit)="updateUserInfo()" #f="ngForm" novalidate>
+          <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !email.valid }">
+            <label>Email</label>
+            <input
+              type="text"
+              class="form-control login-form"
+              placeholder="email"
+              name="email"
+              [(ngModel)]="editUserInfo.email"
+              #email="ngModel"
+              required
+            />
+          </div>
+          <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !username.valid }">
+            <label>Username</label>
+            <input
+              type="text"
+              class="form-control login-form"
+              placeholder="username"
+              name="username"
+              [(ngModel)]="editUserInfo.username"
+              #username="ngModel"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label>Profile</label>
+            <textarea
+              class="form-control login-form"
+              placeholder="profile"
+              name="profile"
+              [(ngModel)]="editUserInfo.profile"
+              #profile="ngModel"
+            ></textarea>
+          </div>
+          <button class="btn btn-success pull-right login-form">
+            Edit User Info
+          </button>
+        </form>
+      </div>
+      <div style="margin-top:70px;" class="edit_password">
+        <h3>Edit Password</h3>
+      </div>
+    </div>
   </div>
   `
 })
 export class MyPageComponent {
 
-  user_id = '';
+  editUserInfo:any = {};
 
   constructor (
     private userStore: UserStore,
@@ -24,6 +69,20 @@ export class MyPageComponent {
   ){}
 
   ngOnInit() {
-
+    setTimeout(() => {
+      this.setFormData();
+    }, 500);
   }
+
+  setFormData() {
+    this.editUserInfo.email = this.userStore.loginUserInfo.email;
+    this.editUserInfo.username = this.userStore.loginUserInfo.username;
+    this.editUserInfo.profile = this.userStore.loginUserInfo.profile;
+  }
+
+  updateUserInfo() {
+    console.log(this.editUserInfo);
+  }
+
+
 }
