@@ -12,7 +12,7 @@ import { TweetStore } from '../stores/tweet.store';
       <div class="panel panel-primary">
         <div class="panel-body">
           <p>
-            @{{ tweet.user.username }}
+            <a [routerLink]="['/user', tweet.user.id]">@{{ tweet.user.username }}</a>
             <span>{{ tweet.created_at | date: 'yyyy/MM/dd hh:mm:ss' }}</span>
           </p>
           {{ tweet.tweet }}
