@@ -46,7 +46,7 @@ import { UserStore } from '../stores/user.store';
               #profile="ngModel"
             ></textarea>
           </div>
-          <button class="btn btn-success pull-right login-form">
+          <button [disabled]=!isAbleChangeUserInfo class="btn btn-success pull-right login-form">
             Edit User Info
           </button>
         </form>
@@ -61,6 +61,13 @@ import { UserStore } from '../stores/user.store';
 export class MyPageComponent {
 
   editUserInfo:any = {};
+
+  get isAbleChangeUserInfo(): boolean {
+    return this.editUserInfo.email &&
+      this.editUserInfo &&
+      this.editUserInfo.email.length > 0 &&
+      this.editUserInfo.username.length > 0;
+  }
 
   constructor (
     private userStore: UserStore,
