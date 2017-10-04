@@ -88,7 +88,7 @@ export class MyPageComponent {
   }
 
   updateUserInfo() {
-    console.log(this.editUserInfo);
+    
   }
 
 

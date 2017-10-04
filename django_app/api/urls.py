@@ -5,7 +5,6 @@ from api.views.user import (AuthRegister, AuthInfoGetView, AuthInfoUpdateView, A
 from api.views.tweet import (TweetPostView, TweetGetByTweetIdView, TweetDeleteView, TweetListGetByUserIdView)
 
 urlpatterns = [
-    # ユーザー関連
     url(r'^tweet/post/$', TweetPostView.as_view()),
     url(r'^tweet/(?P<tweet_id>\d+)$', TweetGetByTweetIdView.as_view()),
     url(r'^tweet/list/$', TweetListGetByUserIdView.as_view()),

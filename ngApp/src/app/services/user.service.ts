@@ -13,6 +13,7 @@ export class UserService {
   private FetchLoginUserApi = `http://127.0.0.1:8000/api/user/mypage/`;
   private RegisterApi = `http://127.0.0.1:8000/api/user/register/`;
   private FetchUserApi = `http://127.0.0.1:8000/api/user/`;
+  private UpdateUserInfoApi = `http://127.0.0.1:8000/api/user/auth_update`;
 
   // ログインユーザを取得するときのSubject
   fetchLoginUserInfoSubjct: Subject<any> = new Subject<any>();
@@ -42,6 +43,12 @@ export class UserService {
 
   // ユーザ情報取得が失敗したときのSubject
   errorUserInfoSubjct: Subject<any> = new Subject<any>();
+
+  // ユーザ情報更新が成功した時のSubject
+  successUpdateUserInfoSubjct: Subject<any> = new Subject<any>();
+
+  // ユーザ情報更新が失敗した時のSubject
+  errorUpdateUserInfoSubjct: Subject<any> = new Subject<any>();
 
   constructor(
     private http: Http,
@@ -137,6 +144,20 @@ export class UserService {
     localStorage.removeItem(this.loginTokenName);
     this.logoutUserSubject.next();
     this.router.navigate(['/login']);
+  }
+
+  // ログインユーザの情報を更新する
+  updateUserInfo(userUpdateInfo) {
+    return this.http
+      .put(this.UpdateUserInfoApi, userUpdateInfo,this.commonService.jwt())
+      .subscribe(
+        (res) => {
+          this.successUpdateUserInfoSubjct.next(res);
+        },
+        (err) => {
+          this.errorUpdateUserInfoSubjct.next();
+        }
+      )
   }
 
 }
