@@ -16,6 +16,7 @@ import { MainStore } from './stores/main.store';
 
 import { LoginComponent } from './components/login.component';
 import { SignupComponent } from './components/signup.component';
+import { UserPanelComponent } from './components/user_panel.component';
 import { UserpageComponent } from './components/userpage.component';
 import { MyPageComponent } from './components/mypage.component';
 import { UserService } from './services/user.service';
@@ -39,6 +40,7 @@ import { HeaderComponent }  from './components/header.component';
     TweetPostComponent,
     TweetListComponent,
     MyPageComponent,
+    UserPanelComponent,
   ],
   imports: [
     BrowserModule,

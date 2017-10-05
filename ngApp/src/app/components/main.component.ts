@@ -14,6 +14,7 @@ import { UserStore } from '../stores/user.store';
           <div class="panel-heading">@{{ userStore.loginUserInfo.username }}</div>
           <div class="panel-body">{{userStore.loginUserInfo.profile }}</div>
         </div>
+        <user-panel></user-panel>
       </div>
       <div class="col-sm-8">
         <div class="tweet_post">

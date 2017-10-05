@@ -15,10 +15,11 @@ import { UserStore } from '../stores/user.store';
           <div class="panel-body">
             {{ userStore.fetchUserInfo.profile }}
             <p *ngIf="userStore.fetchUserInfo.id === userStore.loginUserInfo.id">
-              ユーザ情報を編集する
+              <a [routerLink]="['/mypage']">ユーザ情報を編集する</a>
             </p>
           </div>
         </div>
+        <user-panel></user-panel>
       </div>
       <div class="col-sm-8">
         <tweet-list></tweet-list>
