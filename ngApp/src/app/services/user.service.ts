@@ -135,7 +135,7 @@ export class UserService {
         (err) => {
           this.errorRegisterSubject.next(JSON.parse(err._body));
         }
-      );;
+      );
   }
 
 
@@ -157,7 +157,7 @@ export class UserService {
         (err) => {
           this.errorUpdateUserInfoSubjct.next();
         }
-      )
+      );
   }
 
 }

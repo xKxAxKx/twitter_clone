@@ -3,6 +3,7 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 
 import { MainService } from '../services/main.service';
 import { UserStore } from '../stores/user.store';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'main',
@@ -27,7 +28,18 @@ import { UserStore } from '../stores/user.store';
 export class MainComponent {
   constructor (
     private mainService: MainService,
+    private userService: UserService,
     private userStore: UserStore,
     private activatedRoute: ActivatedRoute,
   ){}
+
+  ngOnInit() {
+    setTimeout(() => {
+      this.setUserInfo();
+    }, 100);
+  }
+
+  setUserInfo() {
+    this.userService.fetchUserInfo(this.userStore.loginUserInfo.id);
+  }
 }

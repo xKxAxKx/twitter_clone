@@ -29,4 +29,20 @@ export class UserpageComponent {
     private activatedRoute: ActivatedRoute,
   ){}
 
+  params_user_id: number;
+
+  ngOnInit() {
+    this.setUserInfo()
+  }
+
+  // user-panelに渡すためにパラメータのユーザ情報を取得する
+  setUserInfo() {
+    this.activatedRoute.params.subscribe((params: Params) => {
+        this.params_user_id = params['user_id'];
+    });
+
+    this.userService.fetchUserInfo(this.params_user_id);
+  }
+
+
 }

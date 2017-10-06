@@ -10,11 +10,11 @@ import { UserService } from '../services/user.service';
   template: `
     <div class="panel panel-primary">
       <div class="panel-heading">
-        @{{ userInfo.username }}
+        @{{ userStore.fetchUserInfo.username }}
       </div>
       <div class="panel-body">
-        <p class="user-profile-in-panel">{{ userInfo.profile }}</p>
-        <p *ngIf="userInfo.id === userStore.loginUserInfo.id">
+        <p class="user-profile-in-panel">{{ userStore.fetchUserInfo.profile }}</p>
+        <p *ngIf="userStore.fetchUserInfo.id === userStore.loginUserInfo.id">
           <a [routerLink]="['/mypage']">Change Profile</a>
         </p>
       </div>
@@ -30,32 +30,6 @@ export class UserPanelComponent {
     private activatedRoute: ActivatedRoute,
   ){
 
-  }
-
-  params_user_id: number;
-  userInfo:any = {};
-
-  ngDoCheck() {
-  }
-
-  ngOnInit() {
-    this.params_user_id = null;
-
-    this.activatedRoute.params.subscribe((params: Params) => {
-        this.params_user_id = params['user_id'];
-    });
-
-    if(this.params_user_id) {
-      this.userService.fetchUserInfo(this.params_user_id);
-      setTimeout(() => {
-        this.userInfo = this.userStore.fetchUserInfo;
-      }, 300);
-    } else {
-      setTimeout(() => {
-        this.userInfo = this.userStore.loginUserInfo;
-        console.log(this.userInfo);
-      }, 300);
-    }
   }
 
 }
