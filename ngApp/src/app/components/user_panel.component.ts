@@ -9,11 +9,13 @@ import { UserService } from '../services/user.service';
   selector: 'user-panel',
   template: `
     <div class="panel panel-primary">
-      <div class="panel-heading">@{{ userInfo.username }}</div>
+      <div class="panel-heading">
+        @{{ userInfo.username }}
+      </div>
       <div class="panel-body">
         <p class="user-profile-in-panel">{{ userInfo.profile }}</p>
         <p *ngIf="userInfo.id === userStore.loginUserInfo.id">
-          <a [routerLink]="['/mypage']">ユーザ情報を編集する</a>
+          <a [routerLink]="['/mypage']">Change Profile</a>
         </p>
       </div>
     </div>
