@@ -10,7 +10,12 @@ import { UserService } from '../services/user.service';
   template: `
     <div class="panel panel-primary">
       <div class="panel-heading">@{{ userInfo.username }}</div>
-      <div class="panel-body">{{ userInfo.profile }}</div>
+      <div class="panel-body">
+        <p class="user-profile-in-panel">{{ userInfo.profile }}</p>
+        <p *ngIf="userInfo.id === userStore.loginUserInfo.id">
+          <a [routerLink]="['/mypage']">ユーザ情報を編集する</a>
+        </p>
+      </div>
     </div>
   `
 })
@@ -26,7 +31,7 @@ export class UserPanelComponent {
   }
 
   params_user_id: number;
-  userInfo: any = {};
+  userInfo:any = {};
 
   ngDoCheck() {
   }
@@ -42,12 +47,12 @@ export class UserPanelComponent {
       this.userService.fetchUserInfo(this.params_user_id);
       setTimeout(() => {
         this.userInfo = this.userStore.fetchUserInfo;
-      }, 0);
+      }, 300);
     } else {
       setTimeout(() => {
         this.userInfo = this.userStore.loginUserInfo;
         console.log(this.userInfo);
-      }, 0);
+      }, 300);
     }
   }
 

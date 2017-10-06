@@ -10,10 +10,6 @@ import { UserStore } from '../stores/user.store';
   <div class="center">
     <div class="row">
       <div class="col-sm-4">
-        <div class="panel panel-primary">
-          <div class="panel-heading">@{{ userStore.loginUserInfo.username }}</div>
-          <div class="panel-body">{{userStore.loginUserInfo.profile }}</div>
-        </div>
         <user-panel></user-panel>
       </div>
       <div class="col-sm-8">
