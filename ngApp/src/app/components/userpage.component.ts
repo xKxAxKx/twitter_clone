@@ -21,28 +21,15 @@ import { UserStore } from '../stores/user.store';
 })
 export class UserpageComponent {
 
-  user_id = '';
+  params_user_id: number;
 
   constructor (
     private userStore: UserStore,
     private userService: UserService,
     private activatedRoute: ActivatedRoute,
-  ){}
-
-  params_user_id: number;
-
-  ngOnInit() {
-    this.setUserInfo()
-  }
-
-  // user-panelに渡すためにパラメータのユーザ情報を取得する
-  setUserInfo() {
-    this.activatedRoute.params.subscribe((params: Params) => {
-        this.params_user_id = params['user_id'];
+  ){
+    activatedRoute.params.subscribe((params: Params) => {
+        this.userService.fetchUserInfo(params['user_id']);
     });
-
-    this.userService.fetchUserInfo(this.params_user_id);
   }
-
-
 }

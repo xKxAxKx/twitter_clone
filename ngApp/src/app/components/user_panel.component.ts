@@ -23,13 +23,13 @@ import { UserService } from '../services/user.service';
 })
 export class UserPanelComponent {
 
+  get_user_id: number = null;
+
   constructor (
     private mainService: MainService,
     private userStore: UserStore,
     private userService: UserService,
     private activatedRoute: ActivatedRoute,
-  ){
-
-  }
+  ){}
 
 }

@@ -16,6 +16,9 @@ export class UserStore {
   // ログインユーザの情報
   loginUserInfo: any = {};
 
+  // ログインユーザの情報の取得が完了した時のSubject
+  loginUserInfoSubject: Subject<void> = new Subject<void>();
+
   // 指定したidのユーザの情報
   fetchUserInfo: any = {};
 
@@ -35,6 +38,7 @@ export class UserStore {
     this.userService.fetchLoginUserInfoSubjct.subscribe(
       (res) => {
         this.loginUserInfo = res.json();
+        this.loginUserInfoSubject.next();
       }
     );
 

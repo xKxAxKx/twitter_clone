@@ -26,20 +26,28 @@ import { UserService } from '../services/user.service';
   `
 })
 export class MainComponent {
+
+  loginUserInfoSubscriber: any;
+
   constructor (
     private mainService: MainService,
     private userService: UserService,
     private userStore: UserStore,
     private activatedRoute: ActivatedRoute,
-  ){}
+  ){
+    activatedRoute.params.subscribe(() => {
+      if(this.userStore.loginUserInfo.id) {
+        this.userService.fetchUserInfo(this.userStore.loginUserInfo.id);
+      }
+    });
+  }
 
   ngOnInit() {
-    setTimeout(() => {
-      this.setUserInfo();
-    }, 100);
+    this.loginUserInfoSubscriber = this.userStore.loginUserInfoSubject.subscribe(
+      () => {
+        this.userService.fetchUserInfo(this.userStore.loginUserInfo.id);
+      }
+    );
   }
 
-  setUserInfo() {
-    this.userService.fetchUserInfo(this.userStore.loginUserInfo.id);
-  }
 }
