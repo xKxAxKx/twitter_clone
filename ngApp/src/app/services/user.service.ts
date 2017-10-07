@@ -50,6 +50,7 @@ export class UserService {
   // ユーザ情報更新が失敗した時のSubject
   errorUpdateUserInfoSubjct: Subject<any> = new Subject<any>();
 
+
   constructor(
     private http: Http,
     private router: Router,
@@ -149,7 +150,7 @@ export class UserService {
   // ログインユーザの情報を更新する
   updateUserInfo(userUpdateInfo) {
     return this.http
-      .put(this.UpdateUserInfoApi, userUpdateInfo,this.commonService.jwt())
+      .put(this.UpdateUserInfoApi, userUpdateInfo, this.commonService.jwt())
       .subscribe(
         (res) => {
           this.successUpdateUserInfoSubjct.next(res);

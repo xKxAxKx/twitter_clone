@@ -88,7 +88,7 @@ export class MyPageComponent {
   }
 
   updateUserInfo() {
-    
+    this.userService.updateUserInfo(this.editUserInfo);
   }
 
 

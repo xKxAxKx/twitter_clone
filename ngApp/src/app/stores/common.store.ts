@@ -71,5 +71,17 @@ export class CommonStore {
       this.errorMessage = 'Tweet Failed...';
     });
 
+    // ユーザ更新成功したメッセージを表示する
+    this.userService.successUpdateUserInfoSubjct.subscribe( () =>{
+      this.successMessage = 'Success Update';
+      this.errorMessage = '';
+    });
+
+    // ユーザ更新失敗したしたメッセージを表示する
+    this.userService.successUpdateUserInfoSubjct.subscribe( () =>{
+      this.successMessage = '';
+      this.errorMessage = 'Failed Update...';
+    });
+
   }
 }
