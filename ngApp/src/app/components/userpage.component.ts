@@ -1,6 +1,7 @@
 import { Component,Input } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 
+import { TweetService } from '../services/tweet.service';
 import { UserService } from '../services/user.service';
 import { UserStore } from '../stores/user.store';
 
@@ -21,15 +22,15 @@ import { UserStore } from '../stores/user.store';
 })
 export class UserpageComponent {
 
-  params_user_id: number;
-
   constructor (
     private userStore: UserStore,
     private userService: UserService,
+    private tweetService: TweetService,
     private activatedRoute: ActivatedRoute,
   ){
     activatedRoute.params.subscribe((params: Params) => {
         this.userService.fetchUserInfo(params['user_id']);
+        this.tweetService.getTweetByUserIds(params['user_id']);
     });
   }
 }

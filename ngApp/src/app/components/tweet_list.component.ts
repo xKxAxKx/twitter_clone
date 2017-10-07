@@ -40,17 +40,6 @@ export class TweetListComponent {
   users = null
 
   ngOnInit() {
-    // URLのパラメータのidを取得する
-    this.activatedRoute.params.subscribe((params: Params) => {
-        this.users = params['user_id'];
-    });
-
-    if (this.users) {
-      this.tweetService.getTweetByUserIds(this.users);
-    } else {
-      console.log("ユーザーページじゃないよ");
-    }
-
   }
 
 }

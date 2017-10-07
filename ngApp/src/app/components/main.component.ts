@@ -36,7 +36,7 @@ export class MainComponent {
     private activatedRoute: ActivatedRoute,
   ){
     activatedRoute.params.subscribe(() => {
-      if(this.userStore.loginUserInfo.id) {
+      if(this.userStore.loginUserInfo) {
         this.userService.fetchUserInfo(this.userStore.loginUserInfo.id);
       }
     });
