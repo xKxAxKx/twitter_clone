@@ -78,7 +78,7 @@ export class CommonStore {
     });
 
     // ユーザ更新失敗したしたメッセージを表示する
-    this.userService.successUpdateUserInfoSubjct.subscribe( () =>{
+    this.userService.errorUpdateUserInfoSubjct.subscribe( () =>{
       this.successMessage = '';
       this.errorMessage = 'Failed Update...';
     });

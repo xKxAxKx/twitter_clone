@@ -13,7 +13,7 @@ export class UserService {
   private FetchLoginUserApi = `http://127.0.0.1:8000/api/user/mypage/`;
   private RegisterApi = `http://127.0.0.1:8000/api/user/register/`;
   private FetchUserApi = `http://127.0.0.1:8000/api/user/`;
-  private UpdateUserInfoApi = `http://127.0.0.1:8000/api/user/auth_update`;
+  private UpdateUserInfoApi = `http://127.0.0.1:8000/api/user/auth_update/`;
 
   // ログインユーザを取得するときのSubject
   fetchLoginUserInfoSubjct: Subject<any> = new Subject<any>();
@@ -154,6 +154,7 @@ export class UserService {
       .subscribe(
         (res) => {
           this.successUpdateUserInfoSubjct.next(res);
+          this.fetchLoginUserInfo()
         },
         (err) => {
           this.errorUpdateUserInfoSubjct.next();
