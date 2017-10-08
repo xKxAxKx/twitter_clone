@@ -77,10 +77,16 @@ export class CommonStore {
       this.errorMessage = '';
     });
 
-    // ユーザ更新失敗したしたメッセージを表示する
+    // ユーザ更新失敗したメッセージを表示する
     this.userService.errorUpdateUserInfoSubjct.subscribe( () =>{
       this.successMessage = '';
       this.errorMessage = 'Failed Update...';
+    });
+
+    // 新しいパスワードが一致しないメッセージを表示する
+    this.userService.notMatchNewPasswordSubject.subscribe( () => {
+      this.successMessage = '';
+      this.errorMessage = 'New passwords do not match';
     });
 
   }

@@ -1,5 +1,6 @@
 import { Component,Input } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
+import { Observable, Subject } from 'rxjs';
 
 import { UserService } from '../services/user.service';
 import { UserStore } from '../stores/user.store';
@@ -53,6 +54,44 @@ import { UserStore } from '../stores/user.store';
       </div>
       <div style="margin-top:70px;" class="edit_password">
         <h3>Edit Password</h3>
+        <form name="form" (ngSubmit)="changePassword()" #f="ngForm" novalidate>
+          <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !oldpassword.valid }">
+            <label>Current Password</label>
+            <input
+              type="password"
+              class="form-control login-form"
+              name="oldpassword"
+              [(ngModel)]="oldPassword"
+              #oldpassword
+              required
+              />
+          </div>
+          <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !newpassword.valid }">
+            <label>New Password</label>
+            <input
+              type="password"
+              class="form-control login-form"
+              name="newpassword"
+              [(ngModel)]="newPassword"
+              #newpassword
+              required
+              />
+          </div>
+          <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !repeatnewpassword.valid }">
+            <label>New Password(repeat)</label>
+            <input
+              type="password"
+              class="form-control login-form"
+              name="repeatnewpassword"
+              [(ngModel)]="repeatNewPassword"
+              #repeatnewpassword
+              required
+              />
+          </div>
+          <button type="submit" [disabled]=!isAbleChangePassword class="btn btn-success pull-right login-form">
+            Edit Password
+          </button>
+        </form>
       </div>
     </div>
   </div>
@@ -61,12 +100,22 @@ import { UserStore } from '../stores/user.store';
 export class MyPageComponent {
 
   editUserInfo:any = {};
+  newPassword:string = '';
+  oldPassword:string = '';
+  repeatNewPassword:string = '';
+
 
   get isAbleChangeUserInfo(): boolean {
     return this.editUserInfo.email &&
       this.editUserInfo &&
       this.editUserInfo.email.length > 0 &&
       this.editUserInfo.username.length > 0;
+  }
+
+  get isAbleChangePassword(): boolean{
+    return this.newPassword.length > 0 &&
+    this.oldPassword.length > 0 &&
+    this.repeatNewPassword.length > 0;
   }
 
   constructor (
@@ -89,6 +138,16 @@ export class MyPageComponent {
 
   updateUserInfo() {
     this.userService.updateUserInfo(this.editUserInfo);
+  }
+
+  changePassword() {
+    if(this.newPassword == this.repeatNewPassword) {
+      this.setFormData();
+      this.editUserInfo.password = this.newPassword;
+      this.userService.updateUserInfo(this.editUserInfo);
+    } else {
+      this.userService.notMatchNewPassword();
+    }
   }
 
 

@@ -50,6 +50,9 @@ export class UserService {
   // ユーザ情報更新が失敗した時のSubject
   errorUpdateUserInfoSubjct: Subject<any> = new Subject<any>();
 
+  // パスワードの繰り返し入力が異なる時のSubject
+  notMatchNewPasswordSubject: Subject<any> = new Subject<any>();
+
 
   constructor(
     private http: Http,
@@ -160,6 +163,10 @@ export class UserService {
           this.errorUpdateUserInfoSubjct.next();
         }
       );
+  }
+
+  notMatchNewPassword() {
+    this.notMatchNewPasswordSubject.next();
   }
 
 }
