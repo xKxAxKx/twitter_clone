@@ -5,6 +5,8 @@ import { Observable, Subject } from 'rxjs';
 
 import { CommonService } from './common.service';
 
+import { ILoginUser } from '../models';
+
 @Injectable()
 export class UserService {
   loginTokenName = 'twitter_clone_token';
@@ -62,9 +64,9 @@ export class UserService {
 
 
   // パスワードとemailでログインする
-  passwordLogin(email:string, password:string) {
+  passwordLogin(loginuser:ILoginUser) {
     return this.http
-      .post(this.LoginApi, {email: email, password: password})
+      .post(this.LoginApi, loginuser)
       .subscribe(
         (res) => {
           let token = JSON.stringify(res.json());

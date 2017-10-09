@@ -4,6 +4,8 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import { UserService } from '../services/user.service';
 import { UserStore } from '../stores/user.store';
 
+import { ILoginUser } from '../models';
+
 @Component({
   selector: 'login',
   template: `
@@ -42,7 +44,10 @@ import { UserStore } from '../stores/user.store';
   `
 })
 export class LoginComponent {
-  loginUserInput: any = {};
+  loginUserInput:ILoginUser = {
+    email: '',
+    password: ''
+  };
 
   constructor(
     private userService: UserService,
@@ -56,6 +61,6 @@ export class LoginComponent {
   }
 
   passwordLogin() {
-    this.userService.passwordLogin(this.loginUserInput.email, this.loginUserInput.password);
+    this.userService.passwordLogin(this.loginUserInput);
   }
 }

@@ -7,3 +7,8 @@ export interface IModal {
   okBtnAble: boolean;
   cancelBtnAble: boolean;
 }
+
+export interface ILoginUser {
+  email: string;
+  password: string;
+};
