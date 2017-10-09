@@ -44,7 +44,7 @@ import { ILoginUser } from '../models';
   `
 })
 export class LoginComponent {
-  loginUserInput:ILoginUser = {
+  loginUserInput: ILoginUser = {
     email: '',
     password: ''
   };

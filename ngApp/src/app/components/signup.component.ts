@@ -4,6 +4,8 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import { UserService } from '../services/user.service';
 import { UserStore } from '../stores/user.store';
 
+import { ISignUpUser } from '../models';
+
 @Component({
   selector: 'signup',
   template: `
@@ -66,7 +68,12 @@ import { UserStore } from '../stores/user.store';
   `
 })
 export class SignupComponent {
-  SignupUserInput: any = {};
+  SignupUserInput: ISignUpUser = {
+    email: '',
+    username: '',
+    password: '',
+    profile: '',
+  };
 
   constructor(
     private userService: UserService,

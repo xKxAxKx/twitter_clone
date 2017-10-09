@@ -5,7 +5,7 @@ import { Observable, Subject } from 'rxjs';
 
 import { CommonService } from './common.service';
 
-import { ILoginUser } from '../models';
+import { ILoginUser, ISignUpUser } from '../models';
 
 @Injectable()
 export class UserService {
@@ -64,7 +64,7 @@ export class UserService {
 
 
   // パスワードとemailでログインする
-  passwordLogin(loginuser:ILoginUser) {
+  passwordLogin(loginuser: ILoginUser) {
     return this.http
       .post(this.LoginApi, loginuser)
       .subscribe(
@@ -130,9 +130,9 @@ export class UserService {
 
 
   // ユーザ登録画面から登録する
-  siginUp(registerInfo) {
+  siginUp(SignupUserInput: ISignUpUser) {
     return this.http
-      .post(this.RegisterApi, registerInfo)
+      .post(this.RegisterApi, SignupUserInput)
       .subscribe(
         (res) => {
           this.completeRegisterSubject.next();

@@ -12,3 +12,10 @@ export interface ILoginUser {
   email: string;
   password: string;
 };
+
+export interface ISignUpUser {
+  email: string;
+  username: string;
+  password: string;
+  profile?: string;
+};
