@@ -6,6 +6,10 @@ import { TweetService } from '../services/tweet.service';
 import { TweetStore } from '../stores/tweet.store';
 import { UserStore } from '../stores/user.store';
 
+// import { Modal }  from '../utils/modal';
+
+import { IModal } from '../models';
+
 @Component({
   selector: 'tweet-list',
   template: `
@@ -37,7 +41,11 @@ export class TweetListComponent {
     private userStore: UserStore,
   ){}
 
-  users = null
+  users = null;
+
+  get dialogData(): IModal {
+    return this.tweetStore.modalData;
+  }
 
   ngOnInit() {
   }

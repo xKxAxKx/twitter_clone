@@ -3,11 +3,25 @@ import { Subject } from 'rxjs';
 
 import { TweetService } from '../services/tweet.service';
 
+import { IModal } from '../models';
+
 @Injectable()
 export class TweetStore {
 
   // 取得したツイートのリスト
   tweetlist: any = null;
+
+  // モーダルの情報
+  modalData: IModal = {
+    isShow: false,
+    type: 'dialog',
+    title: '',
+    text: '',
+    fail: false,
+    okBtnAble: false,
+    cancelBtnAble: false,
+  } as IModal;
+
 
   constructor (
     private tweetService: TweetService,
