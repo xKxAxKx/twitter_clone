@@ -19,7 +19,7 @@ import { UserStore } from '../stores/user.store';
               <span>Reply</span>
               <span>Retweet</span>
               <span>Favorite</span>
-              <span *ngIf="tweet.user.id === userStore.loginUserInfo.id">Delete</span>
+              <a (click)="deleteTweet()" class="cursor_pointer" *ngIf="tweet.user.id === userStore.loginUserInfo.id">Delete</a>
             </p>
             {{ tweet.tweet }}
           </div>
@@ -40,6 +40,10 @@ export class TweetListComponent {
   users = null
 
   ngOnInit() {
+  }
+
+  deleteTweet() {
+    console.log("test");
   }
 
 }
