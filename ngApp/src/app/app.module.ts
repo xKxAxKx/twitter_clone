@@ -29,6 +29,12 @@ import { TweetStore } from './stores/tweet.store';
 
 import { HeaderComponent }  from './components/header.component';
 
+import { Modal } from './utils/modal';
+import { ModalAlert } from './utils/modal';
+import { ModalDialog } from './utils/modal';
+import { ModalError } from './utils/modal';
+import { ModalMedia } from './utils/modal';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -41,6 +47,11 @@ import { HeaderComponent }  from './components/header.component';
     TweetListComponent,
     MyPageComponent,
     UserPanelComponent,
+    Modal,
+    ModalAlert,
+    ModalDialog,
+    ModalError,
+    ModalMedia,
   ],
   imports: [
     BrowserModule,

@@ -6,7 +6,7 @@ import { TweetService } from '../services/tweet.service';
 import { TweetStore } from '../stores/tweet.store';
 import { UserStore } from '../stores/user.store';
 
-// import { Modal }  from '../utils/modal';
+import { Modal }  from '../utils/modal';
 
 import { IModal } from '../models';
 
