@@ -62,7 +62,6 @@ export class TweetListComponent {
     this.dialogData.text = `Delete Tweet "${tweet.tweet}".<br>Is it OK?`;
     this.dialogData.okBtnAble = true;
     this.dialogData.cancelBtnAble = true;
-    console.log(tweet.tweet);
 
     this.modal.openModal(
       // ツイート削除に対してOKを押した時
