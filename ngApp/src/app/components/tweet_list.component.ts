@@ -58,8 +58,8 @@ export class TweetListComponent {
 
   deleteTweet(tweet) {
     this.dialogData.isShow = true;
-    this.dialogData.title = 'ツイートの削除';
-    this.dialogData.text = `ツイート「${tweet.tweet}」を削除します。<br>よろしいですか？`;
+    this.dialogData.title = 'Delete your Tweet';
+    this.dialogData.text = `Delete Tweet "${tweet.tweet}".<br>Is it OK?`;
     this.dialogData.okBtnAble = true;
     this.dialogData.cancelBtnAble = true;
     console.log(tweet.tweet);
@@ -67,7 +67,7 @@ export class TweetListComponent {
     this.modal.openModal(
       // ツイート削除に対してOKを押した時
       () => {
-        this.dialogData.text = "ツイートを削除しています。"
+        this.dialogData.text = "Deleting Tweet..."
         this.dialogData.okBtnAble = false;
         this.dialogData.cancelBtnAble = false;
 
