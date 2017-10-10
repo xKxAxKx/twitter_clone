@@ -23,7 +23,7 @@ import { IModal } from '../models';
               <span>Reply</span>
               <span>Retweet</span>
               <span>Favorite</span>
-              <a (click)="deleteTweet()" class="cursor_pointer" *ngIf="tweet.user.id === userStore.loginUserInfo.id">Delete</a>
+              <a (click)="deleteTweet(tweet)" class="cursor_pointer" *ngIf="tweet.user.id === userStore.loginUserInfo.id">Delete</a>
             </p>
             {{ tweet.tweet }}
           </div>
@@ -56,13 +56,13 @@ export class TweetListComponent {
   ngOnInit() {
   }
 
-  deleteTweet() {
+  deleteTweet(tweet) {
     this.dialogData.isShow = true;
-    this.dialogData.title = 'ツイート削除';
-    this.dialogData.text = `ツイートを削除します。<br>よろしいですか？`;
+    this.dialogData.title = 'ツイートの削除';
+    this.dialogData.text = `ツイート「${tweet.tweet}」を削除します。<br>よろしいですか？`;
     this.dialogData.okBtnAble = true;
     this.dialogData.cancelBtnAble = true;
-    console.log(this.dialogData);
+    console.log(tweet.tweet);
 
     this.modal.openModal(
       // ツイート削除に対してOKを押した時

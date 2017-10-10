@@ -1,0 +1,610 @@
+
+// IE6,IE7にclearfixを対応 or マージン相殺防止 するか
+$support-clearfix-legacy: false;
+
+// レガシーブラウザ用にpxを出力するかしないか
+$support-rem-legacy: false;
+
+
+// Base Font size(px)
+$font-base: 14;
+
+// Base line-height
+$base-line: 1.6;
+
+// page width
+$width-pcMin: 980px;
+
+// Border Radius
+$radius-base: 15px;
+
+// Font Settings
+$font-family-body: 'ヒラギノ角ゴ Pro W3', 'Hiragino Kaku Gothic Pro', 'Meiryo', 'メイリオ', 'ＭＳ Ｐゴシック', 'MS PGothic', sans-serif;
+
+// Path
+$path-common : "/asset";
+
+
+// Colors
+$color-base:        #555555; //base text color
+$color-bg:          #ffffff; //base background color
+$color-bg02:        #c0daf0; //base background color
+
+$color-admin-palette01:   #003D69;
+$color-admin-palette02:   #c0daf0;
+$color-admin-palette03:   #222222;
+
+$color-heading:     #222222; //h1-h6 text color
+
+$color-text01:      #222222; //h1-h6 text color
+$color-text02:      #aaaaaa; //Placeholder color
+
+$color-link:        #02daff; //:link color
+$color-hover:       #00c6ff; //:hover color
+$color-active:      #00c6ff; //:active color
+$color-visited:     #00c6ff; //:visited color
+$color-focus:       #00c6ff; //:focus color
+
+$color-indicator01: #222222; //indicator default
+$color-indicator02: #cccccc; //indicator info
+$color-indicator03: #1685d6; //indicator Primary
+
+$color-success:     #00c895; //indicator Success
+$color-warning:     #f8c148; //indicator Warning
+$color-danger:      #f45d5d; //indicator Danger
+
+$color-divider01:   #e5e5e5; //divider default
+$color-divider02:   #dddddd; //divider dotted
+
+$color-panel01:     #f6f6f6; //Panel Solid
+$color-panel02:     #e5e5e5; //Panel Outline
+
+$radius-base:       3px;
+
+
+$alpha-opacity: 0.75;
+
+
+
+// Break Point
+$mq-small:    640px;
+$mq-middle:   800px;
+$mq-large:    1280px;
+
+$color-post-base:   #111111;
+$color-bg-top:      #000000; //top page background color
+$color-bg-box:      #f3f3f3; //box background color
+
+$color-border01:    #222222; // border color
+$color-border02:    #e5e5e5; // border color02
+$color-border03:    #444444; // border color03
+$color-border04:    #dddddd; // border color03
+
+$color-palette01:   #b42323; // red
+$color-palette02:   #f3f3f3; //
+$color-palette03:   #222222;
+$color-palette04:   #b99874; // beige
+$color-palette05:   #f3cccb; // pink
+
+$color-text-top:    #ffffff;
+$color-text-article:#333333;
+$color-text-footer: #b3b3b3;
+$color-text-info:   #b99874;
+$color-text-pr:     #888888;
+
+
+
+
+
+
+// Font Settings
+$font-family-post: Hiragino Sans, 'ヒラギノ角ゴシック', Hiragino Kaku Gothic ProN, 'ヒラギノ角ゴ ProN W3', '游ゴシック Medium', 'Yu Gothic Medium', '游ゴシック体', YuGothic, Meiryo, メイリオ, sans-serif;
+$font-family-en: 'Helvetica Neue', Helvetica, Arial, 'ヒラギノ角ゴ ProN W3', 'Hiragino Kaku Gothic ProN', '游ゴシック Medium', 'Yu Gothic Medium', '游ゴシック体', YuGothic, Meiryo, メイリオ, sans-serif;
+$font-family-cinzel: 'Cinzel', serif;
+
+
+
+/* Module - Modal
+============================================================================= */
+
+
+.mod-Modal {
+  position: fixed;
+  display: flex;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 2;
+  justify-content: center;
+  align-items: center;
+
+
+  &_Bg {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+  }
+
+  &_Panel {
+    position: relative;
+    width: 460px;
+    margin: 10px;
+    max-height: calc(100% - 20px);
+    overflow: auto;
+    background-color: #fff;
+    box-sizing: border-box;
+    border-radius: $radius-base;
+
+    &--image-multiple {
+      width: 690px;
+    }
+    &--category {
+      width: 520px;
+    }
+  }
+
+
+
+  &_Loader {
+    position: absolute;
+    height: 3px;
+    width: 0;
+    top: 0;
+    left: 0;
+    background-color: $color-indicator03;
+
+    &.is-uploading {
+      width: 90%;
+      transition: width 5s ease-in;
+    }
+  }
+
+
+  &_Header {
+    position: relative;
+    padding: 15px 50px 15px 20px;
+    border-bottom: 1px solid $color-divider01;
+  }
+
+  &_Heading {
+    font-size: 1.8rem;
+    font-weight: bold;
+  }
+
+  &_Close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 50px;
+    height: 60px;
+
+    img {
+      display: block;
+      margin: 0 auto;
+    }
+
+    &:hover {
+      opacity: 0.6;
+    }
+  }
+
+  &_Inner {
+    position: relative;
+    padding: 19px 20px 18px;
+  }
+
+  &_ButtonList {
+    display: flex;
+    padding: 11px 20px 12px;
+    border-top: 1px solid $color-divider01;
+  }
+
+  &_Button {
+    margin-left: 20px;
+
+    &:first-child {
+      margin-left: auto;
+    }
+  }
+
+  &.is-error {
+    animation: rumbleModal 0.1s linear 3;
+
+    @at-root {
+      @keyframes rumbleModal{
+        0%  { transform: translate(0, -50%); }
+        25% { transform: translate(8px, -50%); }
+        50% { transform: translate(0, -50%); }
+        75% { transform: translate(-8px, -50%); }
+        100% { transform: translate(0, -50%); }
+      }
+    }
+  }
+
+
+
+  &_UploadArea {
+    position: relative;
+
+    &> img {
+      display: block;
+      margin: 0 auto;
+    }
+  }
+
+  &_FileInput {
+    position: absolute;
+    width: 0;
+    height: 0;
+    opacity: 0;
+  }
+
+  &_FileLabel {
+    position: relative;
+    height: 236px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    box-sizing: border-box;
+    border-radius: 2px;
+    background-color: $color-panel01;
+
+    // &.is-low {
+    //   height: 170px;
+
+    //   &:before {
+    //     height: 130px;
+    //   }
+    // }
+
+    &> span {
+      display: block;
+      flex: 0 0 auto;
+      max-width: 100%;
+      width: 100%;
+      text-align: center;
+    }
+
+    &:before {
+      content: "";
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      width: calc(100% - 40px);
+      height: calc(100% - 40px);
+      border-radius: 10px;
+      box-sizing: border-box;
+      border: 3px dashed $color-divider01;
+    }
+
+    &.is-dragOver,
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.2);
+    }
+  }
+
+  &_Panel--outline {
+    height: 236px;
+    overflow: auto;
+  }
+
+  &_UploadError {
+    color: $color-danger;
+    margin-bottom: 20px;
+  }
+
+  &_UploadList {
+  }
+  &_UploadItem {
+    position: relative;
+    font-size: 1.2rem;
+    margin-bottom: 3px;
+    line-height: 1.7;
+    height: 20px;
+    padding: 0 10px 0 25px;
+    display: table;
+    border-radius: 10px;
+
+    &:hover {
+      background-color: rgba(34, 34, 34, 0.1);
+    }
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    button {
+      position: absolute;
+      left: 0;
+      top: 0;
+      vertical-align: middle;
+      height: 20px;
+      width: 20px;
+      padding: 0 1px 0 4px;
+      border-radius: 10px 0 0 10px;
+
+      img {
+        display: block;
+        margin: 0 auto;
+        vertical-align: middle;
+      }
+
+      &:hover {
+        background-color: rgba(34, 34, 34, 0.2);
+      }
+    }
+  }
+
+  &_UploadFailList {
+    padding-left: 15px;
+    list-style-type: disc;
+    margin-bottom: 20px;
+  }
+  &_UploadFailItem {
+    font-size: 1.2rem;
+    margin-bottom: 3px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  &_FileName {
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    font-size: 1.3rem;
+    padding: 2px 6px;
+    margin-bottom: 20px;
+    min-height: 20px;
+    resize: none;
+    box-sizing: border-box;
+
+    &:focus {
+      overflow: auto;
+      white-space: normal;
+      text-overflow: clip;
+      border: 1px solid $color-indicator03;
+    }
+  }
+
+  &_Error {
+    display: block;
+    font-size: 11px;
+    margin-top: 15px;
+    padding: 10px;
+    background-color: $color-panel01;
+    border: 1px solid $color-panel02;
+    border-radius: $radius-base;
+
+    .code {
+      color: #7d2727;
+      margin-left: 5px;
+    }
+    .kwd {
+      color: #101094;
+      margin-right: 3px;
+    }
+  }
+
+  &_deleteText01 {
+    margin: 0 5px;
+    color: $color-danger;
+    font-size: 3.6rem;
+  }
+
+  &_deleteText02 {
+    margin: 0 3px;
+    color: $color-danger;
+    font-size: 1.6rem;
+  }
+}
+
+
+
+
+
+/* Module - Button
+============================================================================= */
+
+button {
+  vertical-align: top;
+}
+
+
+
+%mod-Button {
+  display: inline-block;
+  height: 36px;
+  font-size: 1.2rem;
+  line-height: 1;
+  font-weight: bold;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  img {
+    position: relative;
+    vertical-align: middle;
+    top: -1px;
+    pointer-events: none;
+
+    &:first-child {
+      margin-right: 6px;
+    }
+    &:last-child {
+      margin-left: 6px;
+      margin-right: 0;
+    }
+  }
+}
+
+%mod-Button-Base {
+  @extend %mod-Button;
+  padding: 0 20px;
+  min-width: 140px;
+  box-sizing: border-box;
+  border-radius: $radius-base;
+}
+
+%mod-Button-Icon {
+  display: inline-block;
+  width: 36px;
+  height: 36px;
+  border-radius: $radius-base;
+  background-color: $color-palette03;
+
+  img {
+    vertical-align: baseline;
+  }
+
+  &.is-active {
+    opacity: 0.2;
+  }
+
+  &.is-success {
+    background-color: $color-success;
+  }
+
+  &:disabled {
+    background-color: lighten($color-admin-palette03, 30%);
+    cursor: default;
+  }
+
+  &:hover {
+    background-color: lighten($color-admin-palette03, 20%);
+  }
+}
+
+
+
+
+
+.mod-Button {
+  &--block {
+    display: block;
+    width: 100%;
+  }
+
+  &--small {
+    height: 30px;
+  }
+
+  &--large {
+    height: 44px;
+    font-size: 1.4rem;
+  }
+
+  &-Icon {
+    @extend %mod-Button-Icon;
+
+    &--small {
+      width: 30px;
+      height: 30px;
+    }
+  }
+
+  &-Dark {
+    @extend %mod-Button-Base;
+    color: #fff;
+    background-color: $color-admin-palette03;
+
+    &:hover {
+      background-color: lighten($color-admin-palette03, 20%);
+    }
+  }
+
+
+  &-Light {
+    @extend %mod-Button-Base;
+    border: 2px solid $color-admin-palette03;
+
+    &:hover {
+      color: lighten($color-base, 20%);
+    }
+
+    &:disabled {
+      color: lighten($color-base, 40%);
+      cursor: default;
+    }
+  }
+
+  &-Update {
+    @extend %mod-Button-Base;
+    color: #fff;
+    background-color: $color-indicator03;
+
+    &:hover {
+      background-color: lighten($color-indicator03, 15%);
+    }
+
+    &:disabled {
+      background-color: lighten($color-indicator03, 30%);
+      cursor: default;
+    }
+  }
+
+  &-Scheduled {
+    @extend %mod-Button-Base;
+    color: #fff;
+    background-color: $color-warning;
+
+    &:hover {
+      background-color: lighten($color-warning, 15%);
+    }
+
+    &:disabled {
+      background-color: lighten($color-warning, 30%);
+      cursor: default;
+    }
+  }
+
+  &-Delete {
+    @extend %mod-Button-Base;
+    color: #fff;
+    background-color: $color-danger;
+
+    &:hover {
+      background-color: lighten($color-danger, 10%);
+    }
+
+    &:disabled {
+      background-color: lighten($color-danger, 20%);
+      cursor: default;
+    }
+  }
+
+  &-Reservation {
+    @extend %mod-Button-Base;
+    color: #fff;
+    background-color: $color-warning;
+
+    &:hover {
+      background-color: lighten($color-warning, 15%);
+    }
+
+    &:disabled {
+      background-color: lighten($color-warning, 30%);
+      cursor: default;
+    }
+  }
+
+  &-File {
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+
+    > input[type="file"] {
+      position: absolute;
+      top: 0;
+      right: 0;
+      font-size: 100px;
+      opacity: 0;
+      cursor: pointer;
+    }
+  }
+}

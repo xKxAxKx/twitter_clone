@@ -51,14 +51,14 @@ export class ModalAlert {
   <div class="mod-Modal_Inner">
     <p [innerHTML]="data.text"><p>
   </div>
-  <ul class="mod-Modal_ButtonList">
+  <ul class="mod-Modal_ButtonList" style="list-style:none;">
     <li class="mod-Modal_Button">
-      <button class="mod-Button-Update"
+      <button class="btn btn-success"
         (click)="okModal()"
         [disabled]="!data.okBtnAble">OK</button>
     </li>
     <li class="mod-Modal_Button">
-      <button class="mod-Button-Delete"
+      <button class="btn btn-error"
         (click)="cancelModal()"
         [disabled]="!data.cancelBtnAble">Cancel</button>
     </li>
@@ -177,9 +177,6 @@ export class ModalMedia {
         [class.mod-Modal_Panel--media]="data.type === 'media'">
         <div class="mod-Modal_Header">
           <div class="mod-Modal_Heading">{{data.title}}</div>
-          <button class="mod-Modal_Close"
-            *ngIf="data.okBtnAble || data.cancelBtnAble"
-            (click)="closeModal($event)">cansel</button>
         </div>
         <modal-alert
           *ngIf="data.type === 'alert'"
