@@ -179,7 +179,7 @@ export class ModalMedia {
           <div class="mod-Modal_Heading">{{data.title}}</div>
           <button class="mod-Modal_Close"
             *ngIf="data.okBtnAble || data.cancelBtnAble"
-            (click)="closeModal($event)"><img src="/admin/assets/img/icons/icon_cancel.png" alt="Cancel" width="10" height="10"></button>
+            (click)="closeModal($event)">cansel</button>
         </div>
         <modal-alert
           *ngIf="data.type === 'alert'"

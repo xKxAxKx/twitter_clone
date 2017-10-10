@@ -1,4 +1,4 @@
-import { Component,Input } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 
 import { MainService } from '../services/main.service';
@@ -30,9 +30,15 @@ import { IModal } from '../models';
         </div>
       </div>
     </div>
+    <modal
+      [data]="this.tweetStore.modalData"
+      (cancelEvent)="closeModal()"></modal>
   `
 })
 export class TweetListComponent {
+
+  // モーダル
+  @ViewChild(Modal) modal;
 
   constructor (
     private tweetService: TweetService,
@@ -51,7 +57,41 @@ export class TweetListComponent {
   }
 
   deleteTweet() {
-    console.log("test");
+    this.dialogData.isShow = true;
+    this.dialogData.title = 'ツイート削除';
+    this.dialogData.text = `ツイートを削除します。<br>よろしいですか？`;
+    this.dialogData.okBtnAble = true;
+    this.dialogData.cancelBtnAble = true;
+    console.log(this.dialogData);
+
+    this.modal.openModal(
+      // ツイート削除に対してOKを押した時
+      () => {
+        this.dialogData.text = "ツイートを削除しています。"
+        this.dialogData.okBtnAble = false;
+        this.dialogData.cancelBtnAble = false;
+
+        console.log(this.dialogData);
+      },
+      // ツイート削除しましたに対してOKを押した時
+      () => {
+        this.closeModal();
+      }
+    );
   }
+
+  closeModal() {
+    /*
+     * モーダルの内容を設定
+     */
+    this.dialogData.isShow = false;
+    this.dialogData.title = '';
+    this.dialogData.text = '';
+    this.dialogData.okBtnAble = false;
+    this.dialogData.cancelBtnAble = false;
+
+    this.modal.resetAll();
+  }
+
 
 }
