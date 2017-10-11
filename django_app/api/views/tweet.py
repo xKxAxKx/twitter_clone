@@ -69,4 +69,6 @@ class TweetGetByTweetIdView(generics.RetrieveAPIView):
 
 # ツイート削除のView(DELETE)
 class TweetDeleteView(generics.DestroyAPIView):
+    permission_classes = (permissions.IsAuthenticated,)
+    queryset = Tweet.objects.all()
     pass

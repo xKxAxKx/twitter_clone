@@ -10,6 +10,7 @@ export class TweetService {
 
   private PostTweetApi = `http://127.0.0.1:8000/api/tweet/post/`;
   private GetTweetListByUserIds = `http://127.0.0.1:8000/api/tweet/list/`;
+  private DeleteTweetByTweetIdApi = `http://127.0.0.1:8000/api/tweet/delete/`;
 
   // ツイートのPostが成功した時のSubject
   // tweet.storeとcommon.storeに送る
@@ -61,7 +62,11 @@ export class TweetService {
           console.log("ツイートリストの取得に失敗");
         }
       );
-
   }
 
+  // 指定したtweet_idのツイートを削除
+  // tweet.user.idとrequest.user.idが一致しない場合はerrorを返すようにする
+  deleteTweetByTweetId(tweet) {
+    console.log(tweet.tweet);
+  };
 }
