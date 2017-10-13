@@ -24,6 +24,14 @@ export class TweetService {
   // tweet.storeに送る
   fetchTweetListSubjct: Subject<any> = new Subject<any>();
 
+  // ツイートのDeleteが成功した時のSubject
+  // tweet.storeとcommon.storeに送る
+  completeDeleteTweetSubject: Subject<any> = new Subject<any>();
+
+  // ツイートのDeleteが失敗した時のSubject
+  // tweet.storeとcommon.storeに送る
+  errorDeleteTweetSubject: Subject<any> = new Subject<any>();
+
   constructor(
     private http: Http,
     private router: Router,
@@ -66,7 +74,16 @@ export class TweetService {
 
   // 指定したtweet_idのツイートを削除
   // tweet.user.idとrequest.user.idが一致しない場合はerrorを返すようにする
-  deleteTweetByTweetId(tweet) {
-    console.log(tweet.tweet);
+  deleteTweetByTweetId(tweet_id) {
+    return this.http
+      .delete(this.DeleteTweetByTweetIdApi + tweet_id, this.commonService.jwt())
+      .subscribe(
+        (res) => {
+          this.completeDeleteTweetSubject.next(res);
+        },
+        (err) => {
+          this.errorDeleteTweetSubject.next();
+        }
+      );
   };
 }
