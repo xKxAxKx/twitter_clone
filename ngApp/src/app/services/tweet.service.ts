@@ -79,6 +79,7 @@ export class TweetService {
       .delete(this.DeleteTweetByTweetIdApi + tweet_id, this.commonService.jwt())
       .subscribe(
         (res) => {
+          // 削除が終わったらツイート一覧を更新しておく
           this.completeDeleteTweetSubject.next(res);
         },
         (err) => {

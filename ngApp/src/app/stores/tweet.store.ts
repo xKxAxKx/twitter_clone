@@ -30,5 +30,12 @@ export class TweetStore {
       (res) => {
         this.tweetlist = res;
     });
+
+    this.tweetService.completeDeleteTweetSubject.subscribe(
+      (res) => {
+        this.modalData.text = `Tweet Deleted!`;
+        this.modalData.okBtnAble = true;
+      }
+    );
   }
 }

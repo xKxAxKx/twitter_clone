@@ -69,7 +69,6 @@ export class TweetListComponent {
         this.dialogData.text = "Deleting Tweet..."
         this.dialogData.okBtnAble = false;
         this.dialogData.cancelBtnAble = false;
-
         this.tweetService.deleteTweetByTweetId(tweet.id);
       },
       // ツイート削除しましたに対してOKを押した時
