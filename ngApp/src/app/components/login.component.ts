@@ -44,10 +44,7 @@ import { ILoginUser } from '../models';
   `
 })
 export class LoginComponent {
-  loginUserInput: ILoginUser = {
-    email: '',
-    password: ''
-  };
+  loginUserInput = {} as ILoginUser
 
   constructor(
     private userService: UserService,

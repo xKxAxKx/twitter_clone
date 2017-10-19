@@ -10,13 +10,6 @@ export interface ITweets {
   results: ITweet[];
 }
 
-export interface IUser {
-  id: number;
-  email: string;
-  username: string;
-  profile: string;
-}
-
 export interface ILoginUser {
   email: string;
   password: string;
@@ -26,6 +19,13 @@ export interface ISignUpUser {
   email: string;
   username: string;
   password: string;
+  profile?: string;
+}
+
+export interface IUser {
+  id: number;
+  email: string;
+  username: string;
   profile?: string;
 }
 

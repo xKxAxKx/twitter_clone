@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 
 import { UserService } from '../services/user.service';
+import { IUser, ILoginUser, ISignUpUser } from '../models';
 
 @Injectable()
 export class UserStore {
@@ -14,13 +15,13 @@ export class UserStore {
   userLogin: boolean;
 
   // ログインユーザの情報
-  loginUserInfo: any = {};
+  loginUserInfo: IUser = {} as IUser;
 
   // ログインユーザの情報の取得が完了した時のSubject
   loginUserInfoSubject: Subject<void> = new Subject<void>();
 
   // 指定したidのユーザの情報
-  fetchUserInfo: any = {};
+  fetchUserInfo: IUser = {} as IUser;
 
   constructor (
     private userService: UserService
@@ -37,6 +38,7 @@ export class UserStore {
     // userService.fetchLoginUserInfo()が呼ばれたら流れてくる
     this.userService.fetchLoginUserInfoSubjct.subscribe(
       (res) => {
+        console.log("ログインユーザーの情報を格納する");
         this.loginUserInfo = res.json();
         this.loginUserInfoSubject.next();
       }
@@ -47,19 +49,20 @@ export class UserStore {
     this.userService.logoutUserSubject.subscribe( () => {
       this.userLogin = false;
       this.loginUserToken = {};
-      this.loginUserInfo = {};
+      this.loginUserInfo = {} as IUser;
     });
 
     // 指定したidのユーザーの情報を格納する
     this.userService.successUserInfoSubjct.subscribe(
       (res) => {
         this.fetchUserInfo = res.json();
+        console.log("指定したidのユーザーの情報を格納する");
       }
     );
 
     this.userService.errorUserInfoSubjct.subscribe(
       (res) => {
-        this.fetchUserInfo = {};
+        this.fetchUserInfo = {} as IUser;;
       }
     );
 

@@ -68,12 +68,7 @@ import { ISignUpUser } from '../models';
   `
 })
 export class SignupComponent {
-  SignupUserInput: ISignUpUser = {
-    email: '',
-    username: '',
-    password: '',
-    profile: '',
-  };
+  SignupUserInput = {} as ISignUpUser;
 
   constructor(
     private userService: UserService,
