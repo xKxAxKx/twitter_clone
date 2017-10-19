@@ -10,7 +10,7 @@ from rest_framework import status, viewsets, filters
 from rest_framework.views import APIView
 from api.serializers.tweet import TweetSerializer, TweetPostSerializer
 from api.models.tweet import Tweet
-from api.models.user import Account
+from api.models.user import Account, Follow
 import json
 
 
@@ -38,11 +38,15 @@ class TweetListGetByUserIdView(generics.RetrieveAPIView):
     queryset = Tweet.objects.all()
 
     def get(self, request):
+        users = []
         if "users" in request.GET:
-            users = request.GET.get("users")
+            users.append(request.GET.get("users"))
+            print(users)
 
         if "get_follow_tweet" in request.GET:
-            print("フォローしているユーザのツイートもとるよ！")
+            follow_users = Follow.objects.filter(follow_user__in=users)
+            for user in follow_users:
+                users.append(str(user.followed_user.id))
 
         try:
             tweet = Tweet.objects.select_related('user') \
