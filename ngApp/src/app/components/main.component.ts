@@ -1,8 +1,10 @@
 import { Component,Input } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 
+import { ITweet, ITweets } from '../models';
 import { MainService } from '../services/main.service';
 import { TweetService } from '../services/tweet.service';
+import { TweetStore } from '../stores/tweet.store';
 import { UserStore } from '../stores/user.store';
 import { UserService } from '../services/user.service';
 
@@ -33,6 +35,7 @@ export class MainComponent {
   constructor (
     private mainService: MainService,
     private tweetService: TweetService,
+    private tweetStore: TweetStore,
     private userService: UserService,
     private userStore: UserStore,
     private activatedRoute: ActivatedRoute,
@@ -45,6 +48,7 @@ export class MainComponent {
   }
 
   ngOnInit() {
+    this.tweetService.getTweetByUserIds(this.userStore.loginUserInfo.id, true);
     this.loginUserInfoSubscriber = this.userStore.loginUserInfoSubject.subscribe(
       () => {
         this.userService.fetchUserInfo(this.userStore.loginUserInfo.id);
