@@ -12,19 +12,19 @@ import { UserService } from '../services/user.service';
       <div class="container">
         <a routerLink="/" class="title navbar-brand">Twitter Clone</a>
         <ul class="nav navbar-nav navbar-right">
-          <li>
+          <li *ngIf="userStore.userLogin">
             <a [routerLink]="['user', userStore.loginUserInfo.id]" class="cursor_pointer">
               @{{ userStore.loginUserInfo.username }}
             </a>
           </li>
-          <li>
+          <li *ngIf="userStore.userLogin">
             <a (click)="logout()" class="cursor_pointer">Logout</a>
           </li>
-          <li>
+          <li *ngIf="!userStore.userLogin">
             <a routerLink="/login" class="cursor_pointer">Login</a>
           </li>
-          <li>
-            <a routerLink="/signup"  class="cursor_pointer">Signup</a>
+          <li *ngIf="!userStore.userLogin">
+            <a routerLink="/signup" class="cursor_pointer">Signup</a>
           </li>
         </ul>
       </div>
@@ -35,7 +35,17 @@ export class HeaderComponent {
   constructor (
     private userStore: UserStore,
     private userService: UserService,
-  ){}
+  ){
+    // this.userService.completeUserLoginSubject.subscribe( () => {
+    //   this.userLogin = true;
+    // });
+    //
+    // this.userService.logoutUserSubject.subscribe( () => {
+    //   this.userLogin = false;
+    // });
+  }
+
+  // userLogin:boolean;
 
   logout() {
     this.userService.logout();

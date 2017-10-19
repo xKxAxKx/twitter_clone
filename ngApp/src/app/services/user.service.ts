@@ -92,6 +92,7 @@ export class UserService {
   // OKであれば、ユーザ情報の取得、トークンの値をstoreに格納、ログインフラグをTrueにする
   checkLogin(){
     if (localStorage.getItem(this.commonService.loginTokenName)) {
+      this.completeUserLoginSubject.next();
       this.fetchLoginUserInfo();
     } else {
       console.log("ユーザ未ログイン");
