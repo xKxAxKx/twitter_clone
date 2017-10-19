@@ -57,7 +57,9 @@ export class LoginComponent {
   ){}
 
   ngOnInit() {
-
+    if(this.userStore.userLogin) {
+      this.router.navigate(['/']);
+    };
   }
 
   passwordLogin() {

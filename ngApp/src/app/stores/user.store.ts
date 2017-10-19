@@ -11,7 +11,7 @@ export class UserStore {
 
   // ログインしているか否か
   // デフォルトではFalse
-  userLogin: boolean = false;
+  userLogin: boolean;
 
   // ログインユーザの情報
   loginUserInfo: any = {};

@@ -82,6 +82,12 @@ export class SignupComponent {
     private router: Router,
   ){}
 
+  ngOnInit() {
+    if(this.userStore.userLogin) {
+      this.router.navigate(['/']);
+    };
+  }
+
   signup() {
     this.userService.siginUp(this.SignupUserInput)
   }
