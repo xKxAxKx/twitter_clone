@@ -14,7 +14,7 @@ import { IModal } from '../models';
   selector: 'tweet-list',
   template: `
     <div *ngIf="tweetStore.tweetlist">
-      <div *ngFor="let tweet of tweetStore.tweetlist">
+      <div *ngFor="let tweet of tweetStore.tweetlist.results">
         <div class="panel panel-primary">
           <div class="panel-body">
             <p>

@@ -3,13 +3,14 @@ import { Subject } from 'rxjs';
 
 import { TweetService } from '../services/tweet.service';
 
-import { IModal } from '../models';
+import { ITweet, ITweets, IModal } from '../models';
 
 @Injectable()
 export class TweetStore {
 
   // 取得したツイートのリスト
-  tweetlist: any = null;
+  tweetlist: ITweets = {} as ITweets;
+
 
   // モーダルの情報
   modalData: IModal = {
@@ -28,8 +29,7 @@ export class TweetStore {
   ) {
     this.tweetService.fetchTweetListSubjct.subscribe(
       (res) => {
-        console.log(res);
-        this.tweetlist = res;
+        this.tweetlist.results = res;
     });
 
     this.tweetService.completeDeleteTweetSubject.subscribe(

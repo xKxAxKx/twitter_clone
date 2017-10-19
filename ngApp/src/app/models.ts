@@ -1,9 +1,14 @@
+
 export interface ITweet {
   id: number;
   tweet: string;
   created_at: string;
   user: IUser[];
-};
+}
+
+export interface ITweets {
+  results: ITweet[];
+}
 
 export interface IUser {
   id: number;
@@ -15,14 +20,14 @@ export interface IUser {
 export interface ILoginUser {
   email: string;
   password: string;
-};
+}
 
 export interface ISignUpUser {
   email: string;
   username: string;
   password: string;
   profile?: string;
-};
+}
 
 export interface IModal {
   isShow: boolean;
@@ -32,4 +37,4 @@ export interface IModal {
   fail: boolean;
   okBtnAble: boolean;
   cancelBtnAble: boolean;
-};
+}
