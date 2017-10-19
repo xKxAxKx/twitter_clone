@@ -31,7 +31,7 @@ class TweetListPagination(PageNumberPagination):
     page_size_query_param = 'unit'
 
 
-# 指定したユーザid(複数可)のツイートをGETする
+# 指定したユーザidのツイートもしくはフォローしているユーザーのツイートをGETする
 class TweetListGetByUserIdView(generics.RetrieveAPIView):
     permission_classes = (permissions.AllowAny,)
     pagination_class = TweetListPagination

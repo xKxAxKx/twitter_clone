@@ -45,7 +45,17 @@ export class TweetListComponent {
     private tweetStore: TweetStore,
     private activatedRoute: ActivatedRoute,
     private userStore: UserStore,
-  ){}
+  ){
+    activatedRoute.params.subscribe((params: Params) => {
+      if(params['user_id']){
+        this.topPage = false;
+      } else {
+        this.topPage = true;
+      }
+    });
+  }
+
+  topPage: boolean;
 
   users = null;
 
@@ -54,6 +64,7 @@ export class TweetListComponent {
   }
 
   ngOnInit() {
+
   }
 
   deleteTweet(tweet) {
@@ -62,6 +73,8 @@ export class TweetListComponent {
     this.dialogData.text = `Delete Tweet "${tweet.tweet}".<br>Is it OK?`;
     this.dialogData.okBtnAble = true;
     this.dialogData.cancelBtnAble = true;
+    // マイページかトップページか
+
 
     this.modal.openModal(
       // ツイート削除に対してOKを押した時
@@ -69,7 +82,7 @@ export class TweetListComponent {
         this.dialogData.text = "Deleting Tweet..."
         this.dialogData.okBtnAble = false;
         this.dialogData.cancelBtnAble = false;
-        this.tweetService.deleteTweetByTweetId(tweet.id);
+        this.tweetService.deleteTweetByTweetId(tweet.id, this.topPage);
       },
       // ツイート削除しましたに対してOKを押した時
       () => {

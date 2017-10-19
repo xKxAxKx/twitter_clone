@@ -11,7 +11,6 @@ export class TweetStore {
   // 取得したツイートのリスト
   tweetlist: ITweets = {} as ITweets;
 
-
   // モーダルの情報
   modalData: IModal = {
     isShow: false,

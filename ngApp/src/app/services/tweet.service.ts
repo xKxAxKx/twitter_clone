@@ -4,6 +4,7 @@ import { Http, Headers, Response, RequestOptions, URLSearchParams } from '@angul
 import { Observable, Subject } from 'rxjs';
 
 import { CommonService } from './common.service';
+import { UserStore } from '../stores/user.store';
 
 @Injectable()
 export class TweetService {
@@ -36,6 +37,7 @@ export class TweetService {
     private http: Http,
     private router: Router,
     private commonService: CommonService,
+    private userStore: UserStore,
   ){}
 
 
@@ -55,9 +57,10 @@ export class TweetService {
   }
 
   // 指定したuser_id(複数でもOK)のツイートをgetする
-  getTweetByUserIds(users) {
+  getTweetByUserIds(users, follow) {
     let params = new URLSearchParams();
     params.set("users", users);
+    params.set("follow", follow)
 
     return this.http
       .get(this.GetTweetListByUserIds, {search: params})
@@ -73,13 +76,14 @@ export class TweetService {
   }
 
   // 指定したtweet_idのツイートを削除
-  // tweet.user.idとrequest.user.idが一致しない場合はerrorを返すようにする
-  deleteTweetByTweetId(tweet_id) {
+  // トップページか否かで再読み込みするツイートを選択
+  deleteTweetByTweetId(tweet_id:number, topPage:boolean) {
     return this.http
       .delete(this.DeleteTweetByTweetIdApi + tweet_id, this.commonService.jwt())
       .subscribe(
         (res) => {
-          // 削除が終わったらツイート一覧を更新しておく
+          console.log(topPage);
+          this.getTweetByUserIds(this.userStore.loginUserInfo.id, topPage);
           this.completeDeleteTweetSubject.next(res);
         },
         (err) => {
