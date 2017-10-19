@@ -8,11 +8,11 @@ export class AuthGuard implements CanActivate {
     constructor(private router: Router) { }
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-      if (localStorage.getItem('auth_angular_user')) {
+      if (localStorage.getItem('twitter_clone_token')) {
         return true;
       }
 
-      this.router.navigate(['/auth']);
+      this.router.navigate(['/login']);
       return false;
     }
 }
