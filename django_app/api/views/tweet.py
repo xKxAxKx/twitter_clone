@@ -41,6 +41,9 @@ class TweetListGetByUserIdView(generics.RetrieveAPIView):
         if "users" in request.GET:
             users = request.GET.get("users")
 
+        if "get_follow_tweet" in request.GET:
+            print("フォローしているユーザのツイートもとるよ！")
+
         try:
             tweet = Tweet.objects.select_related('user') \
                     .filter(user__in=users) \

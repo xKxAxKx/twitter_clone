@@ -48,7 +48,7 @@ export class MainComponent {
     this.loginUserInfoSubscriber = this.userStore.loginUserInfoSubject.subscribe(
       () => {
         this.userService.fetchUserInfo(this.userStore.loginUserInfo.id);
-        this.tweetService.getTweetByUserIds(this.userStore.loginUserInfo.id, false);
+        this.tweetService.getTweetByUserIds(this.userStore.loginUserInfo.id, true);
       }
     );
   }

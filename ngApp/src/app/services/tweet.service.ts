@@ -61,7 +61,9 @@ export class TweetService {
   getTweetByUserIds(users, getFollowTweet) {
     let params = new URLSearchParams();
     params.set("users", users);
-    params.set("get_follow_tweet", getFollowTweet)
+    if(getFollowTweet) {
+      params.set("get_follow_tweet", getFollowTweet)
+    };
 
     return this.http
       .get(this.GetTweetListByUserIds, {search: params})

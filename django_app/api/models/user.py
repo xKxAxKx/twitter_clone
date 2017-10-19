@@ -5,6 +5,7 @@ from django.contrib.auth.models import (
 from django.core import validators
 from django.utils.translation import ugettext_lazy as _
 from django.utils import timezone
+from django.conf import settings
 
 
 class AccountManager(BaseUserManager):
@@ -83,3 +84,22 @@ class Account(AbstractBaseUser):
     class Meta:
         db_table = 'api_user'
         swappable = 'AUTH_USER_MODEL'
+
+
+class Follow(models.Model):
+    followed_user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        related_name='followed_user',
+        verbose_name='followed_user',
+        on_delete=models.CASCADE
+        )
+    follow_user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        related_name='follow_user',
+        verbose_name='follow_user',
+        on_delete=models.CASCADE
+        )
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.follow
