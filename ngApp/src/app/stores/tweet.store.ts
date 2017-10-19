@@ -28,6 +28,7 @@ export class TweetStore {
   ) {
     this.tweetService.fetchTweetListSubjct.subscribe(
       (res) => {
+        console.log(res);
         this.tweetlist = res;
     });
 
