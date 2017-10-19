@@ -102,4 +102,4 @@ class Follow(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.follow
+        return str(self.followed_user)

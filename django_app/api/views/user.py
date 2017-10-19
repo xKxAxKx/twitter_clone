@@ -9,7 +9,7 @@ from django.http import HttpResponse, Http404
 from rest_framework import status, viewsets, filters
 from rest_framework.views import APIView
 
-from api.serializers.user import AccountSerializer
+from api.serializers.user import AccountSerializer, FollowSerializer
 from api.models.user import Account, AccountManager
 
 
@@ -91,3 +91,13 @@ class AuthInfoDeleteView(generics.DestroyAPIView):
             return instance
         except Account.DoesNotExist:
             raise Http404
+
+
+# ユーザフォロー追加のView(POST)
+class FollowAddView(generics.CreateAPIView):
+    permission_classes = (permissions.IsAuthenticated,)
+
+
+# ユーザーフォロー解除のView(DELETE)
+class FollowRemoveView(generics.DestroyAPIView):
+    permission_classes = (permissions.IsAuthenticated,)

@@ -1,6 +1,6 @@
 from django.contrib.auth import update_session_auth_hash
 from rest_framework import serializers
-from api.models.user import Account, AccountManager
+from api.models.user import Account, AccountManager, Follow
 
 
 class AccountSerializer(serializers.ModelSerializer):
@@ -20,3 +20,10 @@ class AccountSerializer(serializers.ModelSerializer):
             instance = super().update(instance, validated_data)
         instance.save()
         return instance
+
+
+class FollowSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Follow
+        fields = ('id', 'followed_user', 'follow_user')

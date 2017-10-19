@@ -18,7 +18,7 @@ import { UserService } from '../services/user.service';
         <div class="tweet_post">
           <tweet-post></tweet-post>
         </div>
-        <div style="margin-top: 50px;"class="tweet_list">
+        <div style="margin-top: 50px;" class="tweet_list">
           <tweet-list></tweet-list>
         </div>
       </div>
