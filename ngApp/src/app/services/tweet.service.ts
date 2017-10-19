@@ -42,12 +42,13 @@ export class TweetService {
 
 
   // Tweetをpostする
-  postTweet(postData) {
+  postTweet(postData, getFollowTweet) {
     return this.http
       .post(this.PostTweetApi, postData, this.commonService.jwt())
       .map((res) => res.json())
       .subscribe(
         (res) => {
+          this.getTweetByUserIds(this.userStore.loginUserInfo.id, getFollowTweet);
           this.completePostTweetSubject.next(res.tweet);
         },
         (err) => {
@@ -57,10 +58,10 @@ export class TweetService {
   }
 
   // 指定したuser_id(複数でもOK)のツイートをgetする
-  getTweetByUserIds(users, follow) {
+  getTweetByUserIds(users, getFollowTweet) {
     let params = new URLSearchParams();
     params.set("users", users);
-    params.set("follow", follow)
+    params.set("get_follow_tweet", getFollowTweet)
 
     return this.http
       .get(this.GetTweetListByUserIds, {search: params})
@@ -77,13 +78,13 @@ export class TweetService {
 
   // 指定したtweet_idのツイートを削除
   // トップページか否かで再読み込みするツイートを選択
-  deleteTweetByTweetId(tweet_id:number, topPage:boolean) {
+  deleteTweetByTweetId(tweet_id:number, getFollowTweet:boolean) {
     return this.http
       .delete(this.DeleteTweetByTweetIdApi + tweet_id, this.commonService.jwt())
       .subscribe(
         (res) => {
-          console.log(topPage);
-          this.getTweetByUserIds(this.userStore.loginUserInfo.id, topPage);
+          // ツイートのリストを再読み込みしておく
+          this.getTweetByUserIds(this.userStore.loginUserInfo.id, getFollowTweet);
           this.completeDeleteTweetSubject.next(res);
         },
         (err) => {

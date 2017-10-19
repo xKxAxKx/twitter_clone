@@ -48,14 +48,14 @@ export class TweetListComponent {
   ){
     activatedRoute.params.subscribe((params: Params) => {
       if(params['user_id']){
-        this.topPage = false;
+        this.getFollowTweet = false;
       } else {
-        this.topPage = true;
+        this.getFollowTweet = true;
       }
     });
   }
 
-  topPage: boolean;
+  getFollowTweet: boolean;
 
   users = null;
 
@@ -73,8 +73,6 @@ export class TweetListComponent {
     this.dialogData.text = `Delete Tweet "${tweet.tweet}".<br>Is it OK?`;
     this.dialogData.okBtnAble = true;
     this.dialogData.cancelBtnAble = true;
-    // マイページかトップページか
-
 
     this.modal.openModal(
       // ツイート削除に対してOKを押した時
@@ -82,7 +80,7 @@ export class TweetListComponent {
         this.dialogData.text = "Deleting Tweet..."
         this.dialogData.okBtnAble = false;
         this.dialogData.cancelBtnAble = false;
-        this.tweetService.deleteTweetByTweetId(tweet.id, this.topPage);
+        this.tweetService.deleteTweetByTweetId(tweet.id, this.getFollowTweet);
       },
       // ツイート削除しましたに対してOKを押した時
       () => {

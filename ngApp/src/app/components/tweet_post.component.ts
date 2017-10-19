@@ -24,8 +24,17 @@ export class TweetPostComponent {
     private tweetService: TweetService,
     private userStore: UserStore,
     private activatedRoute: ActivatedRoute,
-  ){}
-
+  ){
+    activatedRoute.params.subscribe((params: Params) => {
+      if(params['user_id']){
+        this.getFollowTweet = false;
+      } else {
+        this.getFollowTweet = true;
+      }
+    });
+  }
+  // トップページか否か
+  getFollowTweet: boolean;
   // 入力されたツイートが入る
   tweet = '';
 
@@ -34,7 +43,7 @@ export class TweetPostComponent {
       tweet: this.tweet,
       user: null,
     }
-    this.tweetService.postTweet(postData);
+    this.tweetService.postTweet(postData, this.getFollowTweet);
     this.tweet = '';
   }
 }
