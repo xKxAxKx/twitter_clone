@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
-
+import { Router } from '@angular/router';
 import { UserService } from '../services/user.service';
 import { TweetService } from '../services/tweet.service';
 
@@ -13,25 +13,28 @@ export class CommonStore {
   constructor (
     private userService: UserService,
     private tweetService: TweetService,
+    private router: Router,
   ) {
+
+    router.events.subscribe(() => {
+      this.errorMessage = '';
+      this.successMessage = '';
+    });
 
     // ログインに成功したメッセージを表示する
     // userService.completeUserLoginSubject()が呼ばれたら流れてくる
     this.userService.completeUserLoginSubject.subscribe( () =>{
       this.successMessage = 'Success Login!';
-      this.errorMessage = '';
     });
 
     // ログインに失敗したメッセージを表示する
     this.userService.errorUserLoginSubject.subscribe( () =>{
       this.errorMessage = 'Failed Login...';
-      this.successMessage = '';
     });
 
     // ユーザ作成に成功したメッセージを表示する
     this.userService.completeRegisterSubject.subscribe( () => {
       this.successMessage = 'Success Signup!';
-      this.errorMessage = '';
     });
 
     // ユーザ作成に失敗したメッセージを表示する
@@ -44,7 +47,6 @@ export class CommonStore {
         if(err.email) {
           console.log(err.email);
         }
-        this.successMessage = '';
     });
 
     // ログアウトしたメッセージを表示する
@@ -62,30 +64,25 @@ export class CommonStore {
     this.tweetService.completePostTweetSubject.subscribe(
       (tweet) => {
         this.successMessage = `Tweeted that "${tweet}".`;
-        this.errorMessage = '';
     });
 
     // ツイート失敗したメッセージを表示する
     this.tweetService.errorPostTweetSubject.subscribe( () => {
-      this.successMessage = '';
       this.errorMessage = 'Tweet Failed...';
     });
 
     // ユーザ更新成功したメッセージを表示する
     this.userService.successUpdateUserInfoSubjct.subscribe( () =>{
       this.successMessage = 'Success Update';
-      this.errorMessage = '';
     });
 
     // ユーザ更新失敗したメッセージを表示する
     this.userService.errorUpdateUserInfoSubjct.subscribe( () =>{
-      this.successMessage = '';
       this.errorMessage = 'Failed Update...';
     });
 
     // 新しいパスワードが一致しないメッセージを表示する
     this.userService.notMatchNewPasswordSubject.subscribe( () => {
-      this.successMessage = '';
       this.errorMessage = 'New passwords do not match';
     });
 

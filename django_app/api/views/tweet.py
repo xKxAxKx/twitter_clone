@@ -41,7 +41,6 @@ class TweetListGetByUserIdView(generics.RetrieveAPIView):
         users = []
         if "users" in request.GET:
             users.append(request.GET.get("users"))
-            print(users)
 
         if "get_follow_tweet" in request.GET:
             follow_users = Follow.objects.filter(follow_user__in=users)
