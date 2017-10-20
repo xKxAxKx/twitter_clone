@@ -21,6 +21,6 @@ urlpatterns = [
     url(r'^user/login/$', obtain_jwt_token),
     url(r'^user/token-refresh/$', refresh_jwt_token),
     url(r'^user/token-verify/$', verify_jwt_token),
-    url(r'^user/follow/(?P<user_id>\d+)$', FollowAddView.as_view()),
+    url(r'^user/follow/$', FollowAddView.as_view()),
     url(r'^user/remove/(?P<user_id>\d+)$', UserInfoGetView.as_view()),
 ]

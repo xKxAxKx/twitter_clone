@@ -16,6 +16,7 @@ export class UserService {
   private RegisterApi = `http://127.0.0.1:8000/api/user/register/`;
   private FetchUserApi = `http://127.0.0.1:8000/api/user/`;
   private UpdateUserInfoApi = `http://127.0.0.1:8000/api/user/auth_update/`;
+  private userFollowApi = `http://127.0.0.1:8000/api/user/follow/`;
 
   // ログインユーザを取得するときのSubject
   fetchLoginUserInfoSubjct: Subject<any> = new Subject<any>();
@@ -55,6 +56,11 @@ export class UserService {
   // パスワードの繰り返し入力が異なる時のSubject
   notMatchNewPasswordSubject: Subject<any> = new Subject<any>();
 
+  // ユーザフォローが成功した時のSubject
+  successUserFollowSubjct: Subject<any> = new Subject<any>();
+
+  // ユーザフォローが失敗した時のSubject
+  errorUserFollowSubjct: Subject<any> = new Subject<any>();
 
   constructor(
     private http: Http,
@@ -171,5 +177,24 @@ export class UserService {
   notMatchNewPassword() {
     this.notMatchNewPasswordSubject.next();
   }
+
+  // ユーザをフォローする
+  userFollow(followUser) {
+    return this.http
+      .post(this.userFollowApi, followUser, this.commonService.jwt())
+      .subscribe(
+        (res) => {
+          this.successUserFollowSubjct.next(res);
+        },
+        (err) => {
+          this.errorUserFollowSubjct.next();
+        }
+      );
+  }
+
+  // フォローを解除する
+  userRemove(removeUser){
+    console.log("動いた");
+  };
 
 }

@@ -37,11 +37,11 @@ export class UserPanelComponent {
   ){}
 
   userFollow() {
-    console.log("動いた");
+    this.userService.userFollow(this.userStore.fetchUserInfo);
   };
 
   userRemove() {
-    console.log("動いた");
+    this.userService.userFollow(this.userStore.fetchUserInfo);
   };
 
 }

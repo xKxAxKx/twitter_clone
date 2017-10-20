@@ -10,7 +10,7 @@ from rest_framework import status, viewsets, filters
 from rest_framework.views import APIView
 
 from api.serializers.user import AccountSerializer, FollowSerializer
-from api.models.user import Account, AccountManager
+from api.models.user import Account, AccountManager, Follow
 
 
 # ユーザ作成のView(POST)
@@ -96,8 +96,27 @@ class AuthInfoDeleteView(generics.DestroyAPIView):
 # ユーザフォロー追加のView(POST)
 class FollowAddView(generics.CreateAPIView):
     permission_classes = (permissions.IsAuthenticated,)
+    serializer_class = FollowSerializer
+    queryset = Follow.objects.all()
+
+    def post(self, request, format=None):
+        already_follow = Follow.objects.filter(follow_user=request.user.id,
+                                            followed_user=request.data["id"])
+        if already_follow:
+            return Response(data={
+                "error": "already follow"
+                },
+                status=status.HTTP_400_BAD_REQUEST)
+        else:
+            # あとでやる
+            # follow_results = Follow.objects.create(
+            #     follow_user=request.user.email,
+            #     followed_user=request.data["email"]
+            # )
+            import pdb; pdb.set_trace()
 
 
 # ユーザーフォロー解除のView(DELETE)
 class FollowRemoveView(generics.DestroyAPIView):
     permission_classes = (permissions.IsAuthenticated,)
+    serializer_class = FollowSerializer
