@@ -11,7 +11,6 @@ export class UserStore {
   loginUserToken: any = {};
 
   // ログインしているか否か
-  // デフォルトではFalse
   userLogin: boolean;
 
   // ログインユーザの情報
@@ -38,7 +37,6 @@ export class UserStore {
     // userService.fetchLoginUserInfo()が呼ばれたら流れてくる
     this.userService.fetchLoginUserInfoSubjct.subscribe(
       (res) => {
-        console.log("ログインユーザーの情報を格納する");
         this.loginUserInfo = res.json();
         this.loginUserInfoSubject.next();
       }
@@ -56,7 +54,6 @@ export class UserStore {
     this.userService.successUserInfoSubjct.subscribe(
       (res) => {
         this.fetchUserInfo = res.json();
-        console.log("指定したidのユーザーの情報を格納する");
       }
     );
 

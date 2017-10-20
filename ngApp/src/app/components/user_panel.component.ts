@@ -17,6 +17,10 @@ import { UserService } from '../services/user.service';
         <p *ngIf="userStore.fetchUserInfo.id === userStore.loginUserInfo.id">
           <a [routerLink]="['/mypage']">Change Profile</a>
         </p>
+        <div *ngIf="userStore.fetchUserInfo.id !== userStore.loginUserInfo.id">
+          <button (click)="userFollow()" class="btn btn-primary">フォローする</button>
+          <button (click)="userRemove()" class="btn btn-danger">フォロー解除する</button>
+        </div>
       </div>
     </div>
   `
@@ -31,5 +35,13 @@ export class UserPanelComponent {
     private userService: UserService,
     private activatedRoute: ActivatedRoute,
   ){}
+
+  userFollow() {
+    console.log("動いた");
+  };
+
+  userRemove() {
+    console.log("動いた");
+  };
 
 }
