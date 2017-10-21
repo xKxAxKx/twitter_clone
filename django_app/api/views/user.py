@@ -108,12 +108,15 @@ class FollowAddView(generics.CreateAPIView):
                 },
                 status=status.HTTP_400_BAD_REQUEST)
         else:
-            # あとでやる
-            # follow_results = Follow.objects.create(
-            #     follow_user=request.user.email,
-            #     followed_user=request.data["email"]
-            # )
-            import pdb; pdb.set_trace()
+            followed_user = Account.objects.get(id=request.data["id"])
+            follow_results = Follow.objects.create(
+                followed_user=followed_user,
+                follow_user=request.user,
+            )
+            return Response(data={
+                "response": "followed!"
+                },
+                status=status.HTTP_200_OK)
 
 
 # ユーザーフォロー解除のView(DELETE)
