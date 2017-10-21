@@ -35,30 +35,17 @@ class AuthInfoGetView(generics.RetrieveAPIView):
     serializer_class = AccountSerializer
 
     def get(self, request, format=None):
+        instance = self.queryset\
+                       .prefetch_related('followed_user',
+                                         'follow_user')\
+                       .get(email=self.request.user)
+        # print(instance.followed_user)
+        # import pdb; pdb.set_trace()
         return Response(data={
-            'id': request.user.id,
-            'username': request.user.username,
-            'email': request.user.email,
-            'profile': request.user.profile,
-            },
-            status=status.HTTP_200_OK)
-
-
-# 指定されたidのユーザ情報を返す
-class UserInfoGetView(generics.RetrieveAPIView):
-    permission_classes = (permissions.AllowAny,)
-
-    def get(self, request, user_id):
-        try:
-            user = Account.objects.get(id=user_id)
-        except Account.DoesNotExist:
-            raise Http404
-
-        return Response(data={
-            'id': user.id,
-            'username': user.username,
-            'email': user.email,
-            'profile': user.profile,
+            'id': instance.id,
+            'username': instance.username,
+            'email': instance.email,
+            'profile': instance.profile,
             },
             status=status.HTTP_200_OK)
 
@@ -91,6 +78,25 @@ class AuthInfoDeleteView(generics.DestroyAPIView):
             return instance
         except Account.DoesNotExist:
             raise Http404
+
+
+# 指定されたidのユーザ情報を返す
+class UserInfoGetView(generics.RetrieveAPIView):
+    permission_classes = (permissions.AllowAny,)
+
+    def get(self, request, user_id):
+        try:
+            user = Account.objects.get(id=user_id)
+        except Account.DoesNotExist:
+            raise Http404
+
+        return Response(data={
+            'id': user.id,
+            'username': user.username,
+            'email': user.email,
+            'profile': user.profile,
+            },
+            status=status.HTTP_200_OK)
 
 
 # ユーザフォロー追加のView(POST)
