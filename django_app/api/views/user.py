@@ -101,10 +101,10 @@ class FollowAddView(generics.CreateAPIView):
 
     def post(self, request, format=None):
         already_follow = Follow.objects.filter(follow_user=request.user.id,
-                                            followed_user=request.data["id"])
+                                               followed_user=request.data["id"])
         if already_follow:
             return Response(data={
-                "error": "already follow"
+                "message": "already follow"
                 },
                 status=status.HTTP_400_BAD_REQUEST)
         else:
@@ -114,7 +114,7 @@ class FollowAddView(generics.CreateAPIView):
                 follow_user=request.user,
             )
             return Response(data={
-                "response": "followed!"
+                "message": "followed!"
                 },
                 status=status.HTTP_200_OK)
 
@@ -123,3 +123,19 @@ class FollowAddView(generics.CreateAPIView):
 class FollowRemoveView(generics.DestroyAPIView):
     permission_classes = (permissions.IsAuthenticated,)
     serializer_class = FollowSerializer
+    queryset = Follow.objects.all()
+
+    def delete(self, request, user_id):
+        already_follow = Follow.objects.filter(follow_user=request.user.id,
+                                               followed_user=user_id)
+        if already_follow:
+            already_follow.delete()
+            return Response(data={
+                "message": "Removed!"
+                },
+                status=status.HTTP_200_OK)
+        else:
+            return Response(data={
+                "error": "not followed user"
+                },
+                status=status.HTTP_400_BAD_REQUEST)

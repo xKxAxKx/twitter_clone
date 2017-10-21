@@ -21,8 +21,8 @@ import { IModal } from '../models';
           <a [routerLink]="['/mypage']">Change Profile</a>
         </p>
         <div *ngIf="userStore.fetchUserInfo.id !== userStore.loginUserInfo.id">
-          <button (click)="userFollow()" class="btn btn-primary">フォローする</button>
-          <button (click)="userRemove()" class="btn btn-danger">フォロー解除する</button>
+          <button (click)="userFollow()" class="btn btn-primary">Follow</button>
+          <button (click)="userRemove()" class="btn btn-danger">Unfollow</button>
         </div>
       </div>
     </div>
@@ -67,11 +67,28 @@ export class UserPanelComponent {
         this.closeModal();
       }
     );
-  };
+  }
 
   userRemove() {
-    this.userService.userFollow(this.userStore.fetchUserInfo);
-  };
+    this.dialogData.isShow = true;
+    this.dialogData.title = 'Remove User';
+    this.dialogData.text = `Remove @${this.userStore.fetchUserInfo.username}.<br>Is it OK?`;
+    this.dialogData.okBtnAble = true;
+    this.dialogData.cancelBtnAble = true;
+    this.modal.openModal(
+      // ユーザフォローに対してOKを押した時
+      () => {
+        this.dialogData.text = "Removing User..."
+        this.dialogData.okBtnAble = false;
+        this.dialogData.cancelBtnAble = false;
+        this.userService.userRemove(this.userStore.fetchUserInfo);
+      },
+      // ユーザーフォローしましたに対してOKを押した時
+      () => {
+        this.closeModal();
+      }
+    );
+  }
 
   closeModal() {
     /*

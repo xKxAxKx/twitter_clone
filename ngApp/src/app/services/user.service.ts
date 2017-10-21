@@ -16,7 +16,8 @@ export class UserService {
   private RegisterApi = `http://127.0.0.1:8000/api/user/register/`;
   private FetchUserApi = `http://127.0.0.1:8000/api/user/`;
   private UpdateUserInfoApi = `http://127.0.0.1:8000/api/user/auth_update/`;
-  private userFollowApi = `http://127.0.0.1:8000/api/user/follow/`;
+  private UserFollowApi = `http://127.0.0.1:8000/api/user/follow/`;
+  private UserRemoveApi = `http://127.0.0.1:8000/api/user/remove/`;
 
   // ログインユーザを取得するときのSubject
   fetchLoginUserInfoSubjct: Subject<any> = new Subject<any>();
@@ -61,6 +62,12 @@ export class UserService {
 
   // ユーザフォローが失敗した時のSubject
   errorUserFollowSubjct: Subject<any> = new Subject<any>();
+
+  // ユーザリムーブが成功した時のSubject
+  successUserRemoveSubjct: Subject<any> = new Subject<any>();
+
+  // ユーザリムーブが失敗した時のSubject
+  errorUserRemoveSubjct: Subject<any> = new Subject<any>();
 
   constructor(
     private http: Http,
@@ -181,7 +188,7 @@ export class UserService {
   // ユーザをフォローする
   userFollow(followUser) {
     return this.http
-      .post(this.userFollowApi, followUser, this.commonService.jwt())
+      .post(this.UserFollowApi, followUser, this.commonService.jwt())
       .subscribe(
         (res) => {
           this.successUserFollowSubjct.next(res);
@@ -194,7 +201,16 @@ export class UserService {
 
   // フォローを解除する
   userRemove(removeUser){
-    console.log("動いた");
-  };
+    return this.http
+      .delete(this.UserRemoveApi + removeUser.id, this.commonService.jwt())
+      .subscribe(
+        (res) => {
+          this.successUserRemoveSubjct.next(res);
+        },
+        (err) => {
+          this.errorUserRemoveSubjct.next();
+        }
+      );
+  }
 
 }

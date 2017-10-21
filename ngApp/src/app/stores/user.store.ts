@@ -82,9 +82,27 @@ export class UserStore {
       }
     );
 
+    // ユーザフォローerror
     this.userService.errorUserFollowSubjct.subscribe(
       (err) => {
         this.modalData.text = `Failed Follow User...`;
+        this.modalData.fail = true;
+        this.modalData.okBtnAble = true;
+      }
+    );
+
+    // ユーザリムーブsuccess
+    this.userService.successUserRemoveSubjct.subscribe(
+      (res) => {
+        this.modalData.text = `Removed User!`;
+        this.modalData.okBtnAble = true;
+      }
+    );
+
+    // ユーザリムーブerror
+    this.userService.errorUserRemoveSubjct.subscribe(
+      (err) => {
+        this.modalData.text = `Failed Remove User...`;
         this.modalData.fail = true;
         this.modalData.okBtnAble = true;
       }
