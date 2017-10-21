@@ -2,10 +2,21 @@ import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 
 import { UserService } from '../services/user.service';
-import { IUser, ILoginUser, ISignUpUser } from '../models';
+import { IUser, ILoginUser, ISignUpUser, IModal } from '../models';
 
 @Injectable()
 export class UserStore {
+
+  // モーダルの情報
+  modalData: IModal = {
+    isShow: false,
+    type: 'dialog',
+    title: '',
+    text: '',
+    fail: false,
+    okBtnAble: false,
+    cancelBtnAble: false,
+  } as IModal;
 
   // ログインユーザのトークン
   loginUserToken: any = {};
@@ -60,6 +71,22 @@ export class UserStore {
     this.userService.errorUserInfoSubjct.subscribe(
       (res) => {
         this.fetchUserInfo = {} as IUser;;
+      }
+    );
+
+    // ユーザフォローsuccess
+    this.userService.successUserFollowSubjct.subscribe(
+      (res) => {
+        this.modalData.text = `Followed User!`;
+        this.modalData.okBtnAble = true;
+      }
+    );
+
+    this.userService.errorUserFollowSubjct.subscribe(
+      (err) => {
+        this.modalData.text = `Failed Follow User...`;
+        this.modalData.fail = true;
+        this.modalData.okBtnAble = true;
       }
     );
 
