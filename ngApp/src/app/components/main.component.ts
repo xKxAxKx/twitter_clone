@@ -40,11 +40,11 @@ export class MainComponent {
     private userStore: UserStore,
     private activatedRoute: ActivatedRoute,
   ){
-    // activatedRoute.params.subscribe(() => {
-    //   if(this.userStore.loginUserInfo) {
-    //     this.userService.fetchUserInfo(this.userStore.loginUserInfo.id);
-    //   }
-    // });
+    activatedRoute.params.subscribe(() => {
+      if(this.userStore.loginUserInfo) {
+        this.userService.fetchUserInfo(this.userStore.loginUserInfo.id);
+      }
+    });
   }
 
   ngOnInit() {
