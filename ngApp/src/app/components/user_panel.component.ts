@@ -33,6 +33,8 @@ import { IModal } from '../models';
 })
 export class UserPanelComponent {
 
+  is_follow: boolean;
+
   // モーダル
   @ViewChild(Modal) modal;
 
