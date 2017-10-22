@@ -43,9 +43,9 @@ class TweetListGetByUserIdView(generics.RetrieveAPIView):
             users.append(request.GET.get("users"))
 
         if "get_follow_tweet" in request.GET:
-            follow_users = Follow.objects.filter(follow_user__in=users)
+            follow_users = Follow.objects.filter(follower__in=users)
             for user in follow_users:
-                users.append(str(user.followed_user.id))
+                users.append(str(user.following.id))
 
         try:
             tweet = Tweet.objects.select_related('user') \

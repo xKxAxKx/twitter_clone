@@ -36,16 +36,28 @@ class AuthInfoGetView(generics.RetrieveAPIView):
 
     def get(self, request, format=None):
         instance = self.queryset\
-                       .prefetch_related('followed_user',
-                                         'follow_user')\
                        .get(email=self.request.user)
-        # print(instance.followed_user)
-        # import pdb; pdb.set_trace()
+        follow_list = [{
+            'id': data.following.id,
+            'email': data.following.email,
+            'username': data.following.username,
+        }
+        for data in instance.who_is_followed.all()]
+
+        follower_list = [{
+            'id': data.follower.id,
+            'email': data.follower.email,
+            'username': data.follower.username,
+        }
+        for data in instance.who_follows.all()]
+
         return Response(data={
             'id': instance.id,
             'username': instance.username,
             'email': instance.email,
             'profile': instance.profile,
+            'follow_list': follow_list,
+            'follower_list': follower_list,
             },
             status=status.HTTP_200_OK)
 
@@ -106,18 +118,18 @@ class FollowAddView(generics.CreateAPIView):
     queryset = Follow.objects.all()
 
     def post(self, request, format=None):
-        already_follow = Follow.objects.filter(follow_user=request.user.id,
-                                               followed_user=request.data["id"])
+        already_follow = Follow.objects.filter(follower=request.user.id,
+                                               following=request.data["id"])
         if already_follow:
             return Response(data={
                 "message": "already follow"
                 },
                 status=status.HTTP_400_BAD_REQUEST)
         else:
-            followed_user = Account.objects.get(id=request.data["id"])
+            following = Account.objects.get(id=request.data["id"])
             follow_results = Follow.objects.create(
-                followed_user=followed_user,
-                follow_user=request.user,
+                following=following,
+                follower=request.user,
             )
             return Response(data={
                 "message": "followed!"
@@ -132,8 +144,8 @@ class FollowRemoveView(generics.DestroyAPIView):
     queryset = Follow.objects.all()
 
     def delete(self, request, user_id):
-        already_follow = Follow.objects.filter(follow_user=request.user.id,
-                                               followed_user=user_id)
+        already_follow = Follow.objects.filter(follower=request.user.id,
+                                               following=user_id)
         if already_follow:
             already_follow.delete()
             return Response(data={

@@ -87,19 +87,17 @@ class Account(AbstractBaseUser):
 
 
 class Follow(models.Model):
-    followed_user = models.ForeignKey(
+    following = models.ForeignKey(
         settings.AUTH_USER_MODEL,
-        related_name='followed_user',
-        verbose_name='followed_user',
+        related_name='who_follows',
         on_delete=models.CASCADE
         )
-    follow_user = models.ForeignKey(
+    follower = models.ForeignKey(
         settings.AUTH_USER_MODEL,
-        related_name='follow_user',
-        verbose_name='follow_user',
+        related_name='who_is_followed',
         on_delete=models.CASCADE
         )
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return str(self.followed_user)
+        return str(self.created_at)

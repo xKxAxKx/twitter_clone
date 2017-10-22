@@ -14,4 +14,4 @@ class Tweet(admin.ModelAdmin):
 
 @admin.register(Follow)
 class Follow(admin.ModelAdmin):
-    list_display = ('followed_user', 'follow_user')
+    list_display = ('following', 'follower')

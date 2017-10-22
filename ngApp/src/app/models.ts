@@ -27,6 +27,8 @@ export interface IUser {
   email: string;
   username: string;
   profile?: string;
+  follow_list?: any[];
+  follower_list?: any[];
 }
 
 export interface IModal {
