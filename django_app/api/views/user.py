@@ -41,15 +41,13 @@ class AuthInfoGetView(generics.RetrieveAPIView):
             'id': data.following.id,
             'email': data.following.email,
             'username': data.following.username,
-        }
-        for data in instance.who_is_followed.all()]
+        } for data in instance.who_is_followed.all()]
 
         follower_list = [{
             'id': data.follower.id,
             'email': data.follower.email,
             'username': data.follower.username,
-        }
-        for data in instance.who_follows.all()]
+        } for data in instance.who_follows.all()]
 
         return Response(data={
             'id': instance.id,
