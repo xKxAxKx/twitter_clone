@@ -13,13 +13,19 @@ import { IModal } from '../models';
   template: `
     <div class="panel panel-primary">
       <div class="panel-heading">
-        @{{ userStore.fetchUserInfo.username }}
+        <a class="string-in-panel-heading" routerLink="/user/{{userStore.fetchUserInfo.id}}">
+          @{{ userStore.fetchUserInfo.username }}
+        </a>
       </div>
       <div class="panel-body">
         <p class="user-profile-in-panel">{{ userStore.fetchUserInfo.profile }}</p>
         <div class="ProfileCardStats">
-          <a href="user/{{userStore.fetchUserInfo.id}}/follow_list">{{ userStore.fetchUserInfo.follow_list.length }} Follow</a>
-          <a href="user/{{userStore.fetchUserInfo.id}}/follower_list">{{ userStore.fetchUserInfo.follower_list.length }} Follower</a>
+          <a *ngIf="userStore.fetchUserInfo.follow_list" routerLink="/user/{{userStore.fetchUserInfo.id}}/follow_list">
+            {{ userStore.fetchUserInfo.follow_list.length }} Follow
+          </a>
+          <a *ngIf="userStore.fetchUserInfo.follower_list" routerLink="/user/{{userStore.fetchUserInfo.id}}/follower_list">
+            {{ userStore.fetchUserInfo.follower_list.length }} Follower
+          </a>
         </div>
         <div *ngIf="userStore.fetchUserInfo.id === userStore.loginUserInfo.id">
           <button onclick="location.href='/mypage'" class="btn btn-primary">Edit Profile</button>

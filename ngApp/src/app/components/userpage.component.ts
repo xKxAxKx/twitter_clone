@@ -13,24 +13,42 @@ import { UserStore } from '../stores/user.store';
       <div class="col-sm-4">
         <user-panel></user-panel>
       </div>
-      <div class="col-sm-8">
+      <div *ngIf="is_follow_follower_list === false" class="col-sm-8">
         <tweet-list></tweet-list>
+      </div>
+      <div *ngIf="is_follow_follower_list === true">
+        <follow-follower [title]='followFollowerTitle'></follow-follower>
       </div>
     <div>
   </div>
   `
 })
 export class UserpageComponent {
+  is_follow_follower_list: boolean;
+  followFollowerTitle: string;
 
   constructor (
     private userStore: UserStore,
     private userService: UserService,
     private tweetService: TweetService,
     private activatedRoute: ActivatedRoute,
+    private router: Router,
   ){
     activatedRoute.params.subscribe((params: Params) => {
         this.userService.fetchUserInfo(params['user_id']);
         this.tweetService.getTweetByUserIds(params['user_id'], false);
     });
+  }
+
+  ngOnInit() {
+    if(this.router.url.includes('follower_list')) {
+      this.is_follow_follower_list = true;
+      this.followFollowerTitle = "Follower List";
+    } else if(this.router.url.includes('follow_list')) {
+      this.is_follow_follower_list = true;
+      this.followFollowerTitle = "Follow List";
+    } else {
+      this.is_follow_follower_list = false;
+    }
   }
 }
