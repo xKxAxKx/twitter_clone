@@ -118,12 +118,14 @@ class UserInfoGetView(generics.RetrieveAPIView):
             'id': data.following.id,
             'email': data.following.email,
             'username': data.following.username,
+            'profile': data.following.profile,
         } for data in user.who_is_followed.all()]
 
         follower_list = [{
             'id': data.follower.id,
             'email': data.follower.email,
             'username': data.follower.username,
+            'profile': data.follower.profile,
         } for data in user.who_follows.all()]
 
         return Response(data={

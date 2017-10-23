@@ -12,30 +12,40 @@ import { IModal } from '../models';
   selector: 'follow-follower',
   template: `
   <h2>{{title}}</h2>
-  <div class="col-sm-4">
-    <div class="panel panel-primary">
-      <div class="panel-heading">
-        @hogehoge
-      </div>
-      <div class="panel-body">
-        <p class="user-profile-in-panel">プロフィールが入る</p>
-        <div class="ProfileCardStats">
-          <a href="">0 Follow</a>
-          <a href="">0 Follower</a>
+  <div *ngIf="is_follower===true">
+    <div *ngIf="userStore.fetchUserInfo.follower_list.length === 0">
+      まだ誰にもフォローされていない
+    </div>
+    <div *ngIf="userStore.fetchUserInfo.follower_list.length > 0">
+      <div *ngFor="let followerUser of userStore.fetchUserInfo.follower_list" class="col-sm-4">
+        <div class="panel panel-info">
+          <div class="panel-heading">
+            <a routerLink="/user/{{followerUser.id}}">
+              @{{followerUser.username}}
+            </a>
+          </div>
+          <div class="panel-body">
+            <p class="user-profile-in-panel">{{followerUser.profile}}</p>
+          </div>
         </div>
       </div>
     </div>
   </div>
-  <div class="col-sm-4">
-    <div class="panel panel-primary">
-      <div class="panel-heading">
-        @hogehoge
-      </div>
-      <div class="panel-body">
-        <p class="user-profile-in-panel">プロフィールが入る</p>
-        <div class="ProfileCardStats">
-          <a href="">0 Follow</a>
-          <a href="">0 Follower</a>
+  <div *ngIf="is_follower===false">
+    <div *ngIf="userStore.fetchUserInfo.follow_list.length === 0">
+      まだ誰もフォローしていない
+    </div>
+    <div *ngIf="userStore.fetchUserInfo.follow_list.length > 0">
+      <div *ngFor="let followUser of userStore.fetchUserInfo.follow_list" class="col-sm-4">
+        <div class="panel panel-info">
+          <div class="panel-heading">
+            <a routerLink="/user/{{followUser.id}}">
+              @{{followUser.username}}
+            </a>
+          </div>
+          <div class="panel-body">
+            <p class="user-profile-in-panel">{{followUser.profile}}</p>
+          </div>
         </div>
       </div>
     </div>
@@ -45,8 +55,7 @@ import { IModal } from '../models';
 export class FollowFollowerComponent {
   @Input() title: string;
 
-  // モーダル
-  @ViewChild(Modal) modal;
+  is_follower: boolean;
 
   constructor (
     private mainService: MainService,
@@ -54,6 +63,14 @@ export class FollowFollowerComponent {
     private userService: UserService,
     private activatedRoute: ActivatedRoute,
   ){}
+
+  ngOnInit() {
+    if(this.title.includes('Follower')) {
+      this.is_follower = true;
+    } else {
+      this.is_follower = false;
+    }
+  }
 
 
 }

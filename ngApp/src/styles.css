@@ -2,3 +2,11 @@
 .cursor_pointer {
   cursor: pointer;
 }
+
+.string-in-panel-heading{
+  color: white;
+}
+
+.string-in-panel-heading:visited{
+  color: white;
+}
