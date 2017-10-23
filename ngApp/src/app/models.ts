@@ -27,6 +27,8 @@ export interface IUser {
   email: string;
   username: string;
   profile?: string;
+  is_follow?: boolean;
+  is_followed?: boolean;
   follow_list?: any[];
   follower_list?: any[];
 }

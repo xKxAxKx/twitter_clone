@@ -131,7 +131,7 @@ export class UserService {
   // idで指定したユーザの情報を取得する
   fetchUserInfo(user_id) {
     return this.http
-      .get(this.FetchUserApi + user_id)
+      .get(this.FetchUserApi + user_id, this.commonService.jwt())
       .subscribe(
         (res) => {
           this.successUserInfoSubjct.next(res);
@@ -192,6 +192,8 @@ export class UserService {
       .subscribe(
         (res) => {
           this.successUserFollowSubjct.next(res);
+          this.fetchLoginUserInfo();
+          this.fetchUserInfo(followUser.id);
         },
         (err) => {
           this.errorUserFollowSubjct.next();
@@ -206,6 +208,8 @@ export class UserService {
       .subscribe(
         (res) => {
           this.successUserRemoveSubjct.next(res);
+          this.fetchLoginUserInfo();
+          this.fetchUserInfo(removeUser.id);
         },
         (err) => {
           this.errorUserRemoveSubjct.next();

@@ -21,8 +21,8 @@ import { IModal } from '../models';
           <a [routerLink]="['/mypage']">Change Profile</a>
         </p>
         <div *ngIf="userStore.fetchUserInfo.id !== userStore.loginUserInfo.id">
-          <button (click)="userFollow()" class="btn btn-primary">Follow</button>
-          <button (click)="userRemove()" class="btn btn-danger">Unfollow</button>
+          <button *ngIf="userStore.fetchUserInfo.is_follow === false" (click)="userFollow()" class="btn btn-primary">Follow</button>
+          <button *ngIf="userStore.fetchUserInfo.is_follow === true" (click)="userRemove()" class="btn btn-danger">Unfollow</button>
         </div>
       </div>
     </div>

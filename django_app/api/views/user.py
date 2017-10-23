@@ -100,11 +100,27 @@ class UserInfoGetView(generics.RetrieveAPIView):
         except Account.DoesNotExist:
             raise Http404
 
+        already_follow = Follow.objects.filter(follower=request.user.id,
+                                               following=user_id)
+        if already_follow:
+            is_follow = True
+        else:
+            is_follow = False
+
+        already_followed = Follow.objects.filter(follower=user_id,
+                                                 following=request.user.id)
+        if already_followed:
+            is_followed = True
+        else:
+            is_followed = False
+
         return Response(data={
             'id': user.id,
             'username': user.username,
             'email': user.email,
             'profile': user.profile,
+            'is_follow': is_follow,
+            'is_followed': is_followed,
             },
             status=status.HTTP_200_OK)
 
