@@ -18,8 +18,8 @@ import { IModal } from '../models';
       <div class="panel-body">
         <p class="user-profile-in-panel">{{ userStore.fetchUserInfo.profile }}</p>
         <div class="ProfileCardStats">
-          <span>{{ userStore.fetchUserInfo.follow_list.length }} Follow</span>
-          <span>{{ userStore.fetchUserInfo.follower_list.length }} Follower</span>
+          <a href="user/{{userStore.fetchUserInfo.id}}/follow_list">{{ userStore.fetchUserInfo.follow_list.length }} Follow</a>
+          <a href="user/{{userStore.fetchUserInfo.id}}/follower_list">{{ userStore.fetchUserInfo.follower_list.length }} Follower</a>
         </div>
         <div *ngIf="userStore.fetchUserInfo.id === userStore.loginUserInfo.id">
           <button onclick="location.href='/mypage'" class="btn btn-primary">Edit Profile</button>
