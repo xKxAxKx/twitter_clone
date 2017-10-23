@@ -114,6 +114,18 @@ class UserInfoGetView(generics.RetrieveAPIView):
         else:
             is_followed = False
 
+        follow_list = [{
+            'id': data.following.id,
+            'email': data.following.email,
+            'username': data.following.username,
+        } for data in user.who_is_followed.all()]
+
+        follower_list = [{
+            'id': data.follower.id,
+            'email': data.follower.email,
+            'username': data.follower.username,
+        } for data in user.who_follows.all()]
+
         return Response(data={
             'id': user.id,
             'username': user.username,
@@ -121,6 +133,8 @@ class UserInfoGetView(generics.RetrieveAPIView):
             'profile': user.profile,
             'is_follow': is_follow,
             'is_followed': is_followed,
+            'follow_list': follow_list,
+            'follower_list': follower_list,
             },
             status=status.HTTP_200_OK)
 

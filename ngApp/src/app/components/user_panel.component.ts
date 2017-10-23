@@ -17,9 +17,13 @@ import { IModal } from '../models';
       </div>
       <div class="panel-body">
         <p class="user-profile-in-panel">{{ userStore.fetchUserInfo.profile }}</p>
-        <p *ngIf="userStore.fetchUserInfo.id === userStore.loginUserInfo.id">
-          <a [routerLink]="['/mypage']">Change Profile</a>
-        </p>
+        <div class="ProfileCardStats">
+          <span>{{ userStore.fetchUserInfo.follow_list.length }} Follow</span>
+          <span>{{ userStore.fetchUserInfo.follower_list.length }} Follower</span>
+        </div>
+        <div *ngIf="userStore.fetchUserInfo.id === userStore.loginUserInfo.id">
+          <button onclick="location.href='/mypage'" class="btn btn-primary">Edit Profile</button>
+        </div>
         <div *ngIf="userStore.fetchUserInfo.id !== userStore.loginUserInfo.id">
           <button *ngIf="userStore.fetchUserInfo.is_follow === false" (click)="userFollow()" class="btn btn-primary">Follow</button>
           <button *ngIf="userStore.fetchUserInfo.is_follow === true" (click)="userRemove()" class="btn btn-danger">Unfollow</button>
