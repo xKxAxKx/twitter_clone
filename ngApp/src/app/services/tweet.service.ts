@@ -12,6 +12,7 @@ export class TweetService {
   private PostTweetApi = `http://127.0.0.1:8000/api/tweet/post/`;
   private GetTweetListByUserIds = `http://127.0.0.1:8000/api/tweet/list/`;
   private DeleteTweetByTweetIdApi = `http://127.0.0.1:8000/api/tweet/delete/`;
+  private AddFavoriteByTweetIdApi = `http://127.0.0.1:8000/api/favorite/add/`;
 
   // ツイートのPostが成功した時のSubject
   // tweet.storeとcommon.storeに送る
@@ -94,5 +95,20 @@ export class TweetService {
           this.errorDeleteTweetSubject.next();
         }
       );
-  };
+  }
+
+  // 指定したツイートをお気に入りに追加
+  AddFavoriteTweet(tweet) {
+    return this.http
+      .post(this.AddFavoriteByTweetIdApi, tweet, this.commonService.jwt())
+      .map((res) => res.json())
+      .subscribe(
+        (res) => {
+          console.log(res);
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
+  }
 }

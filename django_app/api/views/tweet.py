@@ -95,7 +95,7 @@ class TweetDeleteView(generics.DestroyAPIView):
 
 
 # お気に入りツイートのView(POST)
-class FavoriteTweetGetByUserIdView(generics.CreateAPIView):
+class FavoriteTweetAddView(generics.CreateAPIView):
     permission_classes = (permissions.IsAuthenticated,)
     queryset = Favorite.objects.all()
     serializer_class = FavoriteSerializer

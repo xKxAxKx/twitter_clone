@@ -88,6 +88,27 @@ export class TweetListComponent {
     );
   }
 
+  AddFavorite(tweet) {
+    this.dialogData.isShow = true;
+    this.dialogData.title = 'Add Favorite';
+    this.dialogData.text = `Add Favorite".<br>Is it OK?`;
+    this.dialogData.okBtnAble = true;
+    this.dialogData.cancelBtnAble = true;
+
+    this.modal.openModal(
+      () => {
+        this.dialogData.text = "Add Favorite..."
+        this.dialogData.okBtnAble = false;
+        this.dialogData.cancelBtnAble = false;
+        this.tweetService.AddFavoriteTweet(tweet);
+      },
+      // ツイート削除しましたに対してOKを押した時
+      () => {
+        this.closeModal();
+      }
+    );
+  }
+
   closeModal() {
     /*
      * モーダルの内容を設定
