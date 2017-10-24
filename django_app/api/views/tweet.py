@@ -8,15 +8,16 @@ from django.http import HttpResponse, Http404
 from rest_framework.pagination import PageNumberPagination
 from rest_framework import status, viewsets, filters
 from rest_framework.views import APIView
-from api.serializers.tweet import TweetSerializer, TweetPostSerializer
-from api.models.tweet import Tweet
+from api.serializers.tweet import (TweetSerializer, TweetPostSerializer,
+                                   FavoriteSerializer)
+from api.models.tweet import Tweet, Favorite
 from api.models.user import Account, Follow
 import json
 
 
 # ツイート作成のView(POST)
 class TweetPostView(generics.CreateAPIView):
-    permission_classes = (permissions.AllowAny,)
+    permission_classes = (permissions.IsAuthenticated,)
     queryset = Tweet.objects.all()
     serializer_class = TweetPostSerializer
 
@@ -91,3 +92,32 @@ class TweetDeleteView(generics.DestroyAPIView):
             return Response(serializer.data, status=status.HTTP_200_OK)
         else:
             raise Http404
+
+
+# お気に入りツイートのView(POST)
+class FavoriteTweetGetByUserIdView(generics.CreateAPIView):
+    permission_classes = (permissions.IsAuthenticated,)
+    queryset = Favorite.objects.all()
+    serializer_class = FavoriteSerializer
+
+    @transaction.atomic
+    def create(self, request, *args, **kwargs):
+        import pdb; pdb.set_trace()
+
+
+# お気に入りのツイートのView(GET)
+class FavoriteTweetGetByUserIdView(generics.RetrieveAPIView):
+    permission_classes = (permissions.AllowAny,)
+    queryset = Favorite.objects.all()
+    serializer_class = FavoriteSerializer
+
+    def get(self, request, user_id):
+        user = Account.objects.filter(id=user_id)
+        try:
+            tweet = Favorite.objects.filter(user__in=user)
+        except Favorite.DoesNotExist:
+            raise Http404
+
+        serializer = TweetSerializer(tweet, many=True)
+
+        return Response(serializer.data, status=status.HTTP_200_OK)
