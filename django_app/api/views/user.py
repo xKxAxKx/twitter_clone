@@ -5,6 +5,7 @@ from rest_framework.exceptions import AuthenticationFailed
 from rest_framework.response import Response
 from django.db import transaction
 from django.http import HttpResponse, Http404
+import json
 
 from rest_framework import status, viewsets, filters
 from rest_framework.views import APIView
@@ -35,27 +36,17 @@ class AuthInfoGetView(generics.RetrieveAPIView):
     serializer_class = AccountSerializer
 
     def get(self, request, format=None):
-        instance = self.queryset\
+        login_user = self.queryset\
                        .get(email=self.request.user)
-        follow_list = [{
-            'id': data.following.id,
-            'email': data.following.email,
-            'username': data.following.username,
-        } for data in instance.who_is_followed.all()]
-
-        follower_list = [{
-            'id': data.follower.id,
-            'email': data.follower.email,
-            'username': data.follower.username,
-        } for data in instance.who_follows.all()]
+        serializer = AccountSerializer(login_user)
 
         return Response(data={
-            'id': instance.id,
-            'username': instance.username,
-            'email': instance.email,
-            'profile': instance.profile,
-            'follow_list': follow_list,
-            'follower_list': follower_list,
+            'id': serializer.data['id'],
+            'username': serializer.data['username'],
+            'email': serializer.data['email'],
+            'profile': serializer.data['profile'],
+            'follow_list': serializer.data['follows'],
+            'follower_list': serializer.data['followers']
             },
             status=status.HTTP_200_OK)
 
@@ -114,29 +105,17 @@ class UserInfoGetView(generics.RetrieveAPIView):
         else:
             is_followed = False
 
-        follow_list = [{
-            'id': data.following.id,
-            'email': data.following.email,
-            'username': data.following.username,
-            'profile': data.following.profile,
-        } for data in user.who_is_followed.all()]
-
-        follower_list = [{
-            'id': data.follower.id,
-            'email': data.follower.email,
-            'username': data.follower.username,
-            'profile': data.follower.profile,
-        } for data in user.who_follows.all()]
+        serializer = AccountSerializer(user)
 
         return Response(data={
-            'id': user.id,
-            'username': user.username,
-            'email': user.email,
-            'profile': user.profile,
+            'id': serializer.data['id'],
+            'username': serializer.data['username'],
+            'email': serializer.data['email'],
+            'profile': serializer.data['profile'],
             'is_follow': is_follow,
             'is_followed': is_followed,
-            'follow_list': follow_list,
-            'follower_list': follower_list,
+            'follow_list': serializer.data['follows'],
+            'follower_list': serializer.data['followers']
             },
             status=status.HTTP_200_OK)
 

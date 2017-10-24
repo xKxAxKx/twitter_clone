@@ -20,12 +20,12 @@ import { IModal } from '../models';
       <div *ngFor="let followerUser of userStore.fetchUserInfo.follower_list" class="col-sm-4">
         <div class="panel panel-info">
           <div class="panel-heading">
-            <a routerLink="/user/{{followerUser.id}}">
-              @{{followerUser.username}}
+            <a routerLink="/user/{{followerUser.follower.id}}">
+              @{{followerUser.follower.username}}
             </a>
           </div>
           <div class="panel-body">
-            <p class="user-profile-in-panel">{{followerUser.profile}}</p>
+            <p class="user-profile-in-panel">{{followerUser.follower.profile}}</p>
           </div>
         </div>
       </div>
@@ -39,12 +39,12 @@ import { IModal } from '../models';
       <div *ngFor="let followUser of userStore.fetchUserInfo.follow_list" class="col-sm-4">
         <div class="panel panel-info">
           <div class="panel-heading">
-            <a routerLink="/user/{{followUser.id}}">
-              @{{followUser.username}}
+            <a routerLink="/user/{{followUser.following.id}}">
+              @{{followUser.following.username}}
             </a>
           </div>
           <div class="panel-body">
-            <p class="user-profile-in-panel">{{followUser.profile}}</p>
+            <p class="user-profile-in-panel">{{followUser.following.profile}}</p>
           </div>
         </div>
       </div>
