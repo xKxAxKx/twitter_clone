@@ -65,7 +65,6 @@ export class UserStore {
     this.userService.successUserInfoSubjct.subscribe(
       (res) => {
         this.fetchUserInfo = res.json();
-        console.log(this.fetchUserInfo.follower_list.length);
       }
     );
 

@@ -28,7 +28,7 @@ import { IModal } from '../models';
           </a>
         </div>
         <div *ngIf="userStore.fetchUserInfo.id === userStore.loginUserInfo.id">
-          <button onclick="location.href='/mypage'" class="btn btn-primary">Edit Profile</button>
+          <button routerLink='/mypage' class="btn btn-primary">Edit Profile</button>
         </div>
         <div *ngIf="userStore.fetchUserInfo.id !== userStore.loginUserInfo.id">
           <button *ngIf="userStore.fetchUserInfo.is_follow === false" (click)="userFollow()" class="btn btn-primary">Follow</button>

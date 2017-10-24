@@ -1,5 +1,5 @@
 from django.contrib import admin
-from api.models import Account, Tweet, Follow
+from api.models import Account, Tweet, Follow, Favorite
 
 
 @admin.register(Account)
@@ -15,3 +15,8 @@ class Tweet(admin.ModelAdmin):
 @admin.register(Follow)
 class Follow(admin.ModelAdmin):
     list_display = ('following', 'follower')
+
+
+@admin.register(Favorite)
+class Favorite(admin.ModelAdmin):
+    list_display = ('tweet', 'user')
