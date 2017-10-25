@@ -21,7 +21,7 @@ import { IModal } from '../models';
               <span>{{ tweet.created_at | date: 'yyyy/MM/dd hh:mm:ss' }}</span>
               <span>Reply</span>
               <span>Retweet</span>
-              <span>Favorite</span>
+              <a (click)="AddFavorite(tweet)" class="cursor_pointer">Favorite(Add)</a>
               <a (click)="deleteTweet(tweet)" class="cursor_pointer" *ngIf="tweet.user.id === userStore.loginUserInfo.id">Delete</a>
             </p>
             {{ tweet.tweet }}
@@ -91,7 +91,7 @@ export class TweetListComponent {
   AddFavorite(tweet) {
     this.dialogData.isShow = true;
     this.dialogData.title = 'Add Favorite';
-    this.dialogData.text = `Add Favorite".<br>Is it OK?`;
+    this.dialogData.text = `Add Favorite.<br>Is it OK?`;
     this.dialogData.okBtnAble = true;
     this.dialogData.cancelBtnAble = true;
 
