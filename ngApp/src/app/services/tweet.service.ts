@@ -101,7 +101,7 @@ export class TweetService {
   AddFavoriteTweet(tweet) {
     return this.http
       .post(this.AddFavoriteByTweetIdApi, tweet, this.commonService.jwt())
-      .map((res) => res.json())
+      .map(res => res.json())
       .subscribe(
         (res) => {
           console.log(res);

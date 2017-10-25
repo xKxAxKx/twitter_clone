@@ -102,7 +102,26 @@ class FavoriteTweetAddView(generics.CreateAPIView):
 
     @transaction.atomic
     def create(self, request, *args, **kwargs):
-        import pdb; pdb.set_trace()
+        #ツイート自体が存在するか確認
+        try:
+            tweet = Tweet.objects.get(id=request.data['id'])
+        except Tweet.DoesNotExist:
+            raise Http404
+
+        # すでにユーザがツイートをfavしていないか確認
+        try:
+            already_fav = Favorite.objects.get(tweet=tweet, user=request.user)
+            not_yet_fav = False
+        except Favorite.DoesNotExist:
+            not_yet_fav = True
+
+        if not_yet_fav:
+            add_fav = Favorite.objects.create(tweet=tweet, user=request.user)
+            serializer = FavoriteSerializer(add_fav)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        else:
+            return Response(data={"message": "already fav!"},
+                            status=status.HTTP_400_BAD_REQUEST)
 
 
 # お気に入りのツイートのView(GET)
