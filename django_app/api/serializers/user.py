@@ -1,6 +1,7 @@
 from django.contrib.auth import update_session_auth_hash
 from rest_framework import serializers
 from api.models.user import Account, AccountManager, Follow
+from api.models.tweet import Favorite
 
 
 class AccountDataSerializer(serializers.ModelSerializer):
@@ -24,11 +25,13 @@ class AccountSerializer(serializers.ModelSerializer):
                                many=True, read_only=True)
     followers = FollowSerializer(source='who_follows',
                                  many=True, read_only=True)
+    favorite_tweet = FollowSerializer(source='favorited_user',
+                                      many=True, read_only=True)
 
     class Meta:
         model = Account
         fields = ('id', 'username', 'email', 'profile', 'password', 'follows',
-                  'followers')
+                  'followers', 'favorite_tweet')
 
     def create(self, validated_data):
         return Account.objects.create_user(request_data=validated_data)

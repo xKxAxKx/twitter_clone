@@ -100,7 +100,7 @@ export class TweetListComponent {
         this.dialogData.text = "Add Favorite..."
         this.dialogData.okBtnAble = false;
         this.dialogData.cancelBtnAble = false;
-        this.tweetService.AddFavoriteTweet(tweet);
+        this.tweetService.AddFavoriteTweet(tweet, this.getFollowTweet);
       },
       // ツイート削除しましたに対してOKを押した時
       () => {

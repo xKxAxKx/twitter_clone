@@ -46,7 +46,8 @@ class AuthInfoGetView(generics.RetrieveAPIView):
             'email': serializer.data['email'],
             'profile': serializer.data['profile'],
             'follow_list': serializer.data['follows'],
-            'follower_list': serializer.data['followers']
+            'follower_list': serializer.data['followers'],
+            'favorite_tweet': serializer.data['favorite_tweet']
             },
             status=status.HTTP_200_OK)
 

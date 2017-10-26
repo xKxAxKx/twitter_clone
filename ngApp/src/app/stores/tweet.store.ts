@@ -37,5 +37,26 @@ export class TweetStore {
         this.modalData.okBtnAble = true;
       }
     );
+
+    this.tweetService.errorDeleteTweetSubject.subscribe(
+      (res) => {
+        this.modalData.text = `Failed Tweet deleted...`;
+        this.modalData.okBtnAble = true;
+      }
+    );
+
+    this.tweetService.successAddFavoriteSubject.subscribe(
+      (res) => {
+        this.modalData.text = `Add Favorite!`;
+        this.modalData.okBtnAble = true;
+      }
+    );
+
+    this.tweetService.errorAddFavoriteSubject.subscribe(
+      (err) => {
+        this.modalData.text = `Failed add Favorite...`;
+        this.modalData.okBtnAble = true;
+      }
+    );
   }
 }

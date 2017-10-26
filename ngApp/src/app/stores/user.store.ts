@@ -50,6 +50,7 @@ export class UserStore {
       (res) => {
         this.loginUserInfo = res.json();
         this.loginUserInfoSubject.next();
+        console.log(this.loginUserInfo);
       }
     );
 
@@ -65,7 +66,6 @@ export class UserStore {
     this.userService.successUserInfoSubjct.subscribe(
       (res) => {
         this.fetchUserInfo = res.json();
-        console.log(this.fetchUserInfo);
       }
     );
 

@@ -124,7 +124,7 @@ class FavoriteTweetAddView(generics.CreateAPIView):
                             status=status.HTTP_400_BAD_REQUEST)
 
 
-# お気に入りのツイートのView(GET)
+# お気に入りツイートをユーザIDで取得
 class FavoriteTweetGetByUserIdView(generics.RetrieveAPIView):
     permission_classes = (permissions.AllowAny,)
     queryset = Favorite.objects.all()

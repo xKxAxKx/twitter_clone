@@ -15,24 +15,25 @@ export class TweetService {
   private AddFavoriteByTweetIdApi = `http://127.0.0.1:8000/api/favorite/add/`;
 
   // ツイートのPostが成功した時のSubject
-  // tweet.storeとcommon.storeに送る
   completePostTweetSubject: Subject<any> = new Subject<any>();
 
   // ツイートのPostが失敗した時のSubject
-  // tweet.storeとcommon.storeに送る
   errorPostTweetSubject: Subject<any> = new Subject<any>();
 
   // ツイートリストの取得が成功した時のSubject
-  // tweet.storeに送る
   fetchTweetListSubjct: Subject<any> = new Subject<any>();
 
   // ツイートのDeleteが成功した時のSubject
-  // tweet.storeとcommon.storeに送る
   completeDeleteTweetSubject: Subject<any> = new Subject<any>();
 
   // ツイートのDeleteが失敗した時のSubject
-  // tweet.storeとcommon.storeに送る
   errorDeleteTweetSubject: Subject<any> = new Subject<any>();
+
+  // ツイートのお気に入り追加が成功した時のSubject
+  successAddFavoriteSubject: Subject<any> = new Subject<any>();
+
+  // ツイートのお気に入り追加が失敗した時のSubject
+  errorAddFavoriteSubject: Subject<any> = new Subject<any>();
 
   constructor(
     private http: Http,
@@ -98,16 +99,17 @@ export class TweetService {
   }
 
   // 指定したツイートをお気に入りに追加
-  AddFavoriteTweet(tweet) {
+  AddFavoriteTweet(tweet, getFollowTweet:boolean) {
     return this.http
       .post(this.AddFavoriteByTweetIdApi, tweet, this.commonService.jwt())
       .map(res => res.json())
       .subscribe(
         (res) => {
-          console.log(res);
+          this.getTweetByUserIds(this.userStore.loginUserInfo.id, getFollowTweet);
+          this.successAddFavoriteSubject.next(res);
         },
         (err) => {
-          console.log(err);
+          this.errorAddFavoriteSubject.next(err);
         }
       );
   }
