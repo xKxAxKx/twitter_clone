@@ -122,12 +122,14 @@ export class MyPageComponent {
     private userStore: UserStore,
     private userService: UserService,
     private activatedRoute: ActivatedRoute,
-  ){}
+  ){
+    this.userStore.completeSetLoginUserInfoSubject.subscribe( () => {
+      this.setFormData();
+    });
+  }
 
   ngOnInit() {
-    setTimeout(() => {
-      this.setFormData();
-    }, 500);
+    this.setFormData()
   }
 
   setFormData() {

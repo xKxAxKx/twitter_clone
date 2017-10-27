@@ -35,8 +35,8 @@ export class UserpageComponent {
     private router: Router,
   ){
     activatedRoute.params.subscribe((params: Params) => {
-        this.userService.fetchUserInfo(params['user_id']);
-        this.tweetService.getTweetByUserIds(params['user_id'], false);
+      this.userService.fetchUserInfo(params['user_id']);
+      this.tweetService.getTweetByUserIds(params['user_id'], false);
     });
   }
 

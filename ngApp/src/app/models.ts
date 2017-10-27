@@ -31,6 +31,7 @@ export interface IUser {
   is_followed?: boolean;
   follow_list?: any[];
   follower_list?: any[];
+  favorite_tweet: any[];
 }
 
 export interface IModal {

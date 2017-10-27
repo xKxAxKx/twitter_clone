@@ -30,7 +30,6 @@ import { UserService } from '../services/user.service';
 })
 export class MainComponent {
 
-  loginUserInfoSubscriber: any;
 
   constructor (
     private mainService: MainService,
@@ -53,8 +52,9 @@ export class MainComponent {
       this.tweetService.getTweetByUserIds(this.userStore.loginUserInfo.id, true);
     };
 
-    this.loginUserInfoSubscriber = this.userStore.loginUserInfoSubject.subscribe(
+    this.userStore.completeSetLoginUserInfoSubject.subscribe(
       () => {
+        console.log(this.userStore.loginUserInfo['favorite_tweet']);
         this.userService.fetchUserInfo(this.userStore.loginUserInfo.id);
         this.tweetService.getTweetByUserIds(this.userStore.loginUserInfo.id, true);
       }

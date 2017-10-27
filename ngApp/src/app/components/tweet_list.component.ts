@@ -1,13 +1,16 @@
-import { Component, Input, ViewChild } from '@angular/core';
+import { Component, Input, ViewChild, Pipe, PipeTransform } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
+import { Subject } from 'rxjs';
 
 import { MainService } from '../services/main.service';
 import { TweetService } from '../services/tweet.service';
 import { TweetStore } from '../stores/tweet.store';
 import { UserStore } from '../stores/user.store';
 import { Modal }  from '../utils/modal';
+// import { SearchValueInListPipe } from '../utils/searchvalueinlist.pipe';
 
 import { IModal } from '../models';
+
 
 @Component({
   selector: 'tweet-list',
@@ -21,7 +24,9 @@ import { IModal } from '../models';
               <span>{{ tweet.created_at | date: 'yyyy/MM/dd hh:mm:ss' }}</span>
               <span>Reply</span>
               <span>Retweet</span>
-              <a (click)="AddFavorite(tweet)" class="cursor_pointer">Favorite(Add)</a>
+              <a (click)="AddFavorite(tweet)" class="cursor_pointer" *ngIf="userStore.loginUserFavList.indexOf(tweet.id)">
+                Favorite(Add)
+              </a>
               <a (click)="deleteTweet(tweet)" class="cursor_pointer" *ngIf="tweet.user.id === userStore.loginUserInfo.id">Delete</a>
             </p>
             {{ tweet.tweet }}
@@ -32,7 +37,7 @@ import { IModal } from '../models';
     <modal
       [data]="this.tweetStore.modalData"
       (cancelEvent)="closeModal()"></modal>
-  `
+  `,
 })
 export class TweetListComponent {
 
@@ -46,7 +51,7 @@ export class TweetListComponent {
     private userStore: UserStore,
   ){
     activatedRoute.params.subscribe((params: Params) => {
-      if(params['user_id']){
+      if(params['user_id']) {
         this.getFollowTweet = false;
       } else {
         this.getFollowTweet = true;
@@ -121,6 +126,4 @@ export class TweetListComponent {
 
     this.modal.resetAll();
   }
-
-
 }

@@ -7,6 +7,12 @@ import { IUser, ILoginUser, ISignUpUser, IModal } from '../models';
 @Injectable()
 export class UserStore {
 
+  // ログインユーザ情報格納が完了した時のSubject
+  completeSetLoginUserInfoSubject: Subject<any> = new Subject<any>();
+
+  // お気に入りツイート格納が完了した時のSubject
+  completeSetFavoriteTweetInfoSubject: Subject<any> = new Subject<any>();
+
   // モーダルの情報
   modalData: IModal = {
     isShow: false,
@@ -26,9 +32,6 @@ export class UserStore {
 
   // ログインユーザの情報
   loginUserInfo: IUser = {} as IUser;
-
-  // ログインユーザの情報の取得が完了した時のSubject
-  loginUserInfoSubject: Subject<void> = new Subject<void>();
 
   // 指定したidのユーザの情報
   fetchUserInfo: IUser = {} as IUser;
@@ -51,7 +54,7 @@ export class UserStore {
     this.userService.fetchLoginUserInfoSubjct.subscribe(
       (res) => {
         this.loginUserInfo = res;
-        this.loginUserInfoSubject.next();
+        this.completeSetLoginUserInfoSubject.next();
       }
     );
 
@@ -113,7 +116,10 @@ export class UserStore {
     // ログインユーザのお気に入りツイート情報を格納する
     this.userService.successFetchLoginUserFavTweetSubject.subscribe(
       (res) => {
-        console.log(res);
+        for(let data of res) {
+          this.loginUserFavList.push(data['tweet']['id']);
+        }
+        this.completeSetFavoriteTweetInfoSubject.next();
       }
     );
 

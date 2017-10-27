@@ -138,6 +138,6 @@ class FavoriteTweetGetByUserIdView(generics.RetrieveAPIView):
         except Favorite.DoesNotExist:
             raise Http404
 
-        serializer = TweetSerializer(tweet, many=True)
+        serializer = FavoriteSerializer(tweet, many=True)
 
         return Response(serializer.data, status=status.HTTP_200_OK)
