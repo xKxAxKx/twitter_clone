@@ -54,7 +54,6 @@ export class MainComponent {
 
     this.userStore.completeSetLoginUserInfoSubject.subscribe(
       () => {
-        console.log(this.userStore.loginUserInfo['favorite_tweet']);
         this.userService.fetchUserInfo(this.userStore.loginUserInfo.id);
         this.tweetService.getTweetByUserIds(this.userStore.loginUserInfo.id, true);
       }

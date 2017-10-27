@@ -5,6 +5,7 @@ import { Observable, Subject } from 'rxjs';
 
 import { CommonService } from './common.service';
 import { UserStore } from '../stores/user.store';
+import { UserService } from './user.service';
 
 @Injectable()
 export class TweetService {
@@ -40,6 +41,7 @@ export class TweetService {
     private router: Router,
     private commonService: CommonService,
     private userStore: UserStore,
+    private userService: UserService,
   ){}
 
 
@@ -106,6 +108,7 @@ export class TweetService {
       .subscribe(
         (res) => {
           this.getTweetByUserIds(this.userStore.loginUserInfo.id, getFollowTweet);
+          this.userService.FetchFavoriteTweet(this.userStore.loginUserInfo, true);
           this.successAddFavoriteSubject.next(res);
         },
         (err) => {

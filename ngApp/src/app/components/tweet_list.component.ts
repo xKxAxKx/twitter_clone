@@ -24,7 +24,7 @@ import { IModal } from '../models';
               <span>{{ tweet.created_at | date: 'yyyy/MM/dd hh:mm:ss' }}</span>
               <span>Reply</span>
               <span>Retweet</span>
-              <a (click)="AddFavorite(tweet)" class="cursor_pointer" *ngIf="userStore.loginUserFavList.indexOf(tweet.id)">
+              <a (click)="AddFavorite(tweet)" class="cursor_pointer" *ngIf="userStore.loginUserFavList.indexOf(tweet.id) < 0">
                 Favorite(Add)
               </a>
               <a (click)="deleteTweet(tweet)" class="cursor_pointer" *ngIf="tweet.user.id === userStore.loginUserInfo.id">Delete</a>
