@@ -8,7 +8,7 @@ from django.http import HttpResponse, Http404
 from rest_framework.pagination import PageNumberPagination
 from rest_framework import status, viewsets, filters
 from rest_framework.views import APIView
-from api.serializers.tweet import (TweetSerializer, TweetPostSerializer,
+from api.serializers.tweet import (TweetSerializer, TweetOnlySerializer,
                                    FavoriteSerializer)
 from api.models.tweet import Tweet, Favorite
 from api.models.user import Account, Follow
@@ -19,7 +19,7 @@ import json
 class TweetPostView(generics.CreateAPIView):
     permission_classes = (permissions.IsAuthenticated,)
     queryset = Tweet.objects.all()
-    serializer_class = TweetPostSerializer
+    serializer_class = TweetOnlySerializer
 
     @transaction.atomic
     def create(self, request, *args, **kwargs):
@@ -49,7 +49,8 @@ class TweetListGetByUserIdView(generics.RetrieveAPIView):
                 users.append(str(user.following.id))
 
         try:
-            tweet = Tweet.objects.select_related('user') \
+            tweet = Tweet.objects\
+                    .select_related('user') \
                     .filter(user__in=users) \
                     .order_by('-id')
         except Tweet.DoesNotExist:
@@ -78,7 +79,7 @@ class TweetGetByTweetIdView(generics.RetrieveAPIView):
 class TweetDeleteView(generics.DestroyAPIView):
     permission_classes = (permissions.IsAuthenticated,)
     queryset = Tweet.objects.all()
-    serializer_class = TweetPostSerializer
+    serializer_class = TweetOnlySerializer
 
     def delete(self, request, tweet_id):
         try:

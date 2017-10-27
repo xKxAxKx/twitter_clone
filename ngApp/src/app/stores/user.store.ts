@@ -50,7 +50,6 @@ export class UserStore {
       (res) => {
         this.loginUserInfo = res.json();
         this.loginUserInfoSubject.next();
-        console.log(this.loginUserInfo);
       }
     );
 

@@ -74,6 +74,7 @@ export class TweetService {
       .subscribe(
         (res) => {
           this.fetchTweetListSubjct.next(res);
+          console.log(res);
         },
         (err) => {
           console.log("ツイートリストの取得に失敗");
