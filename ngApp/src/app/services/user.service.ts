@@ -4,6 +4,7 @@ import { Http, Headers, Response, RequestOptions } from '@angular/http';
 import { Observable, Subject } from 'rxjs';
 
 import { CommonService } from './common.service';
+import { TweetService } from './tweet.service';
 
 import { ILoginUser, ISignUpUser } from '../models';
 
@@ -18,28 +19,24 @@ export class UserService {
   private UpdateUserInfoApi = `http://127.0.0.1:8000/api/user/auth_update/`;
   private UserFollowApi = `http://127.0.0.1:8000/api/user/follow/`;
   private UserRemoveApi = `http://127.0.0.1:8000/api/user/remove/`;
+  private FetchFavoriteTweetByUserIdApi = `http://127.0.0.1:8000/api/favorite/get/`;
 
   // ログインユーザを取得するときのSubject
   fetchLoginUserInfoSubjct: Subject<any> = new Subject<any>();
 
   // ログインが確認できたときのSubject
-  // UserStoreとCommonStoreに送る
   completeUserLoginSubject: Subject<any> = new Subject<any>();
 
   // ログインが失敗したときのSubject
-  // CommonStoreに送る
   errorUserLoginSubject: Subject<any> = new Subject<any>();
 
   // ユーザー登録が成功したときのSubject
-  // CommonStoreに送る
   completeRegisterSubject: Subject<any> = new Subject<any>();
 
   // ユーザー登録が失敗したときのSubject
-  // UserStoreとCommonStoreに送る
   errorRegisterSubject: Subject<any> = new Subject<any>();
 
   // ログアウトするときのSubject
-  // UserStoreとCommonStoreに送る
   logoutUserSubject: Subject<any> = new Subject<any>();
 
   // ユーザ情報を取得が成功したときのSubject
@@ -69,10 +66,17 @@ export class UserService {
   // ユーザリムーブが失敗した時のSubject
   errorUserRemoveSubjct: Subject<any> = new Subject<any>();
 
+  // ログインユーザのお気に入りツイート取得が成功した時のSubject
+  successFetchLoginUserFavTweetSubject: Subject<any> = new Subject<any>();
+
+  // ログインユーザ以外のユーザのお気に入りツイート取得が成功した時のSubject
+  successFetchOtherUserFavTweetSubject: Subject<any> = new Subject<any>();
+
   constructor(
     private http: Http,
     private router: Router,
     private commonService: CommonService,
+    // private tweetService: TweetService,
   ){}
 
 
@@ -117,9 +121,11 @@ export class UserService {
   fetchLoginUserInfo() {
     return this.http
       .get(this.FetchLoginUserApi, this.commonService.jwt())
+      .map(res => res.json())
       .subscribe(
         (res) => {
           this.fetchLoginUserInfoSubjct.next(res);
+          this.FetchFavoriteTweet(res, true);
         },
         (err) => {
           console.log("ユーザ情報の取得に失敗");
@@ -166,6 +172,7 @@ export class UserService {
     this.router.navigate(['/login']);
   }
 
+
   // ログインユーザの情報を更新する
   updateUserInfo(userUpdateInfo) {
     return this.http
@@ -185,6 +192,7 @@ export class UserService {
     this.notMatchNewPasswordSubject.next();
   }
 
+
   // ユーザをフォローする
   userFollow(followUser) {
     return this.http
@@ -201,8 +209,9 @@ export class UserService {
       );
   }
 
+
   // フォローを解除する
-  userRemove(removeUser){
+  userRemove(removeUser) {
     return this.http
       .delete(this.UserRemoveApi + removeUser.id, this.commonService.jwt())
       .subscribe(
@@ -215,6 +224,26 @@ export class UserService {
           this.errorUserRemoveSubjct.next();
         }
       );
+  }
+
+  // 指定したユーザIDのお気に入りツイートを取得
+  // ログインユーザのものか、そのほかのユーザかを判別
+  FetchFavoriteTweet(user, is_LoginUser:boolean) {
+    return this.http
+      .get(this.FetchFavoriteTweetByUserIdApi + user.id)
+      .map(res => res.json())
+      .subscribe(
+        (res) => {
+          if(is_LoginUser) {
+            this.successFetchLoginUserFavTweetSubject.next(res);
+          } else {
+            this.successFetchOtherUserFavTweetSubject.next(res);
+          }
+        },
+        (err) => {
+          console.log("お気に入りの取得に失敗");
+        }
+      )
   }
 
 }

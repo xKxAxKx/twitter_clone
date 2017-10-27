@@ -33,6 +33,8 @@ export class UserStore {
   // 指定したidのユーザの情報
   fetchUserInfo: IUser = {} as IUser;
 
+  loginUserFavList: any = [];
+
   constructor (
     private userService: UserService
   ) {
@@ -48,7 +50,7 @@ export class UserStore {
     // userService.fetchLoginUserInfo()が呼ばれたら流れてくる
     this.userService.fetchLoginUserInfoSubjct.subscribe(
       (res) => {
-        this.loginUserInfo = res.json();
+        this.loginUserInfo = res;
         this.loginUserInfoSubject.next();
       }
     );
@@ -105,6 +107,13 @@ export class UserStore {
         this.modalData.text = `Failed Remove User...`;
         this.modalData.fail = true;
         this.modalData.okBtnAble = true;
+      }
+    );
+
+    // ログインユーザのお気に入りツイート情報を格納する
+    this.userService.successFetchLoginUserFavTweetSubject.subscribe(
+      (res) => {
+        console.log(res);
       }
     );
 
