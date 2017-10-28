@@ -19,12 +19,13 @@ class FavoriteUserSerializer(serializers.ModelSerializer):
 
 class TweetSerializer(serializers.ModelSerializer):
     user = AccountSerializer()
-    favorited_user = FavoriteUserSerializer(source='favorited_tweet',
-                                            many=True, read_only=True)
+    # favorited_user = FavoriteUserSerializer(source='favorited_tweet',
+    #                                         many=True, read_only=True)
 
     class Meta:
         model = Tweet
-        fields = ('id', 'tweet', 'user', 'favorited_user', 'created_at')
+        # fields = ('id', 'tweet', 'user', 'favorited_user', 'created_at')
+        fields = ('id', 'tweet', 'user', 'created_at')
 
 
 class FavoriteSerializer(serializers.ModelSerializer):
