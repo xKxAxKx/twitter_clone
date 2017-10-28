@@ -108,13 +108,17 @@ export class TweetService {
   }
 
   // 指定したツイートをお気に入りに追加
-  AddFavoriteTweet(tweet, getFollowTweet:boolean) {
+  AddFavoriteTweet(tweet, user_id:number) {
     return this.http
       .post(this.AddFavoriteByTweetIdApi, tweet, this.commonService.jwt())
       .map(res => res.json())
       .subscribe(
         (res) => {
-          this.getTweetByUserIds(this.userStore.loginUserInfo.id, getFollowTweet);
+          if(user_id) {
+            this.getTweetByUserIds(user_id, false);
+          } else {
+            this.getTweetByUserIds(this.userStore.loginUserInfo.id, true);
+          }
           this.userService.FetchFavoriteTweet(this.userStore.loginUserInfo, true);
           this.successAddFavoriteSubject.next(res);
         },
@@ -124,12 +128,17 @@ export class TweetService {
       );
   }
 
-  deleteFavoriteTweet(tweet, getFollowTweet:boolean) {
+  // 指定したツイートをお気に入りから削除
+  deleteFavoriteTweet(tweet, user_id:number) {
     return this.http
       .delete(this.DeleteFavoriteByTweetIdApi + tweet.id, this.commonService.jwt())
       .subscribe(
         (res) => {
-          this.getTweetByUserIds(this.userStore.loginUserInfo.id, getFollowTweet);
+          if(user_id) {
+            this.getTweetByUserIds(user_id, false);
+          } else {
+            this.getTweetByUserIds(this.userStore.loginUserInfo.id, true);
+          }
           this.userService.FetchFavoriteTweet(this.userStore.loginUserInfo, true);
           this.successDeleteFavoriteSubject.next(res);
         },

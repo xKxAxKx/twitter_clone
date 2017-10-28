@@ -56,6 +56,8 @@ export class TweetListComponent {
     activatedRoute.params.subscribe((params: Params) => {
       if(params['user_id']) {
         this.getFollowTweet = false;
+        this.user_id = params['user_id']
+        console.log(this.user_id);
       } else {
         this.getFollowTweet = true;
       }
@@ -64,7 +66,7 @@ export class TweetListComponent {
 
   getFollowTweet: boolean;
 
-  users = null;
+  user_id = null;
 
   get dialogData(): IModal {
     return this.tweetStore.modalData;
@@ -108,7 +110,7 @@ export class TweetListComponent {
         this.dialogData.text = "Adding Favorite..."
         this.dialogData.okBtnAble = false;
         this.dialogData.cancelBtnAble = false;
-        this.tweetService.AddFavoriteTweet(tweet, this.getFollowTweet);
+        this.tweetService.AddFavoriteTweet(tweet, this.user_id);
       },
       // 確認に対してOKを押した時
       () => {
@@ -129,7 +131,7 @@ export class TweetListComponent {
         this.dialogData.text = "Deleting Favorite..."
         this.dialogData.okBtnAble = false;
         this.dialogData.cancelBtnAble = false;
-        this.tweetService.deleteFavoriteTweet(tweet, this.getFollowTweet);
+        this.tweetService.deleteFavoriteTweet(tweet, this.user_id);
       },
       // 確認に対してOKを押した時
       () => {
