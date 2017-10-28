@@ -26,6 +26,9 @@ import { IModal } from '../models';
           <a *ngIf="userStore.fetchUserInfo.follower_list" routerLink="/user/{{userStore.fetchUserInfo.id}}/follower_list">
             {{ userStore.fetchUserInfo.follower_list.length }} Follower
           </a>
+          <a routerLink="/user/{{userStore.fetchUserInfo.id}}/fav_list">
+            Favorites
+          </a>
         </div>
         <div *ngIf="userStore.fetchUserInfo.id === userStore.loginUserInfo.id">
           <button routerLink='/mypage' class="btn btn-primary">Edit Profile</button>
