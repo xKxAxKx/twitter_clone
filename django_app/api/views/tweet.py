@@ -163,10 +163,10 @@ class FavoriteTweetGetByUserIdView(generics.RetrieveAPIView):
     def get(self, request, user_id):
         user = Account.objects.filter(id=user_id)
         try:
-            tweet = Favorite.objects.filter(user__in=user)
+            tweet = Tweet.objects.filter(favorited_tweet__in=Favorite.objects.filter(user__in=user))
         except Favorite.DoesNotExist:
             raise Http404
 
-        serializer = FavoriteSerializer(tweet, many=True)
+        serializer = TweetSerializer(tweet, many=True)
 
         return Response(serializer.data, status=status.HTTP_200_OK)

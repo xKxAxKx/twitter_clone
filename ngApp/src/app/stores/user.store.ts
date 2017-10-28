@@ -118,10 +118,9 @@ export class UserStore {
       (res) => {
         this.loginUserFavList = [];
         for(let data of res) {
-          this.loginUserFavList.push(data['tweet']['id']);
+          this.loginUserFavList.push(data['id']);
         }
         this.completeSetFavoriteTweetInfoSubject.next();
-        console.log(this.loginUserFavList);
       }
     );
 

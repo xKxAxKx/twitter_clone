@@ -57,7 +57,6 @@ export class TweetListComponent {
       if(params['user_id']) {
         this.getFollowTweet = false;
         this.user_id = params['user_id']
-        console.log(this.user_id);
       } else {
         this.getFollowTweet = true;
       }

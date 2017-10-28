@@ -70,7 +70,7 @@ export class UserService {
   successFetchLoginUserFavTweetSubject: Subject<any> = new Subject<any>();
 
   // ログインユーザ以外のユーザのお気に入りツイート取得が成功した時のSubject
-  successFetchOtherUserFavTweetSubject: Subject<any> = new Subject<any>();
+  successFetchUserFavTweetSubject: Subject<any> = new Subject<any>();
 
   constructor(
     private http: Http,
@@ -227,7 +227,6 @@ export class UserService {
   }
 
   // 指定したユーザIDのお気に入りツイートを取得
-  // ログインユーザのものか、そのほかのユーザかを判別
   FetchFavoriteTweet(user, is_LoginUser:boolean) {
     return this.http
       .get(this.FetchFavoriteTweetByUserIdApi + user.id)
@@ -235,15 +234,16 @@ export class UserService {
       .subscribe(
         (res) => {
           if(is_LoginUser) {
+            console.log(res);
             this.successFetchLoginUserFavTweetSubject.next(res);
           } else {
-            this.successFetchOtherUserFavTweetSubject.next(res);
+            this.successFetchUserFavTweetSubject.next(res);
           }
         },
         (err) => {
           console.log("お気に入りの取得に失敗");
         }
-      )
+      );
   }
 
 }

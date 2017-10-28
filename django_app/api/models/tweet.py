@@ -10,6 +10,7 @@ class Tweet(models.Model):
         on_delete=models.CASCADE
         )
     created_at = models.DateTimeField(auto_now_add=True)
+    favorite = models.ManyToManyField('Favorite', related_name='favorited_tweet', blank=True,)
 
     def __str__(self):
         return self.tweet

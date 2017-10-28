@@ -13,10 +13,14 @@ import { UserStore } from '../stores/user.store';
       <div class="col-sm-4">
         <user-panel></user-panel>
       </div>
-      <div *ngIf="is_follow_follower_list === false" class="col-sm-8">
+      <div *ngIf="isTweetlist === true && isFavList === false" class="col-sm-8">
         <tweet-list></tweet-list>
       </div>
-      <div *ngIf="is_follow_follower_list === true">
+      <div *ngIf="isTweetlist === true && isFavList === true" class="col-sm-8">
+        <h2>Favorite</h2>
+        <tweet-list></tweet-list>
+      </div>
+      <div *ngIf="isTweetlist === false">
         <follow-follower [title]='followFollowerTitle'></follow-follower>
       </div>
     <div>
@@ -24,7 +28,8 @@ import { UserStore } from '../stores/user.store';
   `
 })
 export class UserpageComponent {
-  is_follow_follower_list: boolean;
+  isTweetlist: boolean;
+  isFavList: boolean;
   followFollowerTitle: string;
 
   constructor (
@@ -41,14 +46,18 @@ export class UserpageComponent {
   }
 
   ngOnInit() {
+    this.isFavList = false;
     if(this.router.url.includes('follower_list')) {
-      this.is_follow_follower_list = true;
+      this.isTweetlist = false;
       this.followFollowerTitle = "Follower List";
     } else if(this.router.url.includes('follow_list')) {
-      this.is_follow_follower_list = true;
+      this.isTweetlist = false;
       this.followFollowerTitle = "Follow List";
+    } else if(this.router.url.includes('fav_list')) {
+      this.isTweetlist = true;
+      this.isFavList = true;
     } else {
-      this.is_follow_follower_list = false;
+      this.isTweetlist = true;
     }
   }
 }
