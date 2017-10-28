@@ -14,6 +14,7 @@ export class TweetService {
   private GetTweetListByUserIds = `http://127.0.0.1:8000/api/tweet/list/`;
   private DeleteTweetByTweetIdApi = `http://127.0.0.1:8000/api/tweet/delete/`;
   private AddFavoriteByTweetIdApi = `http://127.0.0.1:8000/api/favorite/add/`;
+  private DeleteFavoriteByTweetIdApi = `http://127.0.0.1:8000/api/favorite/delete/`;
 
   // ツイートのPostが成功した時のSubject
   completePostTweetSubject: Subject<any> = new Subject<any>();
@@ -35,6 +36,12 @@ export class TweetService {
 
   // ツイートのお気に入り追加が失敗した時のSubject
   errorAddFavoriteSubject: Subject<any> = new Subject<any>();
+
+  // ツイートのお気に入り削除が成功した時のSubject
+  successDeleteFavoriteSubject: Subject<any> = new Subject<any>();
+
+  // ツイートのお気に入り削除が失敗した時のSubject
+  errorDeleteFavoriteSubject: Subject<any> = new Subject<any>();
 
   constructor(
     private http: Http,
@@ -113,6 +120,21 @@ export class TweetService {
         },
         (err) => {
           this.errorAddFavoriteSubject.next(err);
+        }
+      );
+  }
+
+  deleteFavoriteTweet(tweet, getFollowTweet:boolean) {
+    return this.http
+      .delete(this.DeleteFavoriteByTweetIdApi + tweet.id, this.commonService.jwt())
+      .subscribe(
+        (res) => {
+          this.getTweetByUserIds(this.userStore.loginUserInfo.id, getFollowTweet);
+          this.userService.FetchFavoriteTweet(this.userStore.loginUserInfo, true);
+          this.successDeleteFavoriteSubject.next(res);
+        },
+        (err) => {
+          this.errorDeleteFavoriteSubject.next(err);
         }
       );
   }

@@ -95,7 +95,7 @@ class TweetDeleteView(generics.DestroyAPIView):
             raise Http404
 
 
-# お気に入りツイートのView(POST)
+# お気に入りツイート追加のView
 class FavoriteTweetAddView(generics.CreateAPIView):
     permission_classes = (permissions.IsAuthenticated,)
     queryset = Favorite.objects.all()

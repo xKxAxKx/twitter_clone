@@ -24,8 +24,11 @@ import { IModal } from '../models';
               <span>{{ tweet.created_at | date: 'yyyy/MM/dd hh:mm:ss' }}</span>
               <span>Reply</span>
               <span>Retweet</span>
-              <a (click)="AddFavorite(tweet)" class="cursor_pointer" *ngIf="userStore.loginUserFavList.indexOf(tweet.id) < 0">
-                Favorite(Add)
+              <a (click)="addFavorite(tweet)" class="cursor_pointer" *ngIf="userStore.loginUserFavList.indexOf(tweet.id) < 0">
+                ☆
+              </a>
+              <a (click)="deleteFavorite(tweet)" class="cursor_pointer" *ngIf="userStore.loginUserFavList.indexOf(tweet.id) >= 0" style="color:#ff0000;">
+                ★
               </a>
               <a (click)="deleteTweet(tweet)" class="cursor_pointer" *ngIf="tweet.user.id === userStore.loginUserInfo.id">Delete</a>
             </p>
@@ -93,7 +96,7 @@ export class TweetListComponent {
     );
   }
 
-  AddFavorite(tweet) {
+  addFavorite(tweet) {
     this.dialogData.isShow = true;
     this.dialogData.title = 'Add Favorite';
     this.dialogData.text = `Add Favorite.<br>Is it OK?`;
@@ -102,12 +105,33 @@ export class TweetListComponent {
 
     this.modal.openModal(
       () => {
-        this.dialogData.text = "Add Favorite..."
+        this.dialogData.text = "Adding Favorite..."
         this.dialogData.okBtnAble = false;
         this.dialogData.cancelBtnAble = false;
         this.tweetService.AddFavoriteTweet(tweet, this.getFollowTweet);
       },
-      // ツイート削除しましたに対してOKを押した時
+      // 確認に対してOKを押した時
+      () => {
+        this.closeModal();
+      }
+    );
+  }
+
+  deleteFavorite(tweet) {
+    this.dialogData.isShow = true;
+    this.dialogData.title = 'Delete Favorite';
+    this.dialogData.text = `Delete Favorite.<br>Is it OK?`;
+    this.dialogData.okBtnAble = true;
+    this.dialogData.cancelBtnAble = true;
+
+    this.modal.openModal(
+      () => {
+        this.dialogData.text = "Deleting Favorite..."
+        this.dialogData.okBtnAble = false;
+        this.dialogData.cancelBtnAble = false;
+        this.tweetService.AddFavoriteTweet(tweet, this.getFollowTweet);
+      },
+      // 確認に対してOKを押した時
       () => {
         this.closeModal();
       }
