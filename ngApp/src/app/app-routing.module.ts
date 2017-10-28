@@ -16,6 +16,7 @@ const routes: Routes = [
   { path: 'user/:user_id', component: UserpageComponent, canActivate: [AuthGuard] },
   { path: 'user/:user_id/follow_list', component: UserpageComponent, canActivate: [AuthGuard] },
   { path: 'user/:user_id/follower_list', component: UserpageComponent, canActivate: [AuthGuard] },
+  { path: 'user/:user_id/fav_list', component: UserpageComponent, canActivate: [AuthGuard] },
   { path: 'mypage', component: MyPageComponent, canActivate: [AuthGuard]},
 ];
 @NgModule({
