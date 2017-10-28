@@ -125,6 +125,35 @@ class FavoriteTweetAddView(generics.CreateAPIView):
                             status=status.HTTP_400_BAD_REQUEST)
 
 
+# ツお気に入りイート削除のView(DELETE)
+class FavoriteTweetDeleteView(generics.DestroyAPIView):
+    permission_classes = (permissions.IsAuthenticated,)
+    queryset = Favorite.objects.all()
+    serializer_class = FavoriteSerializer
+
+    def delete(self, request, tweet_id):
+        #ツイート自体が存在するか確認
+        try:
+            tweet = Tweet.objects.get(id=tweet_id)
+        except Tweet.DoesNotExist:
+            raise Http404
+
+        #ユーザがツイートをFavしているか確認
+        try:
+            already_fav = Favorite.objects.get(tweet=tweet, user=request.user)
+            not_yet_fav = False
+        except Favorite.DoesNotExist:
+            not_yet_fav = True
+
+        if not_yet_fav:
+            return Response(data={"message": "not_yet fav!"},
+                            status=status.HTTP_400_BAD_REQUEST)
+        else:
+            already_fav.delete()
+            return Response(data={"message": "success delete fav!"},
+                            status=status.HTTP_200_OK)
+
+
 # お気に入りツイートをユーザIDで取得
 class FavoriteTweetGetByUserIdView(generics.RetrieveAPIView):
     permission_classes = (permissions.AllowAny,)
