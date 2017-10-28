@@ -8,7 +8,7 @@ from api.views.user import (AuthRegister, AuthInfoGetView, AuthInfoUpdateView,
 from api.views.tweet import (TweetPostView, TweetGetByTweetIdView,
                              TweetDeleteView, TweetListGetByUserIdView,
                              FavoriteTweetGetByUserIdView,
-                             FavoriteTweetAddView)
+                             FavoriteTweetAddView, FavoriteTweetDeleteView)
 
 urlpatterns = [
     url(r'^tweet/post/$', TweetPostView.as_view()),
@@ -17,6 +17,7 @@ urlpatterns = [
     url(r'^tweet/delete/(?P<tweet_id>\d+)$', TweetDeleteView.as_view()),
     url(r'^favorite/get/(?P<user_id>\d+)$', FavoriteTweetGetByUserIdView.as_view()),
     url(r'^favorite/add/$', FavoriteTweetAddView.as_view()),
+    url(r'^favorite/delete/(?P<tweet_id>\d+)$', FavoriteTweetDeleteView.as_view()),
     url(r'^user/register/$', AuthRegister.as_view()),
     url(r'^user/mypage/$', AuthInfoGetView.as_view()),
     url(r'^user/(?P<user_id>\d+)$', UserInfoGetView.as_view()),
