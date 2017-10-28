@@ -19,6 +19,7 @@ class FavoriteUserSerializer(serializers.ModelSerializer):
 
 class TweetSerializer(serializers.ModelSerializer):
     user = AccountSerializer()
+    # コメントアウトしたけれど、ツイートの詳細を表示させる時にあったほうが良いかもなー
     # favorited_user = FavoriteUserSerializer(source='favorited_tweet',
     #                                         many=True, read_only=True)
 
