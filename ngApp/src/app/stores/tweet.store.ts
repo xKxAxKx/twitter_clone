@@ -58,5 +58,19 @@ export class TweetStore {
         this.modalData.okBtnAble = true;
       }
     );
+
+    this.tweetService.successDeleteFavoriteSubject.subscribe(
+      (res) => {
+        this.modalData.text = `Delete Favorite!`;
+        this.modalData.okBtnAble = true;
+      }
+    );
+
+    this.tweetService.errorAddFavoriteSubject.subscribe(
+      (err) => {
+        this.modalData.text = `Failed delete Favorite...`;
+        this.modalData.okBtnAble = true;
+      }
+    );
   }
 }

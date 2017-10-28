@@ -129,7 +129,7 @@ export class TweetListComponent {
         this.dialogData.text = "Deleting Favorite..."
         this.dialogData.okBtnAble = false;
         this.dialogData.cancelBtnAble = false;
-        this.tweetService.AddFavoriteTweet(tweet, this.getFollowTweet);
+        this.tweetService.deleteFavoriteTweet(tweet, this.getFollowTweet);
       },
       // 確認に対してOKを押した時
       () => {
