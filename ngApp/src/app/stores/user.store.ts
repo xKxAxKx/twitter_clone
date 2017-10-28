@@ -113,7 +113,7 @@ export class UserStore {
       }
     );
 
-    // ログインユーザのお気に入りツイート情報を格納する
+    // ログインユーザのお気に入りツイート情報のidをリスト格納する
     this.userService.successFetchLoginUserFavTweetSubject.subscribe(
       (res) => {
         this.loginUserFavList = [];
