@@ -22,6 +22,7 @@ import { IModal } from '../models';
             <p>
               <a [routerLink]="['/user', tweet.user.id]">@{{ tweet.user.username }}</a>
               <span>{{ tweet.created_at | date: 'yyyy/MM/dd hh:mm:ss' }}</span>
+              <a [routerLink]="['/tweet', tweet.id]">Detail</a>
               <span>Reply</span>
               <span>Retweet</span>
               <a (click)="addFavorite(tweet)" class="cursor_pointer" *ngIf="userStore.loginUserFavList.indexOf(tweet.id) < 0">
