@@ -13,6 +13,12 @@ class Tweet(models.Model):
     favorite = models.ManyToManyField('Favorite',
                                       related_name='favorited_tweet',
                                       blank=True)
+    parent = models.ManyToManyField('Reply',
+                                    related_name='child_tweet',
+                                    blank=True)
+    child = models.ManyToManyField('Reply',
+                                   related_name='parent_tweet',
+                                   blank=True)
 
     def __str__(self):
         return self.tweet
@@ -36,14 +42,14 @@ class Favorite(models.Model):
 
 
 class Reply(models.Model):
-    base_tweet = models.ForeignKey(
+    parent = models.ForeignKey(
         Tweet,
-        related_name='base_tweet',
+        related_name='parent_tweet',
         on_delete=models.CASCADE
         )
-    reply_tweet = models.ForeignKey(
+    child = models.ForeignKey(
         Tweet,
-        related_name='reply_tweet',
+        related_name='child_tweet',
         on_delete=models.CASCADE
         )
     created_at = models.DateTimeField(auto_now_add=True)

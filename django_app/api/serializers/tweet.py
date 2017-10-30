@@ -1,9 +1,12 @@
 from rest_framework import serializers
 from api.serializers.user import AccountSerializer, FollowSerializer
-from api.models.tweet import Tweet, Favorite
+from api.models.tweet import Tweet, Favorite, Reply
+import sys
 
 
 class TweetOnlySerializer(serializers.ModelSerializer):
+    user = AccountSerializer()
+
     class Meta:
         model = Tweet
         fields = ('id', 'tweet', 'user', 'created_at')
@@ -17,15 +20,35 @@ class FavoriteUserSerializer(serializers.ModelSerializer):
         fields = ('id', 'user')
 
 
+class ParentTweetSerializer(serializers.ModelSerializer):
+    parent = TweetOnlySerializer()
+
+    class Meta:
+        model = Reply
+        fields = ['parent']
+
+
+class ChildTweetSerializer(serializers.ModelSerializer):
+    child = TweetOnlySerializer()
+
+    class Meta:
+        model = Reply
+        fields = ['child']
+
+
 class TweetSerializer(serializers.ModelSerializer):
     user = AccountSerializer()
     favorited_user = FavoriteUserSerializer(source='favorited_tweet',
                                             many=True, read_only=True)
+    parent = ParentTweetSerializer(source='child_tweet',
+                                   many=True, read_only=True)
+    child = ChildTweetSerializer(source='parent_tweet',
+                                 many=True, read_only=True)
 
     class Meta:
         model = Tweet
-        fields = ('id', 'tweet', 'user', 'favorited_user', 'created_at')
-        # fields = ('id', 'tweet', 'user', 'created_at')
+        fields = ('id', 'tweet', 'user', 'favorited_user',
+                  'parent', 'child', 'created_at')
 
 
 class FavoriteSerializer(serializers.ModelSerializer):
