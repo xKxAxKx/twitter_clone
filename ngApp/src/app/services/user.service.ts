@@ -125,7 +125,6 @@ export class UserService {
       .subscribe(
         (res) => {
           this.fetchLoginUserInfoSubjct.next(res);
-          // console.log(res['id']);
           this.FetchFavoriteTweet(res['id'], true);
         },
         (err) => {
@@ -201,7 +200,7 @@ export class UserService {
       .subscribe(
         (res) => {
           this.successUserFollowSubjct.next(res);
-          this.fetchLoginUserInfo();
+          // this.fetchLoginUserInfo();
           this.fetchUserInfo(followUser.id);
         },
         (err) => {
@@ -218,7 +217,7 @@ export class UserService {
       .subscribe(
         (res) => {
           this.successUserRemoveSubjct.next(res);
-          this.fetchLoginUserInfo();
+          // this.fetchLoginUserInfo();
           this.fetchUserInfo(removeUser.id);
         },
         (err) => {
