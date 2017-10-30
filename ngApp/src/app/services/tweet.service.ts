@@ -102,7 +102,6 @@ export class TweetService {
           // ツイートのリストを再読み込みしておく
           if(isFavList) {
             this.userService.FetchFavoriteTweet(user_id, false);
-            console.log("favページでのツイート削除")
           } else {
             this.getTweetByUserIds(this.userStore.loginUserInfo.id, getFollowTweet);
           }

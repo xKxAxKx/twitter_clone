@@ -138,7 +138,7 @@ class FavoriteTweetDeleteView(generics.DestroyAPIView):
         except Tweet.DoesNotExist:
             raise Http404
 
-        #ユーザがツイートをFavしているか確認
+        # ユーザがツイートをFavしているか確認
         try:
             already_fav = Favorite.objects.get(tweet=tweet, user=request.user)
             not_yet_fav = False
@@ -163,7 +163,9 @@ class FavoriteTweetGetByUserIdView(generics.RetrieveAPIView):
     def get(self, request, user_id):
         user = Account.objects.filter(id=user_id)
         try:
-            tweet = Tweet.objects.filter(favorited_tweet__in=Favorite.objects.filter(user__in=user))
+            tweet = Tweet.objects \
+                         .filter(favorited_tweet__in=Favorite.objects.filter(user__in=user))\
+                         .order_by('-id')
         except Favorite.DoesNotExist:
             raise Http404
 
