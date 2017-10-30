@@ -14,10 +14,11 @@ import { UserStore } from '../stores/user.store';
         <user-panel></user-panel>
       </div>
       <div *ngIf="isTweetlist === true && isFavList === false" class="col-sm-8">
+        <h2>@{{userStore.fetchUserInfo.username}}'s tweets</h2>
         <tweet-list></tweet-list>
       </div>
       <div *ngIf="isTweetlist === true && isFavList === true" class="col-sm-8">
-        <h2>Favorite</h2>
+        <h2>@{{userStore.fetchUserInfo.username}}'s Favorite</h2>
         <tweet-list></tweet-list>
       </div>
       <div *ngIf="isTweetlist === false">
@@ -41,23 +42,27 @@ export class UserpageComponent {
   ){
     activatedRoute.params.subscribe((params: Params) => {
       this.userService.fetchUserInfo(params['user_id']);
-      this.tweetService.getTweetByUserIds(params['user_id'], false);
+
+      this.isFavList = false;
+      if(this.router.url.includes('follower_list')) {
+        this.isTweetlist = false;
+        this.followFollowerTitle = "Follower List";
+      } else if(this.router.url.includes('follow_list')) {
+        this.isTweetlist = false;
+        this.followFollowerTitle = "Follow List";
+      } else if(this.router.url.includes('fav_list')) {
+        this.isTweetlist = true;
+        this.isFavList = true;
+      } else {
+        this.isTweetlist = true;
+      }
+
+      if(this.isFavList){
+        this.userService.FetchFavoriteTweet(params['user_id'], false);
+      } else {
+        this.tweetService.getTweetByUserIds(params['user_id'], false);
+      }
     });
   }
 
-  ngOnInit() {
-    this.isFavList = false;
-    if(this.router.url.includes('follower_list')) {
-      this.isTweetlist = false;
-      this.followFollowerTitle = "Follower List";
-    } else if(this.router.url.includes('follow_list')) {
-      this.isTweetlist = false;
-      this.followFollowerTitle = "Follow List";
-    } else if(this.router.url.includes('fav_list')) {
-      this.isTweetlist = true;
-      this.isFavList = true;
-    } else {
-      this.isTweetlist = true;
-    }
-  }
 }

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 
 import { TweetService } from '../services/tweet.service';
+import { UserService } from '../services/user.service';
 
 import { ITweet, ITweets, IModal } from '../models';
 
@@ -25,6 +26,7 @@ export class TweetStore {
 
   constructor (
     private tweetService: TweetService,
+    private userService: UserService,
   ) {
     this.tweetService.fetchTweetListSubjct.subscribe(
       (res) => {
@@ -70,6 +72,12 @@ export class TweetStore {
       (err) => {
         this.modalData.text = `Failed delete Favorite...`;
         this.modalData.okBtnAble = true;
+      }
+    );
+
+    this.userService.successFetchUserFavTweetSubject.subscribe(
+      (res) => {
+        this.tweetlist.results = res;
       }
     );
   }

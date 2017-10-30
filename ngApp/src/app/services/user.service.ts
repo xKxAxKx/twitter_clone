@@ -125,7 +125,8 @@ export class UserService {
       .subscribe(
         (res) => {
           this.fetchLoginUserInfoSubjct.next(res);
-          this.FetchFavoriteTweet(res, true);
+          // console.log(res['id']);
+          this.FetchFavoriteTweet(res['id'], true);
         },
         (err) => {
           console.log("ユーザ情報の取得に失敗");
@@ -227,14 +228,13 @@ export class UserService {
   }
 
   // 指定したユーザIDのお気に入りツイートを取得
-  FetchFavoriteTweet(user, is_LoginUser:boolean) {
+  FetchFavoriteTweet(user_id, is_LoginUser:boolean) {
     return this.http
-      .get(this.FetchFavoriteTweetByUserIdApi + user.id)
+      .get(this.FetchFavoriteTweetByUserIdApi + user_id)
       .map(res => res.json())
       .subscribe(
         (res) => {
           if(is_LoginUser) {
-            console.log(res);
             this.successFetchLoginUserFavTweetSubject.next(res);
           } else {
             this.successFetchUserFavTweetSubject.next(res);
