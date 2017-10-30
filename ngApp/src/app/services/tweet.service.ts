@@ -92,13 +92,20 @@ export class TweetService {
 
   // 指定したtweet_idのツイートを削除
   // トップページか否かで再読み込みするツイートを選択
-  deleteTweetByTweetId(tweet_id:number, getFollowTweet:boolean) {
+  // favlistページの場合は、favlistを再読み込みする
+  deleteTweetByTweetId(tweet_id:number, user_id:any,
+                       getFollowTweet:boolean, isFavList:boolean=false) {
     return this.http
       .delete(this.DeleteTweetByTweetIdApi + tweet_id, this.commonService.jwt())
       .subscribe(
         (res) => {
           // ツイートのリストを再読み込みしておく
-          this.getTweetByUserIds(this.userStore.loginUserInfo.id, getFollowTweet);
+          if(isFavList) {
+            this.userService.FetchFavoriteTweet(user_id, false);
+            console.log("favページでのツイート削除")
+          } else {
+            this.getTweetByUserIds(this.userStore.loginUserInfo.id, getFollowTweet);
+          }
           this.completeDeleteTweetSubject.next(res);
         },
         (err) => {
