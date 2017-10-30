@@ -42,13 +42,13 @@ class TweetSerializer(serializers.ModelSerializer):
                                             many=True, read_only=True)
     parent = ParentTweetSerializer(source='child_tweet',
                                    many=True, read_only=True)
-    child = ChildTweetSerializer(source='parent_tweet',
-                                 many=True, read_only=True)
+    children = ChildTweetSerializer(source='parent_tweet',
+                                    many=True, read_only=True)
 
     class Meta:
         model = Tweet
         fields = ('id', 'tweet', 'user', 'favorited_user',
-                  'parent', 'child', 'created_at')
+                  'parent', 'children', 'created_at')
 
 
 class FavoriteSerializer(serializers.ModelSerializer):
