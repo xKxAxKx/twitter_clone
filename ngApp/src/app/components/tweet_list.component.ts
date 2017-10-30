@@ -75,7 +75,6 @@ export class TweetListComponent {
   }
 
   ngOnInit() {
-    console.log(this.isFavList);
   }
 
   deleteTweet(tweet) {
@@ -112,7 +111,7 @@ export class TweetListComponent {
         this.dialogData.text = "Adding Favorite..."
         this.dialogData.okBtnAble = false;
         this.dialogData.cancelBtnAble = false;
-        this.tweetService.AddFavoriteTweet(tweet, this.user_id);
+        this.tweetService.AddFavoriteTweet(tweet, this.user_id, this.isFavList);
       },
       // 確認に対してOKを押した時
       () => {

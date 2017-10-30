@@ -108,14 +108,18 @@ export class TweetService {
   }
 
   // 指定したツイートをお気に入りに追加
-  AddFavoriteTweet(tweet, user_id:number) {
+  AddFavoriteTweet(tweet, user_id:number, isFavList:boolean=false) {
     return this.http
       .post(this.AddFavoriteByTweetIdApi, tweet, this.commonService.jwt())
       .map(res => res.json())
       .subscribe(
         (res) => {
           if(user_id) {
-            this.getTweetByUserIds(user_id, false);
+            if(isFavList) {
+              this.userService.FetchFavoriteTweet(user_id, false);
+            } else {
+              this.getTweetByUserIds(user_id, false);
+            }
           } else {
             this.getTweetByUserIds(this.userStore.loginUserInfo.id, true);
           }
