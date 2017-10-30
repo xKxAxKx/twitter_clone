@@ -47,6 +47,9 @@ export class TweetListComponent {
   // モーダル
   @ViewChild(Modal) modal;
 
+  // お気に入り一覧か否か
+  @Input() isFavList:boolean = false;
+
   constructor (
     private tweetService: TweetService,
     private tweetStore: TweetStore,
@@ -72,7 +75,7 @@ export class TweetListComponent {
   }
 
   ngOnInit() {
-
+    console.log(this.isFavList);
   }
 
   deleteTweet(tweet) {
@@ -130,7 +133,7 @@ export class TweetListComponent {
         this.dialogData.text = "Deleting Favorite..."
         this.dialogData.okBtnAble = false;
         this.dialogData.cancelBtnAble = false;
-        this.tweetService.deleteFavoriteTweet(tweet, this.user_id);
+        this.tweetService.deleteFavoriteTweet(tweet, this.user_id, this.isFavList);
       },
       // 確認に対してOKを押した時
       () => {

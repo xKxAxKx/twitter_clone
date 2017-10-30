@@ -19,7 +19,7 @@ import { UserStore } from '../stores/user.store';
       </div>
       <div *ngIf="isTweetlist === true && isFavList === true" class="col-sm-8">
         <h2>@{{userStore.fetchUserInfo.username}}'s Favorite</h2>
-        <tweet-list></tweet-list>
+        <tweet-list [isFavList]='isFavList'></tweet-list>
       </div>
       <div *ngIf="isTweetlist === false">
         <follow-follower [title]='followFollowerTitle'></follow-follower>

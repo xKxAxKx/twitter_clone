@@ -119,7 +119,7 @@ export class TweetService {
           } else {
             this.getTweetByUserIds(this.userStore.loginUserInfo.id, true);
           }
-          this.userService.FetchFavoriteTweet(this.userStore.loginUserInfo, true);
+          this.userService.FetchFavoriteTweet(this.userStore.loginUserInfo.id, true);
           this.successAddFavoriteSubject.next(res);
         },
         (err) => {
@@ -129,17 +129,21 @@ export class TweetService {
   }
 
   // 指定したツイートをお気に入りから削除
-  deleteFavoriteTweet(tweet, user_id:number) {
+  deleteFavoriteTweet(tweet, user_id:number, isFavList:boolean=false) {
     return this.http
       .delete(this.DeleteFavoriteByTweetIdApi + tweet.id, this.commonService.jwt())
       .subscribe(
         (res) => {
           if(user_id) {
-            this.getTweetByUserIds(user_id, false);
+            if (isFavList) {
+              this.userService.FetchFavoriteTweet(user_id, false);
+            } else {
+              this.getTweetByUserIds(user_id, false);
+            }
           } else {
             this.getTweetByUserIds(this.userStore.loginUserInfo.id, true);
           }
-          this.userService.FetchFavoriteTweet(this.userStore.loginUserInfo, true);
+          this.userService.FetchFavoriteTweet(this.userStore.loginUserInfo.id, true);
           this.successDeleteFavoriteSubject.next(res);
         },
         (err) => {
