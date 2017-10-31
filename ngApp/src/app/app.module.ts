@@ -24,6 +24,7 @@ import { UserStore } from './stores/user.store';
 
 import { TweetPostComponent } from './components/tweet_post.component';
 import { TweetListComponent } from './components/tweet_list.component';
+import { TweetDetailComponent } from './components/tweet_detail.component';
 import { TweetService } from './services/tweet.service';
 import { TweetStore } from './stores/tweet.store';
 
@@ -47,6 +48,7 @@ import { ModalMedia } from './utils/modal';
     UserpageComponent,
     TweetPostComponent,
     TweetListComponent,
+    TweetDetailComponent,
     MyPageComponent,
     UserPanelComponent,
     FollowFollowerComponent,
