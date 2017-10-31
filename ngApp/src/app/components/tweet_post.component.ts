@@ -5,6 +5,7 @@ import { MainService } from '../services/main.service';
 import { TweetService } from '../services/tweet.service';
 import { UserStore } from '../stores/user.store';
 import { ITweet, ITweets, IModal } from '../models';
+import { Modal, ModalTweet }  from '../utils/modal';
 
 @Component({
   selector: 'tweet-post',
@@ -17,7 +18,7 @@ import { ITweet, ITweets, IModal } from '../models';
     required
   ></textarea><br>
   <button *ngIf="reply===false" (click)="postTweet()" class="btn btn-success pull-right">tweet</button>
-  <button *ngIf="reply===true" (click)="postTweet()" class="btn btn-success pull-right">reply</button>
+  <button *ngIf="reply===true" (click)="postReply()" class="btn btn-success pull-right">reply</button>
   `
 })
 export class TweetPostComponent {
@@ -32,6 +33,7 @@ export class TweetPostComponent {
     private tweetService: TweetService,
     private userStore: UserStore,
     private activatedRoute: ActivatedRoute,
+    private modalTweet: ModalTweet,
   ){
     activatedRoute.params.subscribe((params: Params) => {
       if(params['user_id']){
@@ -51,7 +53,7 @@ export class TweetPostComponent {
     }
 
   }
-  // 入力されたツイートが入
+
   postTweet() {
     let postData = {
       tweet: this.tweet,
@@ -60,5 +62,10 @@ export class TweetPostComponent {
     this.tweetService.postTweet(postData, this.getFollowTweet);
     this.tweet = '';
     this.parent_tweet = {};
+  }
+
+  postReply() {
+    console.log(this.tweet);
+    this.modalTweet.okModal();
   }
 }

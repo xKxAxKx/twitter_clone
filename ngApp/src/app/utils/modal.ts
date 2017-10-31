@@ -75,7 +75,14 @@ export class ModalDialog {
   ],
   template: `
   <div class="mod-Modal_Inner">
-    <a [routerLink]="['/user', data.tweet.user.id]" (click)="cancelModal()">@{{data.tweet.user.username}}</a>
+    <div *ngIf="data.tweet.parent.length >= 1">
+      <h5>Reply from</h5>
+      <div *ngFor="let parent of data.tweet.parent">
+        <p><a [routerLink]="['/user', parent.parent.user.id]" (click)="cancelModal()">@{{parent.parent.user.username}}</a> {{parent.parent.tweet}}</p>
+      </div>
+      <hr>
+    </div>
+    <h4><a [routerLink]="['/user', data.tweet.user.id]" (click)="cancelModal()">@{{data.tweet.user.username}}</a></h4>
     <h3>{{data.tweet.tweet}}</h3>
     <p>{{data.tweet.created_at | date: 'yyyy/MM/dd hh:mm:ss'}}</p>
     <hr>
@@ -84,8 +91,11 @@ export class ModalDialog {
       <tweet-post [parent_tweet]="data.tweet"></tweet-post>
     </div>
     <hr style="margin-top: 50px;">
-    <div *ngIf="data.tweet.children">
+    <div *ngIf="data.tweet.children.length >= 1">
       <h5>Respond to this tweet</h5>
+      <div *ngFor="let child of data.tweet.children">
+        <p><a [routerLink]="['/user', child.child.user.id]" (click)="cancelModal()">@{{child.child.user.username}}</a> {{child.child.tweet}}</p>
+      </div>
     </div>
   </div>
   `
@@ -138,7 +148,7 @@ export class ModalTweet {
       <div class="mod-Modal_Panel"
         [class.mod-Modal_Panel--dialog]="data.type === 'dialog'"
         [class.mod-Modal_Panel--dialog]="data.type === 'tweet'">
-        <div class="mod-Modal_Header">
+        <div *ngIf="data.type === 'dialog'" class="mod-Modal_Header">
           <div class="mod-Modal_Heading">{{data.title}}</div>
         </div>
         <modal-dialog
