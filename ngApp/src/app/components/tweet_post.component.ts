@@ -4,6 +4,7 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import { MainService } from '../services/main.service';
 import { TweetService } from '../services/tweet.service';
 import { UserStore } from '../stores/user.store';
+import { ITweet, ITweets, IModal } from '../models';
 
 @Component({
   selector: 'tweet-post',
@@ -15,10 +16,17 @@ import { UserStore } from '../stores/user.store';
     placeholder="What are you doing now?"
     required
   ></textarea><br>
-  <button (click)="postTweet()" class="btn btn-success pull-right">tweet</button>
+  <button *ngIf="reply===false" (click)="postTweet()" class="btn btn-success pull-right">tweet</button>
+  <button *ngIf="reply===true" (click)="postTweet()" class="btn btn-success pull-right">reply</button>
   `
 })
 export class TweetPostComponent {
+
+  @Input() parent_tweet: any;
+  reply: boolean = false;
+
+  getFollowTweet: boolean;
+  tweet: string;
 
   constructor (
     private tweetService: TweetService,
@@ -33,11 +41,17 @@ export class TweetPostComponent {
       }
     });
   }
-  // トップページか否か
-  getFollowTweet: boolean;
-  // 入力されたツイートが入る
-  tweet = '';
 
+  ngOnInit(){
+    if(this.parent_tweet) {
+      this.reply = true;
+      this.tweet = `@${this.parent_tweet.user.username} `;
+    } else {
+      this.tweet = '';
+    }
+
+  }
+  // 入力されたツイートが入
   postTweet() {
     let postData = {
       tweet: this.tweet,
@@ -45,5 +59,6 @@ export class TweetPostComponent {
     }
     this.tweetService.postTweet(postData, this.getFollowTweet);
     this.tweet = '';
+    this.parent_tweet = {};
   }
 }

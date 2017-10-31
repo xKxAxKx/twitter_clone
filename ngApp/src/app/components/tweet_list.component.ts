@@ -22,7 +22,7 @@ import { IModal } from '../models';
             <p>
               <a [routerLink]="['/user', tweet.user.id]">@{{ tweet.user.username }}</a>
               <span>{{ tweet.created_at | date: 'yyyy/MM/dd hh:mm:ss' }}</span>
-              <a [routerLink]="['/tweet', tweet.id]">Detail</a>
+              <a (click)="getTweetDetail(tweet)" class="cursor_pointer">Detail</a>
               <span>Reply</span>
               <span>Retweet</span>
               <a (click)="addFavorite(tweet)" class="cursor_pointer" *ngIf="userStore.loginUserFavList.indexOf(tweet.id) < 0">
@@ -143,13 +143,21 @@ export class TweetListComponent {
     );
   }
 
+  getTweetDetail(tweet) {
+    this.dialogData.isShow = true;
+    this.dialogData.title = 'Tweet Detail';
+    this.dialogData.tweet = tweet;
+    this.dialogData.type = 'tweet';
+    console.log(tweet)
+  }
+
   closeModal() {
     /*
      * モーダルの内容を設定
      */
     this.dialogData.isShow = false;
     this.dialogData.title = '';
-    this.dialogData.text = '';
+    this.dialogData.tweet = {};
     this.dialogData.okBtnAble = false;
     this.dialogData.cancelBtnAble = false;
 

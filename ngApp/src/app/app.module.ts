@@ -33,10 +33,8 @@ import { HeaderComponent }  from './components/header.component';
 import { FollowFollowerComponent }  from './components/follow_follower.component';
 
 import { Modal } from './utils/modal';
-import { ModalAlert } from './utils/modal';
 import { ModalDialog } from './utils/modal';
-import { ModalError } from './utils/modal';
-import { ModalMedia } from './utils/modal';
+import { ModalTweet } from './utils/modal';
 
 @NgModule({
   declarations: [
@@ -53,10 +51,8 @@ import { ModalMedia } from './utils/modal';
     UserPanelComponent,
     FollowFollowerComponent,
     Modal,
-    ModalAlert,
     ModalDialog,
-    ModalError,
-    ModalMedia,
+    ModalTweet,
   ],
   imports: [
     BrowserModule,

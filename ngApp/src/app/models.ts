@@ -39,6 +39,7 @@ export interface IModal {
   type: string;
   title: string;
   text: string;
+  tweet: any;
   fail: boolean;
   okBtnAble: boolean;
   cancelBtnAble: boolean;

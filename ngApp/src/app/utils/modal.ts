@@ -6,41 +6,9 @@ import {
           ChangeDetectorRef
         } from '@angular/core';
 
-
-@Component({
-  selector: 'modal-alert',
-  inputs: [
-    'data'
-  ],
-  template: `
-    alert
-  `
-})
-export class ModalAlert {
-
-  data: any;
-
-  /**
-   * Cancel の Output
-   */
-  @Output() cancelEvent: EventEmitter<number> = new EventEmitter<number>();
-
-
-  /**
-   * Cancelを押した
-   */
-  cancelModal() {
-    this.cancelEvent.emit();
-  }
-
-  constructor(
-  ) {
-  }
-}
-
-
-
-
+import { UserStore } from '../stores/user.store';
+import { TweetService } from '../services/tweet.service';
+import { TweetStore } from '../stores/tweet.store';
 
 @Component({
   selector: 'modal-dialog',
@@ -100,27 +68,48 @@ export class ModalDialog {
 }
 
 
-
-
-
 @Component({
-  selector: 'modal-error',
+  selector: 'modal-tweet',
   inputs: [
     'data'
   ],
   template: `
-    error
+  <div class="mod-Modal_Inner">
+    <a [routerLink]="['/user', data.tweet.user.id]" (click)="cancelModal()">@{{data.tweet.user.username}}</a>
+    <h3>{{data.tweet.tweet}}</h3>
+    <p>{{data.tweet.created_at | date: 'yyyy/MM/dd hh:mm:ss'}}</p>
+    <hr>
+    <h5>Reply to this tweet</h5>
+    <div class="tweet_post">
+      <tweet-post [parent_tweet]="data.tweet"></tweet-post>
+    </div>
+    <hr style="margin-top: 50px;">
+    <div *ngIf="data.tweet.children">
+      <h5>Respond to this tweet</h5>
+    </div>
+  </div>
   `
 })
-export class ModalError {
+export class ModalTweet {
+
+  constructor(
+    private userStore: UserStore,
+    private tweetService: TweetService,
+  ) {
+  }
 
   data: any;
 
-  /**
-   * Cancel の Output
-   */
+  @Output() okEvent: EventEmitter<number> = new EventEmitter<number>();
+
   @Output() cancelEvent: EventEmitter<number> = new EventEmitter<number>();
 
+  /**
+   * Cancelを押した
+   */
+  okModal() {
+    this.okEvent.emit();
+  }
 
   /**
    * Cancelを押した
@@ -129,35 +118,11 @@ export class ModalError {
     this.cancelEvent.emit();
   }
 
-  constructor(
-  ) {
+  addFavorite(tweet) {
+
   }
+
 }
-
-
-
-
-
-@Component({
-  selector: 'modal-media',
-  inputs: [
-    'data'
-  ],
-  template: `
-    media
-  `
-})
-export class ModalMedia {
-
-  data: any;
-
-  constructor(
-  ) {
-  }
-}
-
-
-
 
 
 @Component({
@@ -171,29 +136,21 @@ export class ModalMedia {
     <div class="mod-Modal">
       <div class="mod-Modal_Bg" (click)="closeModal($event)"></div>
       <div class="mod-Modal_Panel"
-        [class.mod-Modal_Panel--alert]="data.type === 'alert'"
         [class.mod-Modal_Panel--dialog]="data.type === 'dialog'"
-        [class.mod-Modal_Panel--error]="data.type === 'error'"
-        [class.mod-Modal_Panel--media]="data.type === 'media'">
+        [class.mod-Modal_Panel--dialog]="data.type === 'tweet'">
         <div class="mod-Modal_Header">
           <div class="mod-Modal_Heading">{{data.title}}</div>
         </div>
-        <modal-alert
-          *ngIf="data.type === 'alert'"
-          [data]="data"
-          (cancelEvent)="closeModal()"></modal-alert>
         <modal-dialog
           *ngIf="data.type === 'dialog'"
           [data]="data"
           (okEvent)="okModal()"
           (cancelEvent)="closeModal()"></modal-dialog>
-        <modal-error
-          *ngIf="data.type === 'error'"
-          [data]="data"
-          (cancelEvent)="closeModal()"></modal-error>
-        <modal-media
-          *ngIf="data.type === 'media'"
-          [data]="data"></modal-media>
+          <modal-tweet
+            *ngIf="data.type === 'tweet'"
+            [data]="data"
+            (okEvent)="okModal()"
+            (cancelEvent)="closeModal()"></modal-tweet>
       </div>
     </div>
   </ng-container>
@@ -304,10 +261,6 @@ export class Modal {
     this.successCallback = null;
     this.failCallback = null;
   }
-
-
-
-
 
   constructor(
   ) {

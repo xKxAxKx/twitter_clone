@@ -19,6 +19,7 @@ export class TweetStore {
     title: '',
     text: '',
     fail: false,
+    tweet: {},
     okBtnAble: false,
     cancelBtnAble: false,
   } as IModal;
