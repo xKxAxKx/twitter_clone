@@ -23,8 +23,6 @@ import { IModal } from '../models';
               <a [routerLink]="['/user', tweet.user.id]">@{{ tweet.user.username }}</a>
               <span>{{ tweet.created_at | date: 'yyyy/MM/dd hh:mm:ss' }}</span>
               <a (click)="getTweetDetail(tweet)" class="cursor_pointer">Detail</a>
-              <span>Reply</span>
-              <span>Retweet</span>
               <a (click)="addFavorite(tweet)" class="cursor_pointer" *ngIf="userStore.loginUserFavList.indexOf(tweet.id) < 0">
                 ☆
               </a>
@@ -102,6 +100,7 @@ export class TweetListComponent {
   }
 
   addFavorite(tweet) {
+    this.dialogData.type = 'dialog';
     this.dialogData.isShow = true;
     this.dialogData.title = 'Add Favorite';
     this.dialogData.text = `Add Favorite.<br>Is it OK?`;
@@ -123,6 +122,7 @@ export class TweetListComponent {
   }
 
   deleteFavorite(tweet) {
+    this.dialogData.type = 'dialog';
     this.dialogData.isShow = true;
     this.dialogData.title = 'Delete Favorite';
     this.dialogData.text = `Delete Favorite.<br>Is it OK?`;

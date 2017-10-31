@@ -1,11 +1,11 @@
-import { Component,Input } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 
 import { MainService } from '../services/main.service';
 import { TweetService } from '../services/tweet.service';
 import { UserStore } from '../stores/user.store';
 import { ITweet, ITweets, IModal } from '../models';
-import { Modal, ModalTweet }  from '../utils/modal';
+import { ModalTweet }  from '../utils/modal';
 
 @Component({
   selector: 'tweet-post',
@@ -23,6 +23,7 @@ import { Modal, ModalTweet }  from '../utils/modal';
 })
 export class TweetPostComponent {
 
+  @ViewChild(ModalTweet) modalTweet;
   @Input() parent_tweet: any;
   reply: boolean = false;
 
@@ -33,7 +34,6 @@ export class TweetPostComponent {
     private tweetService: TweetService,
     private userStore: UserStore,
     private activatedRoute: ActivatedRoute,
-    private modalTweet: ModalTweet,
   ){
     activatedRoute.params.subscribe((params: Params) => {
       if(params['user_id']){
