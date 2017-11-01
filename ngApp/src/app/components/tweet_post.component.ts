@@ -78,7 +78,6 @@ export class TweetPostComponent {
       parent_tweet: this.parent_tweet,
       user: null,
     }
-    console.log(this.isFavList, this.user_id);
     this.closeModal();
   }
 

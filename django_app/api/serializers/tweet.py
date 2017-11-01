@@ -4,9 +4,16 @@ from api.models.tweet import Tweet, Favorite, Reply
 import sys
 
 
+class TweetPostSerializer(serializers.ModelSerializer):
+    user = AccountSerializer()
+
+    class Meta:
+        model = Tweet
+        fields = ('tweet', 'user')
+
+
 class TweetOnlySerializer(serializers.ModelSerializer):
     user = AccountSerializer()
-    # user = AccountDataSerializer()
 
     class Meta:
         model = Tweet

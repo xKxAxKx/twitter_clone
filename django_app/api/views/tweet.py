@@ -9,7 +9,7 @@ from rest_framework.pagination import PageNumberPagination
 from rest_framework import status, viewsets, filters
 from rest_framework.views import APIView
 from api.serializers.tweet import (TweetSerializer, TweetOnlySerializer,
-                                   FavoriteSerializer)
+                                   FavoriteSerializer, TweetPostSerializer)
 from api.serializers.user import AccountSerializer
 from api.models.tweet import Tweet, Favorite
 from api.models.user import Account, Follow
@@ -18,14 +18,18 @@ import json
 
 # ツイート作成のView(POST)
 class TweetPostView(generics.CreateAPIView):
-    permission_classes = (permissions.AllowAny,)
+    permission_classes = (permissions.IsAuthenticated,)
     queryset = Tweet.objects.all()
-    serializer_class = TweetOnlySerializer
+    serializer_class = TweetPostSerializer
 
     @transaction.atomic
     def create(self, request, *args, **kwargs):
-        request.data['user'] = request.user.email
-        return super().create(request)
+        request.data['user'] = request.user.id
+        request_user = Account.objects.get(id=request.user.id)
+        query_set = Tweet.objects.create(tweet=request.data['tweet'],
+                                         user=request_user)
+        tweet_serializer = TweetSerializer(query_set)
+        return Response(tweet_serializer.data, status=status.HTTP_200_OK)
 
 
 class TweetListPagination(PageNumberPagination):
