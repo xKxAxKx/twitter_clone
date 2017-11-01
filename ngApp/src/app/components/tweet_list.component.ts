@@ -135,7 +135,6 @@ export class TweetListComponent {
         this.dialogData.okBtnAble = false;
         this.dialogData.cancelBtnAble = false;
         this.tweetService.deleteFavoriteTweet(tweet, this.user_id, this.isFavList);
-        console.log(tweet);
       },
       // 確認に対してOKを押した時
       () => {
@@ -148,7 +147,6 @@ export class TweetListComponent {
     this.dialogData.isShow = true;
     this.dialogData.tweet = tweet;
     this.dialogData.type = 'tweet';
-    console.log(tweet)
   }
 
   closeModal() {

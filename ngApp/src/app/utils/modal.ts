@@ -114,22 +114,13 @@ export class ModalTweet {
 
   @Output() cancelEvent: EventEmitter<number> = new EventEmitter<number>();
 
-  /**
-   * Cancelを押した
-   */
   okModal() {
     this.okEvent.emit();
   }
 
-  /**
-   * Cancelを押した
-   */
+
   cancelModal() {
     this.cancelEvent.emit();
-  }
-
-  addFavorite(tweet) {
-
   }
 
 }

@@ -4,8 +4,9 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import { MainService } from '../services/main.service';
 import { TweetService } from '../services/tweet.service';
 import { UserStore } from '../stores/user.store';
+import { TweetStore } from '../stores/tweet.store';
 import { ITweet, ITweets, IModal } from '../models';
-import { ModalTweet }  from '../utils/modal';
+import { Modal }  from '../utils/modal';
 
 @Component({
   selector: 'tweet-post',
@@ -23,16 +24,15 @@ import { ModalTweet }  from '../utils/modal';
 })
 export class TweetPostComponent {
 
-  @ViewChild(ModalTweet) modalTweet;
   @Input() parent_tweet: any;
-  reply: boolean = false;
-
+  reply: boolean;
   getFollowTweet: boolean;
   tweet: string;
 
   constructor (
     private tweetService: TweetService,
     private userStore: UserStore,
+    private tweetStore: TweetStore,
     private activatedRoute: ActivatedRoute,
   ){
     activatedRoute.params.subscribe((params: Params) => {
@@ -44,14 +44,18 @@ export class TweetPostComponent {
     });
   }
 
+  get dialogData(): IModal {
+    return this.tweetStore.modalData;
+  }
+
   ngOnInit(){
+    this.reply = false;
+    this.tweet = '';
+
     if(this.parent_tweet) {
       this.reply = true;
       this.tweet = `@${this.parent_tweet.user.username} `;
-    } else {
-      this.tweet = '';
     }
-
   }
 
   postTweet() {
@@ -65,7 +69,25 @@ export class TweetPostComponent {
   }
 
   postReply() {
-    console.log(this.tweet);
-    this.modalTweet.okModal();
+    let postData = {
+      tweet: this.tweet,
+      parent_tweet: this.parent_tweet,
+      user: null,
+    }
+    console.log(postData);
+    this.closeModal();
+  }
+
+  closeModal() {
+    /*
+     * モーダルの内容を設定
+     */
+    this.dialogData.isShow = false;
+    this.dialogData.type = 'dialog';
+    this.dialogData.title = '';
+    this.dialogData.tweet = {};
+    this.dialogData.okBtnAble = false;
+    this.dialogData.cancelBtnAble = false;
+
   }
 }
