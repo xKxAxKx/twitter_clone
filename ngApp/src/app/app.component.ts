@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router, ActivatedRoute, Params } from '@angular/router';
 
 import { CommonStore } from './stores/common.store';
 import { UserService } from './services/user.service';
@@ -26,7 +27,10 @@ export class AppComponent {
   constructor (
     private commonStore: CommonStore,
     private userService: UserService,
-  ){}
+    private activatedRoute: ActivatedRoute,
+  ){
+    
+  }
 
   ngOnInit() {
     this.userService.checkLogin();

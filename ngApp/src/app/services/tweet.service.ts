@@ -53,7 +53,8 @@ export class TweetService {
 
 
   // Tweetをpostする
-  postTweet(postData, getFollowTweet) {
+  // postした再読み込みするデータが異なってくるので注意
+  postTweet(postData, getFollowTweet:boolean, user_id:number=null, isFavList:boolean=false) {
     return this.http
       .post(this.PostTweetApi, postData, this.commonService.jwt())
       .map((res) => res.json())

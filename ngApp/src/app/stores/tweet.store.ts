@@ -22,6 +22,7 @@ export class TweetStore {
     tweet: {},
     okBtnAble: false,
     cancelBtnAble: false,
+    options: {},
   } as IModal;
 
 

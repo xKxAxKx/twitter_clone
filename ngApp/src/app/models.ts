@@ -43,4 +43,5 @@ export interface IModal {
   fail: boolean;
   okBtnAble: boolean;
   cancelBtnAble: boolean;
+  options: any;
 }

@@ -88,7 +88,7 @@ export class ModalDialog {
     <hr>
     <h5>Reply to this tweet</h5>
     <div class="tweet_post">
-      <tweet-post [parent_tweet]="data.tweet"></tweet-post>
+      <tweet-post [parent_tweet]="data.tweet" [isFavList]="data.options.isFavList"></tweet-post>
     </div>
     <hr style="margin-top: 50px;">
     <div *ngIf="data.tweet.children.length >= 1">

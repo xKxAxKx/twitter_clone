@@ -6,6 +6,7 @@ import sys
 
 class TweetOnlySerializer(serializers.ModelSerializer):
     user = AccountSerializer()
+    # user = AccountDataSerializer()
 
     class Meta:
         model = Tweet

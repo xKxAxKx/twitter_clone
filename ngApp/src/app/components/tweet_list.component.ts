@@ -147,6 +147,9 @@ export class TweetListComponent {
     this.dialogData.isShow = true;
     this.dialogData.tweet = tweet;
     this.dialogData.type = 'tweet';
+    this.dialogData.options = {
+      isFavList: this.isFavList,
+    }
   }
 
   closeModal() {

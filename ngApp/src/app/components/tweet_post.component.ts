@@ -25,9 +25,11 @@ import { Modal }  from '../utils/modal';
 export class TweetPostComponent {
 
   @Input() parent_tweet: any;
+  @Input() isFavList: boolean;
   reply: boolean;
   getFollowTweet: boolean;
   tweet: string;
+  user_id: number;
 
   constructor (
     private tweetService: TweetService,
@@ -37,8 +39,10 @@ export class TweetPostComponent {
   ){
     activatedRoute.params.subscribe((params: Params) => {
       if(params['user_id']){
+        this.user_id = params['user_id'];
         this.getFollowTweet = false;
       } else {
+        this.user_id = null;
         this.getFollowTweet = true;
       }
     });
@@ -74,7 +78,7 @@ export class TweetPostComponent {
       parent_tweet: this.parent_tweet,
       user: null,
     }
-    console.log(postData);
+    console.log(this.isFavList, this.user_id);
     this.closeModal();
   }
 

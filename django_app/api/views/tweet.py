@@ -10,6 +10,7 @@ from rest_framework import status, viewsets, filters
 from rest_framework.views import APIView
 from api.serializers.tweet import (TweetSerializer, TweetOnlySerializer,
                                    FavoriteSerializer)
+from api.serializers.user import AccountSerializer
 from api.models.tweet import Tweet, Favorite
 from api.models.user import Account, Follow
 import json
@@ -17,13 +18,13 @@ import json
 
 # ツイート作成のView(POST)
 class TweetPostView(generics.CreateAPIView):
-    permission_classes = (permissions.IsAuthenticated,)
+    permission_classes = (permissions.AllowAny,)
     queryset = Tweet.objects.all()
     serializer_class = TweetOnlySerializer
 
     @transaction.atomic
     def create(self, request, *args, **kwargs):
-        request.data['user'] = request.user.id
+        request.data['user'] = request.user.email
         return super().create(request)
 
 
