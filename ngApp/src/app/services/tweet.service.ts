@@ -54,13 +54,25 @@ export class TweetService {
 
   // Tweetをpostする
   // postした再読み込みするデータが異なってくるので注意
-  postTweet(postData, getFollowTweet:boolean, user_id:number=null, isFavList:boolean=false) {
+  postTweet(postData:any, getFollowTweet:boolean,
+            user_id:number=null, isFavList:boolean=false) {
     return this.http
       .post(this.PostTweetApi, postData, this.commonService.jwt())
       .map((res) => res.json())
       .subscribe(
         (res) => {
-          this.getTweetByUserIds(this.userStore.loginUserInfo.id, getFollowTweet);
+          if (user_id) {
+            if (isFavList) {
+              // 当該ユーザのfav一覧の更新
+              this.userService.FetchFavoriteTweet(user_id, false);
+            } else {
+              // 当該のユーザのツイート一覧を更新
+              this.getTweetByUserIds(user_id, false);
+            }
+          } else {
+            // 自分のタイムラインの更新
+            this.getTweetByUserIds(this.userStore.loginUserInfo.id, getFollowTweet);
+          }
           this.completePostTweetSubject.next(res.tweet);
         },
         (err) => {

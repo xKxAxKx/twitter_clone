@@ -11,7 +11,7 @@ from rest_framework.views import APIView
 from api.serializers.tweet import (TweetSerializer, TweetOnlySerializer,
                                    FavoriteSerializer, TweetPostSerializer)
 from api.serializers.user import AccountSerializer
-from api.models.tweet import Tweet, Favorite
+from api.models.tweet import Tweet, Favorite, Reply
 from api.models.user import Account, Follow
 import json
 
@@ -26,9 +26,13 @@ class TweetPostView(generics.CreateAPIView):
     def create(self, request, *args, **kwargs):
         request.data['user'] = request.user.id
         request_user = Account.objects.get(id=request.user.id)
-        query_set = Tweet.objects.create(tweet=request.data['tweet'],
+        save_tweet_query = Tweet.objects.create(tweet=request.data['tweet'],
                                          user=request_user)
-        tweet_serializer = TweetSerializer(query_set)
+        if request.data['parent_tweet']:
+            parent_tweet = Tweet.objects.get(id=request.data['parent_tweet']['id'])
+            reply_query = Reply.objects.create(parent=parent_tweet,
+                                               child=save_tweet_query)
+        tweet_serializer = TweetSerializer(save_tweet_query)
         return Response(tweet_serializer.data, status=status.HTTP_200_OK)
 
 

@@ -77,6 +77,7 @@ export class TweetListComponent {
   }
 
   deleteTweet(tweet) {
+    this.dialogData.type = 'dialog';
     this.dialogData.isShow = true;
     this.dialogData.title = 'Delete your Tweet';
     this.dialogData.text = `Delete Tweet "${tweet.tweet}".<br>Is it OK?`;

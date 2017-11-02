@@ -65,6 +65,7 @@ export class TweetPostComponent {
   postTweet() {
     let postData = {
       tweet: this.tweet,
+      parent_tweet: null,
       user: null,
     }
     this.tweetService.postTweet(postData, this.getFollowTweet);
@@ -78,7 +79,7 @@ export class TweetPostComponent {
       parent_tweet: this.parent_tweet,
       user: null,
     }
-    console.log(postData, this.getFollowTweet, this.user_id, this.isFavList)
+    this.tweetService.postTweet(postData, this.getFollowTweet, this.user_id, this.isFavList);
     this.closeModal();
   }
 
