@@ -35,17 +35,7 @@ export class HeaderComponent {
   constructor (
     private userStore: UserStore,
     private userService: UserService,
-  ){
-    // this.userService.completeUserLoginSubject.subscribe( () => {
-    //   this.userLogin = true;
-    // });
-    //
-    // this.userService.logoutUserSubject.subscribe( () => {
-    //   this.userLogin = false;
-    // });
-  }
-
-  // userLogin:boolean;
+  ){}
 
   logout() {
     this.userService.logout();

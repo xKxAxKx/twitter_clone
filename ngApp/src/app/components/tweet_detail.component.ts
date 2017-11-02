@@ -29,7 +29,6 @@ export class TweetDetailComponent {
     private userService: UserService,
     private tweetService: TweetService,
     private tweetStore: TweetStore,
-
   ){
   }
 

@@ -112,7 +112,7 @@ export class MyPageComponent {
       this.editUserInfo.username.length > 0;
   }
 
-  get isAbleChangePassword(): boolean{
+  get isAbleChangePassword(): boolean {
     return this.newPassword.length > 0 &&
     this.oldPassword.length > 0 &&
     this.repeatNewPassword.length > 0;

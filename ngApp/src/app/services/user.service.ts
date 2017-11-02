@@ -6,7 +6,7 @@ import { Observable, Subject } from 'rxjs';
 import { CommonService } from './common.service';
 import { TweetService } from './tweet.service';
 
-import { ILoginUser, ISignUpUser, IUpdateUser } from '../models';
+import { ILoginUser, ISignUpUser, IUpdateUser, IUser } from '../models';
 
 @Injectable()
 export class UserService {
@@ -194,7 +194,7 @@ export class UserService {
 
 
   // ユーザをフォローする
-  userFollow(followUser) {
+  userFollow(followUser:IUser) {
     return this.http
       .post(this.UserFollowApi, followUser, this.commonService.jwt())
       .subscribe(
@@ -211,7 +211,7 @@ export class UserService {
 
 
   // フォローを解除する
-  userRemove(removeUser) {
+  userRemove(removeUser:IUser) {
     return this.http
       .delete(this.UserRemoveApi + removeUser.id, this.commonService.jwt())
       .subscribe(
@@ -227,7 +227,7 @@ export class UserService {
   }
 
   // 指定したユーザIDのお気に入りツイートを取得
-  FetchFavoriteTweet(user_id, is_LoginUser:boolean) {
+  FetchFavoriteTweet(user_id:number, is_LoginUser:boolean) {
     return this.http
       .get(this.FetchFavoriteTweetByUserIdApi + user_id)
       .map(res => res.json())
