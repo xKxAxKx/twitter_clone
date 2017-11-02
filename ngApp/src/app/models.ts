@@ -22,6 +22,12 @@ export interface ISignUpUser {
   profile?: string;
 }
 
+export interface IUpdateUser {
+  email: string;
+  username: string;
+  profile?: string;
+}
+
 export interface IUser {
   id: number;
   email: string;

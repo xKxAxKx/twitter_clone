@@ -6,7 +6,7 @@ import { Observable, Subject } from 'rxjs';
 import { CommonService } from './common.service';
 import { TweetService } from './tweet.service';
 
-import { ILoginUser, ISignUpUser } from '../models';
+import { ILoginUser, ISignUpUser, IUpdateUser } from '../models';
 
 @Injectable()
 export class UserService {
@@ -135,7 +135,7 @@ export class UserService {
 
 
   // idで指定したユーザの情報を取得する
-  fetchUserInfo(user_id) {
+  fetchUserInfo(user_id:number) {
     return this.http
       .get(this.FetchUserApi + user_id, this.commonService.jwt())
       .subscribe(
@@ -174,7 +174,7 @@ export class UserService {
 
 
   // ログインユーザの情報を更新する
-  updateUserInfo(userUpdateInfo) {
+  updateUserInfo(userUpdateInfo: IUpdateUser) {
     return this.http
       .put(this.UpdateUserInfoApi, userUpdateInfo, this.commonService.jwt())
       .subscribe(
