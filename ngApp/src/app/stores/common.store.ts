@@ -25,11 +25,13 @@ export class CommonStore {
     // userService.completeUserLoginSubject()が呼ばれたら流れてくる
     this.userService.completeUserLoginSubject.subscribe( () =>{
       this.successMessage = 'Success Login!';
+      this.errorMessage = '';
     });
 
     // ログインに失敗したメッセージを表示する
     this.userService.errorUserLoginSubject.subscribe( () =>{
       this.errorMessage = 'Failed Login...';
+      this.errorMessage = '';
     });
 
     // ユーザ作成に成功したメッセージを表示する
@@ -41,12 +43,6 @@ export class CommonStore {
     this.userService.errorRegisterSubject.subscribe(
       (err) => {
         this.errorMessage = 'Failed Signup...';
-        if(err.username) {
-          console.log(err.username);
-        }
-        if(err.email) {
-          console.log(err.email);
-        }
     });
 
     // ログアウトしたメッセージを表示する
@@ -54,7 +50,7 @@ export class CommonStore {
       this.successMessage = 'Logged out';
     });
 
-    // ログアウトしたメッセージを表示する
+    // 存在しないユーザIDにアクセスした場合のメッセージを表示する
     this.userService.errorUserInfoSubjct.subscribe(
       (err) => {
         this.errorMessage = 'There is no account that does not exist';
