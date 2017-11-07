@@ -1,7 +1,6 @@
 import { Component, Input, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 
-import { MainService } from '../services/main.service';
 import { UserStore } from '../stores/user.store';
 import { UserService } from '../services/user.service';
 import { Modal }  from '../utils/modal';
@@ -52,7 +51,6 @@ export class UserPanelComponent {
   @ViewChild(Modal) modal;
 
   constructor (
-    private mainService: MainService,
     private userStore: UserStore,
     private userService: UserService,
     private activatedRoute: ActivatedRoute,

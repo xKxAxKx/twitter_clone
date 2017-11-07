@@ -7,12 +7,10 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule }   from './app-routing.module';
 import { AuthGuard }      from './guards/auth.guard';
 
+import { MainComponent } from './components/main.component';
+
 import { CommonService } from './services/common.service';
 import { CommonStore } from './stores/common.store';
-
-import { MainComponent } from './components/main.component';
-import { MainService } from './services/main.service';
-import { MainStore } from './stores/main.store';
 
 import { LoginComponent } from './components/login.component';
 import { SignupComponent } from './components/signup.component';
@@ -64,8 +62,6 @@ import { ModalTweet } from './utils/modal';
     AuthGuard,
     CommonService,
     CommonStore,
-    MainService,
-    MainStore,
     UserService,
     UserStore,
     TweetService,
