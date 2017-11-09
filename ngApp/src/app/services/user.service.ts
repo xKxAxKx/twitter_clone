@@ -27,6 +27,9 @@ export class UserService {
   // ログインが確認できたときのSubject
   completeUserLoginSubject: Subject<any> = new Subject<any>();
 
+  // ログインが成功できた時のSubject
+  successUserLoginSubject: Subject<any> = new Subject<any>();
+
   // ログインが失敗したときのSubject
   errorUserLoginSubject: Subject<any> = new Subject<any>();
 
@@ -76,7 +79,6 @@ export class UserService {
     private http: Http,
     private router: Router,
     private commonService: CommonService,
-    // private tweetService: TweetService,
   ){}
 
 
@@ -89,6 +91,7 @@ export class UserService {
           let token = JSON.stringify(res.json());
           this.saveToken(token);
           this.completeUserLoginSubject.next();
+          this.successUserLoginSubject.next();
           this.router.navigate(['/']);
         },
         (err) => {
