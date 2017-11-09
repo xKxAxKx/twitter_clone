@@ -1,7 +1,6 @@
 import { Component, Input, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 
-import { MainService } from '../services/main.service';
 import { TweetService } from '../services/tweet.service';
 import { UserStore } from '../stores/user.store';
 import { TweetStore } from '../stores/tweet.store';
