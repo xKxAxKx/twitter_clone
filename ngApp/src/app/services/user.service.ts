@@ -182,6 +182,8 @@ export class UserService {
       .put(this.UpdateUserInfoApi, userUpdateInfo, this.commonService.jwt())
       .subscribe(
         (res) => {
+          let token = JSON.stringify(res.json());
+          this.saveToken(token);
           this.successUpdateUserInfoSubjct.next(res);
           this.fetchLoginUserInfo()
         },

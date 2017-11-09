@@ -4,15 +4,15 @@ from rest_framework_jwt.settings import api_settings
 from rest_framework.exceptions import AuthenticationFailed
 from rest_framework.response import Response
 from django.db import transaction
-from django.http import HttpResponse, Http404
-import json
-
+from django.http import HttpResponse, Http404, JsonResponse
 from rest_framework import status, viewsets, filters
 from rest_framework.views import APIView
-
 from api.serializers.user import AccountSerializer, FollowSerializer
 from api.models.user import Account, AccountManager, Follow
+import jwt
+from django.conf import settings
 
+jwt_payload_handler = api_settings.JWT_PAYLOAD_HANDLER
 
 # ユーザ作成のView(POST)
 class AuthRegister(generics.CreateAPIView):
@@ -66,6 +66,21 @@ class AuthInfoUpdateView(generics.UpdateAPIView):
         except Account.DoesNotExist:
             raise Http404
 
+    def put(self, request, *args, **kwargs):
+        serializer = self.serializer_class(self.get_object(),
+                                           data=request.data,
+                                           partial=True)
+        if serializer.is_valid():
+            instance = serializer.save()
+            payload = jwt_payload_handler(instance)
+            token = jwt.encode(payload, settings.SECRET_KEY).decode('unicode_escape')
+            response = JsonResponse({'token': token})
+            response.status = 200
+            return response
+        else:
+            response = JsonResponse({'errors': serializer.errors})
+            response.status = 500
+            return response
 
 # ユーザ削除のView(DELETE)
 class AuthInfoDeleteView(generics.DestroyAPIView):

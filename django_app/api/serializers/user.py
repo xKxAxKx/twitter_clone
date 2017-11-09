@@ -2,6 +2,9 @@ from django.contrib.auth import update_session_auth_hash
 from rest_framework import serializers
 from api.models.user import Account, AccountManager, Follow
 from api.models.tweet import Favorite
+from rest_framework_jwt.settings import api_settings
+import jwt
+from django.conf import settings
 
 
 class AccountDataSerializer(serializers.ModelSerializer):
@@ -36,10 +39,14 @@ class AccountSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         return Account.objects.create_user(request_data=validated_data)
 
-    def update(self, instance, validated_data):
-        if 'password' in validated_data:
-            instance.set_password(validated_data['password'])
-        else:
-            instance = super().update(instance, validated_data)
-        instance.save()
-        return instance
+    # def update(self, instance, validated_data):
+    #     if 'password' in validated_data:
+    #         instance.set_password(validated_data['password'])
+    #     else:
+    #         instance = super().update(instance, validated_data)
+    #     instance.save()
+    #     payload = jwt_payload_handler(instance)
+    #     token = jwt.encode(payload, settings.SECRET_KEY).decode('unicode_escape')
+    #     response = JsonResponse({'token': token})
+    #     response.status = 200
+    #     return response
