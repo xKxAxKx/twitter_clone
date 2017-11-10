@@ -39,14 +39,14 @@ class AccountSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         return Account.objects.create_user(request_data=validated_data)
 
-    # def update(self, instance, validated_data):
-    #     if 'password' in validated_data:
-    #         instance.set_password(validated_data['password'])
-    #     else:
-    #         instance = super().update(instance, validated_data)
-    #     instance.save()
-    #     payload = jwt_payload_handler(instance)
-    #     token = jwt.encode(payload, settings.SECRET_KEY).decode('unicode_escape')
-    #     response = JsonResponse({'token': token})
-    #     response.status = 200
-    #     return response
+
+class PasswordChangeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Account
+        fields = ('id', 'email', 'password')
+
+    def update(self, instance, validated_data):
+        validated_data
+        instance.set_password(validated_data['password'])
+        instance.save()
+        return instance
