@@ -145,7 +145,8 @@ export class MyPageComponent {
   changePassword() {
     if(this.newPassword == this.repeatNewPassword) {
       this.setFormData();
-      this.editUserInfo.password = this.newPassword;
+      this.editUserInfo.old_password = this.oldPassword;
+      this.editUserInfo.new_password = this.newPassword;
       this.userService.updatePassword(this.editUserInfo);
     } else {
       this.userService.notMatchNewPassword();

@@ -194,12 +194,12 @@ export class UserService {
       );
   }
 
+  // ログインユーザのパスワードを更新する
   updatePassword(userUpdateInfo: IUpdateUser) {
     return this.http
       .put(this.UpdatePasswordApi, userUpdateInfo, this.commonService.jwt())
       .subscribe(
         (res) => {
-          let token = JSON.stringify(res.json());
           this.successUpdateUserInfoSubjct.next(res);
           this.fetchLoginUserInfo()
         },

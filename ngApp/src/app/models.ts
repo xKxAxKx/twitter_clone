@@ -26,6 +26,8 @@ export interface IUpdateUser {
   email: string;
   username: string;
   profile?: string;
+  old_password?: string;
+  new_password?: string;
 }
 
 export interface IUser {

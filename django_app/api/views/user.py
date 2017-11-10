@@ -90,15 +90,24 @@ class AuthInfoUpdateView(generics.UpdateAPIView):
 class PasswordUpdateView(generics.UpdateAPIView):
     permission_classes = (permissions.IsAuthenticated,)
     serializer_class = PasswordChangeSerializer
-    lookup_field = 'email'
     queryset = Account.objects.all()
+    lookup_field = 'email'
 
-    def get_object(self):
-        try:
-            instance = self.queryset.get(email=self.request.user)
-            return instance
-        except Account.DoesNotExist:
-            raise Http404
+    def update(self, request, *args, **kwargs):
+        user = Account.objects.get(email=self.request.user)
+        serializer = self.get_serializer(data=request.data)
+
+        if serializer.is_valid():
+            if not user.check_password(serializer.data.get("old_password")):
+                return Response({"old_password": ["Wrong password."]},
+                                status=status.HTTP_400_BAD_REQUEST)
+            else:
+                user.set_password(serializer.data.get("new_password"))
+                user.save()
+                return Response("Success.", status=status.HTTP_200_OK)
+        else:
+            return Response(serializer.errors,
+                            status=status.HTTP_400_BAD_REQUEST)
 
 
 # ユーザ削除のView(DELETE)

@@ -40,13 +40,6 @@ class AccountSerializer(serializers.ModelSerializer):
         return Account.objects.create_user(request_data=validated_data)
 
 
-class PasswordChangeSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Account
-        fields = ('id', 'email', 'password')
-
-    def update(self, instance, validated_data):
-        validated_data
-        instance.set_password(validated_data['password'])
-        instance.save()
-        return instance
+class PasswordChangeSerializer(serializers.Serializer):
+    old_password = serializers.CharField(required=True)
+    new_password = serializers.CharField(required=True)
