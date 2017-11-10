@@ -17,6 +17,7 @@ export class UserService {
   private RegisterApi = `http://127.0.0.1:8000/api/user/register/`;
   private FetchUserApi = `http://127.0.0.1:8000/api/user/`;
   private UpdateUserInfoApi = `http://127.0.0.1:8000/api/user/auth_update/`;
+  private UpdatePasswordApi = `http://127.0.0.1:8000/api/user/password_update/`;
   private UserFollowApi = `http://127.0.0.1:8000/api/user/follow/`;
   private UserRemoveApi = `http://127.0.0.1:8000/api/user/remove/`;
   private FetchFavoriteTweetByUserIdApi = `http://127.0.0.1:8000/api/favorite/get/`;
@@ -184,6 +185,21 @@ export class UserService {
         (res) => {
           let token = JSON.stringify(res.json());
           this.saveToken(token);
+          this.successUpdateUserInfoSubjct.next(res);
+          this.fetchLoginUserInfo()
+        },
+        (err) => {
+          this.errorUpdateUserInfoSubjct.next();
+        }
+      );
+  }
+
+  updatePassword(userUpdateInfo: IUpdateUser) {
+    return this.http
+      .put(this.UpdatePasswordApi, userUpdateInfo, this.commonService.jwt())
+      .subscribe(
+        (res) => {
+          let token = JSON.stringify(res.json());
           this.successUpdateUserInfoSubjct.next(res);
           this.fetchLoginUserInfo()
         },

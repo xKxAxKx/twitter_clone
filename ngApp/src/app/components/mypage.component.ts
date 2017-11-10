@@ -146,7 +146,7 @@ export class MyPageComponent {
     if(this.newPassword == this.repeatNewPassword) {
       this.setFormData();
       this.editUserInfo.password = this.newPassword;
-      this.userService.updateUserInfo(this.editUserInfo);
+      this.userService.updatePassword(this.editUserInfo);
     } else {
       this.userService.notMatchNewPassword();
     }
