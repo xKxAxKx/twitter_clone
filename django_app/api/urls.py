@@ -4,7 +4,8 @@ from rest_framework_jwt.views import (obtain_jwt_token, refresh_jwt_token,
                                       verify_jwt_token)
 from api.views.user import (AuthRegister, AuthInfoGetView, AuthInfoUpdateView,
                             AuthInfoDeleteView, UserInfoGetView,
-                            FollowAddView, FollowRemoveView)
+                            FollowAddView, FollowRemoveView,
+                            PasswordUpdateView)
 from api.views.tweet import (TweetPostView, TweetGetByTweetIdView,
                              TweetDeleteView, TweetListGetByUserIdView,
                              FavoriteTweetGetByUserIdView,
@@ -22,6 +23,7 @@ urlpatterns = [
     url(r'^user/mypage/$', AuthInfoGetView.as_view()),
     url(r'^user/(?P<user_id>\d+)$', UserInfoGetView.as_view()),
     url(r'^user/auth_update/$', AuthInfoUpdateView.as_view()),
+    url(r'^user/password_update/$', PasswordUpdateView.as_view()),
     url(r'^user/delete/$', AuthInfoDeleteView.as_view()),
     url(r'^user/login/$', obtain_jwt_token),
     url(r'^user/token-refresh/$', refresh_jwt_token),

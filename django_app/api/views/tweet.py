@@ -134,7 +134,7 @@ class FavoriteTweetAddView(generics.CreateAPIView):
                             status=status.HTTP_400_BAD_REQUEST)
 
 
-# お気に入りイート削除のView(DELETE)
+# お気に入りツイート削除のView(DELETE)
 class FavoriteTweetDeleteView(generics.DestroyAPIView):
     permission_classes = (permissions.IsAuthenticated,)
     queryset = Favorite.objects.all()

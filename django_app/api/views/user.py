@@ -7,12 +7,14 @@ from django.db import transaction
 from django.http import HttpResponse, Http404, JsonResponse
 from rest_framework import status, viewsets, filters
 from rest_framework.views import APIView
-from api.serializers.user import AccountSerializer, FollowSerializer
+from api.serializers.user import (AccountSerializer, FollowSerializer,
+                                  PasswordChangeSerializer)
 from api.models.user import Account, AccountManager, Follow
 import jwt
 from django.conf import settings
 
 jwt_payload_handler = api_settings.JWT_PAYLOAD_HANDLER
+
 
 # ユーザ作成のView(POST)
 class AuthRegister(generics.CreateAPIView):
@@ -73,7 +75,8 @@ class AuthInfoUpdateView(generics.UpdateAPIView):
         if serializer.is_valid():
             instance = serializer.save()
             payload = jwt_payload_handler(instance)
-            token = jwt.encode(payload, settings.SECRET_KEY).decode('unicode_escape')
+            token = jwt.encode(payload, settings.SECRET_KEY) \
+                       .decode('unicode_escape')
             response = JsonResponse({'token': token})
             response.status = 200
             return response
@@ -81,6 +84,22 @@ class AuthInfoUpdateView(generics.UpdateAPIView):
             response = JsonResponse({'errors': serializer.errors})
             response.status = 500
             return response
+
+
+# パスワード更新のView(PUT)
+class PasswordUpdateView(generics.UpdateAPIView):
+    permission_classes = (permissions.IsAuthenticated,)
+    serializer_class = PasswordChangeSerializer
+    lookup_field = 'email'
+    queryset = Account.objects.all()
+
+    def get_object(self):
+        try:
+            instance = self.queryset.get(email=self.request.user)
+            return instance
+        except Account.DoesNotExist:
+            raise Http404
+
 
 # ユーザ削除のView(DELETE)
 class AuthInfoDeleteView(generics.DestroyAPIView):
