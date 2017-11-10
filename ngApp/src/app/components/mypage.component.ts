@@ -1,9 +1,11 @@
-import { Component,Input } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
 
 import { UserService } from '../services/user.service';
 import { UserStore } from '../stores/user.store';
+import { Modal }  from '../utils/modal';
+import { IModal } from '../models';
 
 @Component({
   selector: 'myPage',
@@ -93,11 +95,21 @@ import { UserStore } from '../stores/user.store';
           </button>
         </form>
       </div>
+      <div style="margin-top:70px; margin-bottom:50px;">
+        <h3>Delete User</h3>
+        <p>Deleting a user can never be undone</p>
+        <button (click)="deleteUser()" class="btn btn-danger">Delete User</button>
+      </div>
     </div>
   </div>
+  <modal
+    [data]="this.userStore.modalData"
+    (cancelEvent)="closeModal()"></modal>
   `
 })
 export class MyPageComponent {
+
+  @ViewChild(Modal) modal;
 
   editUserInfo:any = {};
   newPassword:string = '';
@@ -116,6 +128,10 @@ export class MyPageComponent {
     return this.newPassword.length > 0 &&
     this.oldPassword.length > 0 &&
     this.repeatNewPassword.length > 0;
+  }
+
+  get dialogData(): IModal {
+    return this.userStore.modalData;
   }
 
   constructor (
@@ -151,6 +167,35 @@ export class MyPageComponent {
     } else {
       this.userService.notMatchNewPassword();
     }
+  }
+
+  deleteUser() {
+    this.dialogData.type = 'dialog';
+    this.dialogData.isShow = true;
+    this.dialogData.title = 'Delete Your Account';
+    this.dialogData.text = `Delete Your Account.<br>Deleting a user can never be undone.<br><br>Is it OK?`;
+    this.dialogData.okBtnAble = true;
+    this.dialogData.cancelBtnAble = true;
+    this.modal.openModal(
+      // ツイート削除に対してOKを押した時
+      () => {
+        this.closeModal();
+        this.userService.deleteUser();
+      }
+    );
+  }
+
+  closeModal() {
+    /*
+     * モーダルの内容を設定
+     */
+    this.dialogData.isShow = false;
+    this.dialogData.title = '';
+    this.dialogData.tweet = {};
+    this.dialogData.okBtnAble = false;
+    this.dialogData.cancelBtnAble = false;
+
+    this.modal.resetAll();
   }
 
 

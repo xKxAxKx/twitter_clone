@@ -112,7 +112,7 @@ class PasswordUpdateView(generics.UpdateAPIView):
 
 # ユーザ削除のView(DELETE)
 class AuthInfoDeleteView(generics.DestroyAPIView):
-    permission_classes = (permissions.IsAuthenticated)
+    permission_classes = (permissions.IsAuthenticated,)
     serializer_class = AccountSerializer
     lookup_field = 'email'
     queryset = Account.objects.all()

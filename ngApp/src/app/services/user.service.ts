@@ -21,6 +21,7 @@ export class UserService {
   private UserFollowApi = `http://127.0.0.1:8000/api/user/follow/`;
   private UserRemoveApi = `http://127.0.0.1:8000/api/user/remove/`;
   private FetchFavoriteTweetByUserIdApi = `http://127.0.0.1:8000/api/favorite/get/`;
+  private DeleteUserIdApi = `http://127.0.0.1:8000/api/user/delete/`;
 
   // ログインユーザを取得するときのSubject
   fetchLoginUserInfoSubjct: Subject<any> = new Subject<any>();
@@ -75,6 +76,12 @@ export class UserService {
 
   // ログインユーザ以外のユーザのお気に入りツイート取得が成功した時のSubject
   successFetchUserFavTweetSubject: Subject<any> = new Subject<any>();
+
+  // ログインユーザの削除が成功した時のSubject
+  successDeleteUserSubject: Subject<any> = new Subject<any>();
+
+  // ログインユーザの削除が失敗した時のSubject
+  errorDeleteUserSubject: Subject<any> = new Subject<any>();
 
   constructor(
     private http: Http,
@@ -262,6 +269,22 @@ export class UserService {
         },
         (err) => {
           console.log("お気に入りの取得に失敗");
+        }
+      );
+  }
+
+  // ユーザを削除する
+  deleteUser() {
+    return this.http
+      .delete(this.DeleteUserIdApi, this.commonService.jwt())
+      .subscribe(
+        (res) => {
+          localStorage.removeItem(this.loginTokenName);
+          this.router.navigate(['/login']);
+          this.successDeleteUserSubject.next();
+        },
+        (err) => {
+          this.errorDeleteUserSubject.next();
         }
       );
   }

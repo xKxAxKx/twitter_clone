@@ -124,5 +124,10 @@ export class UserStore {
       }
     );
 
+    this.userService.successDeleteUserSubject.subscribe(() => {
+      this.userLogin = false;
+      this.loginUserToken = {};
+      this.loginUserInfo = {} as IUser;
+    });
   }
 }

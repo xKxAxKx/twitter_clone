@@ -108,5 +108,17 @@ export class CommonStore {
       this.counter = 1;
     });
 
+    this.userService.successDeleteUserSubject.subscribe( () => {
+      this.successMessage = 'Success Delete your Account';
+      this.errorMessage = '';
+      this.counter = 1;
+    });
+
+    this.userService.errorDeleteUserSubject.subscribe( () => {
+      this.errorMessage = 'Failed Delete your Account...';
+      this.successMessage = '';
+      this.counter = 1;
+    });
+
   }
 }
