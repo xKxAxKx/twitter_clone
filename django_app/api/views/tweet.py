@@ -77,11 +77,7 @@ class TweetGetByTweetIdView(generics.RetrieveAPIView):
     permission_classes = (permissions.AllowAny,)
 
     def get(self, request, tweet_id):
-        try:
-            tweet = Tweet.objects.select_related('user').get(id=tweet_id)
-        except Tweet.DoesNotExist:
-            raise Http404
-
+        tweet = get_object_or_404(Tweet, id=tweet_id)
         serializer = TweetSerializer(tweet)
 
         return Response(serializer.data, status=status.HTTP_200_OK)
@@ -94,10 +90,7 @@ class TweetDeleteView(generics.DestroyAPIView):
     serializer_class = TweetOnlySerializer
 
     def delete(self, request, tweet_id):
-        try:
-            tweet = Tweet.objects.select_related('user').get(id=tweet_id)
-        except Tweet.DoesNotExist:
-            raise Http404
+        tweet = get_object_or_404(Tweet, id=tweet_id)
 
         if request.user.id == tweet.user.id:
             tweet.delete()
