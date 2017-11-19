@@ -162,9 +162,9 @@ class FavoriteTweetGetByUserIdView(generics.RetrieveAPIView):
     def get(self, request, user_id):
         user = Account.objects.filter(id=user_id)
         try:
-            tweet = Tweet.objects \
-                         .filter(favorited_tweet__in=Favorite.objects.filter(user__in=user))\
-                         .order_by('-id')
+            tweet = (Tweet.objects
+                         .filter(favorited_tweet__in=Favorite.objects.filter(user__in=user))
+                         .order_by('-id'))
         except Favorite.DoesNotExist:
             raise Http404
 
