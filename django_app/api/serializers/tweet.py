@@ -1,7 +1,9 @@
+import sys
+
 from rest_framework import serializers
+
 from api.serializers.user import AccountSerializer, FollowSerializer
 from api.models.tweet import Tweet, Favorite, Reply
-import sys
 
 
 class TweetPostSerializer(serializers.ModelSerializer):

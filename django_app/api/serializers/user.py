@@ -1,10 +1,13 @@
 from django.contrib.auth import update_session_auth_hash
+from django.conf import settings
+
 from rest_framework import serializers
+from rest_framework_jwt.settings import api_settings
+
 from api.models.user import Account, AccountManager, Follow
 from api.models.tweet import Favorite
-from rest_framework_jwt.settings import api_settings
+
 import jwt
-from django.conf import settings
 
 
 class AccountDataSerializer(serializers.ModelSerializer):
