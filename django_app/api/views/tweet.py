@@ -1,19 +1,22 @@
+import json
+
 from django.contrib.auth import authenticate
-from rest_framework import authentication, permissions, generics
+from django.shortcuts import get_object_or_404
+from django.db import transaction
+from django.http import HttpResponse, Http404
+
+from rest_framework import authentication, permissions, generics, status, viewsets, filters
 from rest_framework_jwt.settings import api_settings
 from rest_framework.exceptions import AuthenticationFailed
 from rest_framework.response import Response
-from django.db import transaction
-from django.http import HttpResponse, Http404
 from rest_framework.pagination import PageNumberPagination
-from rest_framework import status, viewsets, filters
 from rest_framework.views import APIView
+
 from api.serializers.tweet import (TweetSerializer, TweetOnlySerializer,
                                    FavoriteSerializer, TweetPostSerializer)
 from api.serializers.user import AccountSerializer
 from api.models.tweet import Tweet, Favorite, Reply
 from api.models.user import Account, Follow
-import json
 
 
 # ツイート作成のView(POST)
@@ -113,10 +116,7 @@ class FavoriteTweetAddView(generics.CreateAPIView):
     @transaction.atomic
     def create(self, request, *args, **kwargs):
         #ツイート自体が存在するか確認
-        try:
-            tweet = Tweet.objects.get(id=request.data['id'])
-        except Tweet.DoesNotExist:
-            raise Http404
+        tweet = get_object_or_404(Tweet, id=request.data['id'])
 
         # すでにユーザがツイートをfavしていないか確認
         try:
@@ -142,10 +142,7 @@ class FavoriteTweetDeleteView(generics.DestroyAPIView):
 
     def delete(self, request, tweet_id):
         #ツイート自体が存在するか確認
-        try:
-            tweet = Tweet.objects.get(id=tweet_id)
-        except Tweet.DoesNotExist:
-            raise Http404
+        tweet = get_object_or_404(Tweet, id=tweet_id)
 
         # ユーザがツイートをFavしているか確認
         try:
