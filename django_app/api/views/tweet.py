@@ -111,6 +111,12 @@ class FavoriteTweetAddView(generics.CreateAPIView):
         #ツイート自体が存在するか確認
         tweet = get_object_or_404(Tweet, id=request.data['id'])
 
+        # 今度prefetch_related使ってリファクタリングしてみる
+        # tweet = (Tweet.objects
+        #               .prefetch_related('favorited_tweet')
+        #               .get(id=request.data['id']))
+        # import pdb; pdb.set_trace()
+
         # すでにユーザがツイートをfavしていないか確認
         try:
             already_fav = Favorite.objects.get(tweet=tweet, user=request.user)
@@ -134,23 +140,14 @@ class FavoriteTweetDeleteView(generics.DestroyAPIView):
     serializer_class = FavoriteSerializer
 
     def delete(self, request, tweet_id):
-        #ツイート自体が存在するか確認
-        tweet = get_object_or_404(Tweet, id=tweet_id)
+        fav_tweet = get_object_or_404(Favorite,
+                                      tweet__id=tweet_id,
+                                      user=request.user)
 
-        # ユーザがツイートをFavしているか確認
-        try:
-            already_fav = Favorite.objects.get(tweet=tweet, user=request.user)
-            not_yet_fav = False
-        except Favorite.DoesNotExist:
-            not_yet_fav = True
+        fav_tweet.delete()
 
-        if not_yet_fav:
-            return Response(data={"message": "not_yet fav!"},
-                            status=status.HTTP_400_BAD_REQUEST)
-        else:
-            already_fav.delete()
-            return Response(data={"message": "success delete fav!"},
-                            status=status.HTTP_200_OK)
+        return Response(data={"message": "success delete fav!"},
+                        status=status.HTTP_200_OK)
 
 
 # お気に入りツイートをユーザIDで取得
