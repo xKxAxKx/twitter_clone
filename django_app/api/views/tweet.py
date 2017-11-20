@@ -30,7 +30,7 @@ class TweetPostView(generics.CreateAPIView):
         request.data['user'] = request.user.id
         request_user = Account.objects.get(id=request.user.id)
         save_tweet_query = Tweet.objects.create(tweet=request.data['tweet'],
-                                         user=request_user)
+                                                user=request_user)
         if request.data['parent_tweet']:
             parent_tweet = Tweet.objects.get(id=request.data['parent_tweet']['id'])
             reply_query = Reply.objects.create(parent=parent_tweet,
@@ -63,6 +63,9 @@ class TweetListGetByUserIdView(generics.RetrieveAPIView):
         try:
             tweet = (Tweet.objects
                           .select_related('user')
+                          .prefetch_related('favorited_tweet',
+                                            'child_tweet',
+                                            'parent_tweet')
                           .filter(user__in=users)
                           .order_by('-id'))
         except Tweet.DoesNotExist:
@@ -108,12 +111,6 @@ class FavoriteTweetAddView(generics.CreateAPIView):
     def create(self, request, *args, **kwargs):
         #ツイート自体が存在するか確認
         tweet = get_object_or_404(Tweet, id=request.data['id'])
-
-        # 今度prefetch_related使ってリファクタリングしてみる
-        # tweet = (Tweet.objects
-        #               .prefetch_related('favorited_tweet')
-        #               .get(id=request.data['id']))
-        # import pdb; pdb.set_trace()
 
         # すでにユーザがツイートをfavしていないか確認
         try:
