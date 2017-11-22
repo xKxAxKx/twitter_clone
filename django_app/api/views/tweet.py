@@ -39,11 +39,6 @@ class TweetPostView(generics.CreateAPIView):
         return Response(tweet_serializer.data, status=status.HTTP_200_OK)
 
 
-class TweetListPagination(PageNumberPagination):
-    page_size = 10
-    page_size_query_param = 'unit'
-
-
 # 指定したユーザidのツイートもしくはフォローしているユーザーのツイートをGETする
 class TweetListGetByUserIdView(generics.RetrieveAPIView):
     permission_classes = (permissions.AllowAny,)
