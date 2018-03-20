@@ -22,7 +22,7 @@ from api.models.user import Account, Follow
 
 # ツイート作成のView(POST)
 class TweetPostView(generics.CreateAPIView):
-    permission_classes = (permissions.AllowAny,)
+    permission_classes = (permissions.IsAuthenticated,)
     queryset = Tweet.objects.all()
     serializer_class = TweetPostSerializer
 
