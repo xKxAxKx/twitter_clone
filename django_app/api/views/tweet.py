@@ -5,7 +5,8 @@ from django.shortcuts import get_object_or_404
 from django.db import transaction
 from django.http import HttpResponse, Http404
 
-from rest_framework import authentication, permissions, generics, status, viewsets, filters
+from rest_framework import (authentication, permissions, generics,
+                            status, viewsets, filters)
 from rest_framework_jwt.settings import api_settings
 from rest_framework.exceptions import AuthenticationFailed
 from rest_framework.response import Response
@@ -21,7 +22,7 @@ from api.models.user import Account, Follow
 
 # ツイート作成のView(POST)
 class TweetPostView(generics.CreateAPIView):
-    permission_classes = (permissions.IsAuthenticated,)
+    permission_classes = (permissions.AllowAny,)
     queryset = Tweet.objects.all()
     serializer_class = TweetPostSerializer
 
@@ -42,16 +43,31 @@ class TweetPostView(generics.CreateAPIView):
 # 指定したユーザidのツイートもしくはフォローしているユーザーのツイートをGETする
 class TweetListGetByUserIdView(generics.RetrieveAPIView):
     permission_classes = (permissions.AllowAny,)
-    pagination_class = TweetListPagination
     queryset = Tweet.objects.all()
 
     def get(self, request):
-        users = []
-        if "users" in request.GET:
-            users.append(request.GET.get("users"))
+        """
+        params:
+            - name: user
+              descrption: userのidを指定し、そのユーザのツイート一覧を取得する
+              required: True
+              type: int
+            - name: get_follow_tweet
+              descrption: userで指定したユーザがフォローしているユーザのツイート一覧を取得する
+              required: False
+              type: boolean
+        """
+        page = int(request.GET.get('page', 1))
+        unit = int(request.GET.get('unit', 10))
+        target_user = str(request.GET.get('user', None))
+        get_follow_tweet = request.GET.get('get_follow_tweet', False)
 
-        if "get_follow_tweet" in request.GET:
-            follow_users = Follow.objects.filter(follower__in=users)
+        users = []
+        if target_user:
+            users.append(target_user)
+
+        if get_follow_tweet:
+            follow_users = Follow.objects.filter(follower=target_user)
             for user in follow_users:
                 users.append(str(user.following.id))
 

@@ -83,9 +83,9 @@ export class TweetService {
 
   // 指定したuser_idのツイートをgetする
   // getFollowTweetがTrueだったらフォローしているユーザのツイートも取得
-  getTweetByUserIds(users, getFollowTweet) {
+  getTweetByUserIds(user, getFollowTweet) {
     let params = new URLSearchParams();
-    params.set("users", users);
+    params.set("user", user);
     if(getFollowTweet) {
       params.set("get_follow_tweet", getFollowTweet)
     };
