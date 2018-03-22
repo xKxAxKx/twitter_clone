@@ -32,7 +32,7 @@ export class TweetStore {
   ) {
     this.tweetService.fetchTweetListSubjct.subscribe(
       (res) => {
-        this.tweetlist.results = res;
+        this.tweetlist.results = res.results;
     });
 
     this.tweetService.completeDeleteTweetSubject.subscribe(
