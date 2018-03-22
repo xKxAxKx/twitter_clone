@@ -41,7 +41,7 @@ class AuthInfoGetView(generics.RetrieveAPIView):
 
     def get(self, request, format=None):
         login_user = self.queryset\
-                       .get(email=self.request.user)
+                         .get(email=self.request.user)
         serializer = AccountSerializer(login_user)
 
         return Response(data={
