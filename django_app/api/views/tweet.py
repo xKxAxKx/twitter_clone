@@ -90,6 +90,12 @@ class TweetListGetByUserIdView(generics.ListAPIView):
 # 指定したidのツイートをGETする
 class TweetGetByTweetIdView(generics.RetrieveAPIView):
     permission_classes = (permissions.AllowAny,)
+    serializer_class = TweetSerializer
+
+    # def get_object(self, queryset=None):
+    #     tweet_id = self.kwargs['tweet_id']
+    #     tweet = get_object_or_404(Tweet, id=tweet_id)
+    #     return tweet
 
     def get(self, request, tweet_id):
         tweet = get_object_or_404(Tweet, id=tweet_id)
