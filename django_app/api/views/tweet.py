@@ -10,7 +10,6 @@ from rest_framework import (authentication, permissions, generics,
 from rest_framework_jwt.settings import api_settings
 from rest_framework.exceptions import AuthenticationFailed
 from rest_framework.response import Response
-from rest_framework.pagination import PageNumberPagination
 from rest_framework.views import APIView
 
 from api.serializers.tweet import (TweetSerializer, TweetOnlySerializer,
@@ -18,6 +17,7 @@ from api.serializers.tweet import (TweetSerializer, TweetOnlySerializer,
 from api.serializers.user import AccountSerializer
 from api.models.tweet import Tweet, Favorite, Reply
 from api.models.user import Account, Follow
+from api.utils.pagenation import TweetListPagenation
 
 
 # ツイート作成のView(POST)
@@ -41,13 +41,15 @@ class TweetPostView(generics.CreateAPIView):
 
 
 # 指定したユーザidのツイートもしくはフォローしているユーザーのツイートをGETする
-class TweetListGetByUserIdView(generics.RetrieveAPIView):
+class TweetListGetByUserIdView(generics.ListAPIView):
     permission_classes = (permissions.AllowAny,)
     queryset = Tweet.objects.all()
+    serializer_class = TweetSerializer
+    pagination_class = TweetListPagenation
 
-    def get(self, request):
+    def get_queryset(self):
         """
-        params:
+        params
             - name: user
               descrption: userのidを指定し、そのユーザのツイート一覧を取得する
               required: True
@@ -57,19 +59,20 @@ class TweetListGetByUserIdView(generics.RetrieveAPIView):
               required: False
               type: boolean
         """
-        page = int(request.GET.get('page', 1))
-        unit = int(request.GET.get('unit', 10))
-        target_user = str(request.GET.get('user', None))
-        get_follow_tweet = request.GET.get('get_follow_tweet', False)
+        target_user = self.request.GET.get('user', None)
+        get_follow_tweet = self.request.GET.get('get_follow_tweet', False)
 
         users = []
         if target_user:
+            target_user = target_user
             users.append(target_user)
+        else:
+            raise Http404
 
         if get_follow_tweet:
             follow_users = Follow.objects.filter(follower=target_user)
             for user in follow_users:
-                users.append(str(user.following.id))
+                users.append(user.following.id)
 
         try:
             tweet = (Tweet.objects
@@ -79,11 +82,9 @@ class TweetListGetByUserIdView(generics.RetrieveAPIView):
                                             'parent_tweet')
                           .filter(user__in=users)
                           .order_by('-id'))
+            return tweet
         except Tweet.DoesNotExist:
             raise Http404
-        serializer = TweetSerializer(tweet, many=True)
-
-        return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 # 指定したidのツイートをGETする
