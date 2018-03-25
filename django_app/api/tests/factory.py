@@ -7,11 +7,11 @@ from api.models import Tweet, Favorite, Reply, Account, Follow
 
 class AccountFactory(factory.DjangoModelFactory):
     class Meta:
-        model = Account
+        model = Account()
 
     username = FuzzyText()
-    first_name = None
-    last_name = None
+    first_name = FuzzyText()
+    last_name = FuzzyText()
     email = factory.Sequence(lambda n: f'exsample_{n}@email.com')
     profile = FuzzyText()
     is_active = True
@@ -21,7 +21,7 @@ class AccountFactory(factory.DjangoModelFactory):
 
 class TweetFactory(factory.DjangoModelFactory):
     class Meta:
-        model = Tweet
+        model = Tweet()
 
     tweet = FuzzyText()
     user = factory.SubFactory(AccountFactory)
