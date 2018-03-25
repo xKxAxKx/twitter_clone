@@ -25,7 +25,6 @@ class TweetFactory(factory.DjangoModelFactory):
 
     tweet = FuzzyText()
     user = factory.SubFactory(AccountFactory)
-    created_at = FuzzyDateTime()
     favorite = None
     parent = None
     child = None
