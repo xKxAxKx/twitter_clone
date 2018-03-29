@@ -1,4 +1,5 @@
 import os
+import json
 from unittest.mock import MagicMock, patch
 
 from rest_framework import status
@@ -10,6 +11,12 @@ from api.tests.factory import AccountFactory, TweetFactory
 
 class TestTweetGet(TestCaseBase):
     api_url = '/api'
+
+    template_data = dict(tweet='this is test tweet')
+
+    pay_load = {
+        'tweet': 'this is test tweet'
+    }
 
     def create_data(self):
         self.user_1 = AccountFactory(username='user_1')
@@ -29,3 +36,13 @@ class TestTweetGet(TestCaseBase):
         result = self.get(tweet_get_url, None)
         self.assertStatus(status.HTTP_200_OK, result)
         self.assertEqual(self.tweet_1_1.tweet, result.data['tweet'])
+
+    def test_tweet_post(self):
+        token = self.get_user_token()
+        tweet_post_url = os.path.join(self.api_url, 'tweet/post/')
+        request_tweet = {'tweet': 'this is test tweet',
+                         'parent_tweet': None}
+        result = self.post(tweet_post_url,
+                           request_tweet,
+                           token)
+        self.assertEqual(status.HTTP_201_CREATED, result.status_code)

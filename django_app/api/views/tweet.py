@@ -37,7 +37,8 @@ class TweetPostView(generics.CreateAPIView):
             reply_query = Reply.objects.create(parent=parent_tweet,
                                                child=save_tweet_query)
         tweet_serializer = TweetSerializer(save_tweet_query)
-        return Response(tweet_serializer.data, status=status.HTTP_200_OK)
+        return Response(tweet_serializer.data,
+                        status=status.HTTP_201_CREATED)
 
 
 # 指定したユーザidのツイートもしくはフォローしているユーザーのツイートをGETする
