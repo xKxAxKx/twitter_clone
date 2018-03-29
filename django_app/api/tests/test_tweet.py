@@ -31,7 +31,7 @@ class TestTweetGet(TestCaseBase):
         self.assertStatus(status.HTTP_200_OK, result)
         self.assertEqual(self.tweet_1_1.tweet, result.data['tweet'])
 
-    def test_tweet_post(self):
+    def test_tweet_post_success(self):
         token = self.get_user_token()
         tweet_post_url = os.path.join(self.api_url, 'tweet/post/')
         request_tweet = {'tweet': 'this is test tweet',
@@ -50,3 +50,24 @@ class TestTweetGet(TestCaseBase):
                            request_tweet,
                            token)
         self.assertEqual(status.HTTP_401_UNAUTHORIZED, result.status_code)
+
+    def test_tweet_reply(self):
+        token = self.get_user_token()
+        self.create_data()
+
+        tweet_get_url = os.path.join(self.api_url,
+                                     'tweet',
+                                     str(self.tweet_1_1.id))
+        parent_tweet = self.get(tweet_get_url, None)
+
+        tweet_post_url = os.path.join(self.api_url, 'tweet/post/')
+        request_tweet = {'tweet': 'this is test tweet',
+                         'parent_tweet': parent_tweet.data}
+        result = self.post(tweet_post_url,
+                           request_tweet,
+                           token)
+        self.assertEqual(status.HTTP_201_CREATED, result.status_code)
+        print(result.data)
+        # ここのレスポンス良くないなー
+        self.assertEqual(result.data['parent'][0]['parent']['tweet'],
+                         self.tweet_1_1.tweet)
