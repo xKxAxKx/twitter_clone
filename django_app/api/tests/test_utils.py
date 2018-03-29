@@ -63,9 +63,10 @@ class TestCaseBase(APITestCase):
 
 
 def get_user_token(client):
-    response = client.post(api_url('token-auth/'), {
+    response = client.post('http://127.0.0.1:8000/api/user/login/', {
         'email': 'test_user@example.com',
         'password': 'password',
     }, format='json')
+    import pdb; pdb.set_trace()
     token = response.data['token']
     return token
