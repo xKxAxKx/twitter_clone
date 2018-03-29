@@ -9,7 +9,7 @@ from api.tests.factory import AccountFactory, TweetFactory
 
 
 class TestTweetGet(TestCaseBase):
-    api_url = 'http://127.0.0.1:8000/api'
+    api_url = '/api'
 
     def create_data(self):
         self.user_1 = AccountFactory(username='user_1')
@@ -20,11 +20,12 @@ class TestTweetGet(TestCaseBase):
         self.tweet_2_2 = TweetFactory(user=self.user_2)
 
     def test_tweet_get(self):
+        self.get_user_token()
         self.create_data()
         tweet_get_url = os.path.join(self.api_url,
                                      'tweet',
                                      str(self.tweet_1_1.id))
 
-        print(tweet_get_url)
-        result = self.get(tweet_get_url, data=None)
+        result = self.get(tweet_get_url, None)
         self.assertStatus(status.HTTP_200_OK, result)
+        self.assertEqual(self.tweet_1_1.tweet, result.data['tweet'])

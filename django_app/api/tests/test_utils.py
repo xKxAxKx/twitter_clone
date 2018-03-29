@@ -63,10 +63,17 @@ class TestCaseBase(APITestCase):
 
 
 def get_user_token(client):
-    response = client.post('http://127.0.0.1:8000/api/user/login/', {
-        'email': 'test_user@example.com',
-        'password': 'password',
-    }, format='json')
-    import pdb; pdb.set_trace()
+    create_account(client)
+    response = client.post('/api/user/login/',
+                           {'email': 'test_user@example.com',
+                            'password': 'password'}, format='json')
+    print(response, response.data)
     token = response.data['token']
     return token
+
+
+def create_account(client):
+    url = "/api/user/register/"
+    data = {'email': 'test_user@example.com', 'username': 'test_user',
+            'password': 'password'}
+    response = client.post(url, data, format='json')
