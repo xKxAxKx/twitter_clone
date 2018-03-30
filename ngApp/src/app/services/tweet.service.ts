@@ -53,7 +53,7 @@ export class TweetService {
 
 
   // Tweetをpostする
-  // postした再読み込みするデータが異なってくるので注意
+  // postしたページによって再読み込みするデータが異なってくるので注意
   postTweet(postData:any, getFollowTweet:boolean,
             user_id:number=null, isFavList:boolean=false) {
     return this.http

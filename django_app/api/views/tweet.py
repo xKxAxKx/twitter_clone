@@ -117,14 +117,6 @@ class TweetDeleteView(generics.DestroyAPIView):
                                   user__id=self.request.user.id)
         return tweet
 
-    # def delete(self, request, tweet_id):
-    #     tweet = get_object_or_404(Tweet,
-    #                               id=tweet_id,
-    #                               user__id=request.user.id)
-    #     tweet.delete()
-    #     serializer = TweetSerializer(tweet)
-    #     return Response(serializer.data, status=status.HTTP_200_OK)
-
 
 # お気に入りツイート追加のView
 class FavoriteTweetAddView(generics.CreateAPIView):
