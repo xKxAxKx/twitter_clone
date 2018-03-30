@@ -93,6 +93,7 @@ class TweetGetByTweetIdView(generics.RetrieveAPIView):
     permission_classes = (permissions.AllowAny,)
     serializer_class = TweetSerializer
 
+    # こっちだけでもいい。どっちがbetterなんだろう
     # def get_object(self, queryset=None):
     #     tweet_id = self.kwargs['tweet_id']
     #     tweet = get_object_or_404(Tweet, id=tweet_id)
@@ -139,7 +140,7 @@ class FavoriteTweetAddView(generics.CreateAPIView):
         if not_yet_fav:
             add_fav = Favorite.objects.create(tweet=tweet, user=request.user)
             serializer = FavoriteSerializer(add_fav)
-            return Response(serializer.data, status=status.HTTP_200_OK)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
             return Response(data={"message": "already fav!"},
                             status=status.HTTP_400_BAD_REQUEST)
@@ -151,15 +152,12 @@ class FavoriteTweetDeleteView(generics.DestroyAPIView):
     queryset = Favorite.objects.all()
     serializer_class = FavoriteSerializer
 
-    def delete(self, request, tweet_id):
+    def get_object(self, queryset=None):
+        tweet_id = self.kwargs['tweet_id']
         fav_tweet = get_object_or_404(Favorite,
                                       tweet__id=tweet_id,
-                                      user=request.user)
-
-        fav_tweet.delete()
-
-        return Response(data={"message": "success delete fav!"},
-                        status=status.HTTP_200_OK)
+                                      user=self.request.user)
+        return fav_tweet
 
 
 # お気に入りツイートをユーザIDで取得
