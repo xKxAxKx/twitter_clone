@@ -108,16 +108,22 @@ class TweetGetByTweetIdView(generics.RetrieveAPIView):
 # ツイート削除のView(DELETE)
 class TweetDeleteView(generics.DestroyAPIView):
     permission_classes = (permissions.IsAuthenticated,)
-    queryset = Tweet.objects.all()
     serializer_class = TweetOnlySerializer
 
-    def delete(self, request, tweet_id):
+    def get_object(self, queryset=None):
+        tweet_id = self.kwargs['tweet_id']
         tweet = get_object_or_404(Tweet,
                                   id=tweet_id,
-                                  user__id=request.user.id)
-        tweet.delete()
-        serializer = TweetSerializer(tweet)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+                                  user__id=self.request.user.id)
+        return tweet
+
+    # def delete(self, request, tweet_id):
+    #     tweet = get_object_or_404(Tweet,
+    #                               id=tweet_id,
+    #                               user__id=request.user.id)
+    #     tweet.delete()
+    #     serializer = TweetSerializer(tweet)
+    #     return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 # お気に入りツイート追加のView
