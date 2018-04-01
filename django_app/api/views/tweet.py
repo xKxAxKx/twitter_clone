@@ -127,8 +127,10 @@ class FavoriteTweetAddView(generics.CreateAPIView):
 
     @transaction.atomic
     def create(self, request, *args, **kwargs):
+        tweet_id = int(kwargs['tweet_id'])
+
         #ツイート自体が存在するか確認
-        tweet = get_object_or_404(Tweet, id=request.data['id'])
+        tweet = get_object_or_404(Tweet, id=tweet_id)
 
         # すでにユーザがツイートをfavしていないか確認
         try:

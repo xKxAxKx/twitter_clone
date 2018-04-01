@@ -17,7 +17,7 @@ urlpatterns = [
     url(r'^tweet/list/$', TweetListGetByUserIdView.as_view()),
     url(r'^tweet/delete/(?P<tweet_id>\d+)$', TweetDeleteView.as_view()),
     url(r'^favorite/get/(?P<user_id>\d+)$', FavoriteTweetGetByUserIdView.as_view()),
-    url(r'^favorite/add/$', FavoriteTweetAddView.as_view()),
+    url(r'^favorite/add/(?P<tweet_id>\d+)$', FavoriteTweetAddView.as_view()),
     url(r'^favorite/delete/(?P<tweet_id>\d+)$', FavoriteTweetDeleteView.as_view()),
     url(r'^user/register/$', AuthRegister.as_view()),
     url(r'^user/mypage/$', AuthInfoGetView.as_view()),
