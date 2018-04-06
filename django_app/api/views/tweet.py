@@ -93,12 +93,6 @@ class TweetGetByTweetIdView(generics.RetrieveAPIView):
     permission_classes = (permissions.AllowAny,)
     serializer_class = TweetSerializer
 
-    # こっちだけでもいい。どっちがbetterなんだろう
-    # def get_object(self, queryset=None):
-    #     tweet_id = self.kwargs['tweet_id']
-    #     tweet = get_object_or_404(Tweet, id=tweet_id)
-    #     return tweet
-
     def get(self, request, tweet_id):
         tweet = get_object_or_404(Tweet, id=tweet_id)
         serializer = TweetSerializer(tweet)
