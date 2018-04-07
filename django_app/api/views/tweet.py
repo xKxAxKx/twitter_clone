@@ -3,7 +3,7 @@ import json
 from django.contrib.auth import authenticate
 from django.shortcuts import get_object_or_404
 from django.db import transaction
-from django.http import HttpResponse, Http404
+from django.http import HttpResponse, Http404, HttpResponseBadRequest
 
 from rest_framework import (authentication, permissions, generics,
                             status, viewsets, filters)
@@ -28,15 +28,29 @@ class TweetPostView(generics.CreateAPIView):
 
     @transaction.atomic
     def create(self, request, *args, **kwargs):
-        request.data['user'] = request.user.id
-        request_user = Account.objects.get(id=request.user.id)
-        save_tweet_query = Tweet.objects.create(tweet=request.data['tweet'],
-                                                user=request_user)
-        if request.data['parent_tweet']:
-            parent_tweet = Tweet.objects.get(id=request.data['parent_tweet']['id'])
-            reply_query = Reply.objects.create(parent=parent_tweet,
-                                               child=save_tweet_query)
-        tweet_serializer = TweetSerializer(save_tweet_query)
+        """
+        uri
+            - /api/tweet/post/
+        params
+            - name: parent
+              descrption: リプライ元のツイートのidを指定する
+              required: False
+              type: int
+        """
+        save_tweet = Tweet.objects.create(tweet=request.data['tweet'],
+                                          user=request.user)
+        parent_tweet_id = request.query_params.get('parent')
+        if parent_tweet_id:
+            try:
+                parent_tweet = get_object_or_404(Tweet,
+                                                 id=int(parent_tweet_id))
+            except ValueError:
+                return HttpResponseBadRequest(
+                    content='パラメーターが不正です'
+                )
+            Reply.objects.create(parent=parent_tweet,
+                                 child=save_tweet)
+        tweet_serializer = TweetSerializer(save_tweet)
         return Response(tweet_serializer.data,
                         status=status.HTTP_201_CREATED)
 
