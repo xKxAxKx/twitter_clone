@@ -25,3 +25,11 @@ class TweetFactory(factory.DjangoModelFactory):
 
     tweet = FuzzyText()
     user = factory.SubFactory(AccountFactory)
+
+
+class FavoriteFactory(factory.DjangoModelFactory):
+    class Meta:
+        model = Favorite
+
+    tweet = factory.SubFactory(TweetFactory)
+    user = factory.SubFactory(AccountFactory)
