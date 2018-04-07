@@ -23,6 +23,10 @@ class Tweet(models.Model):
     def __str__(self):
         return self.tweet
 
+    @property
+    def fav_user(self):
+        pass
+
 
 class Favorite(models.Model):
     tweet = models.ForeignKey(
