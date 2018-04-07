@@ -10,21 +10,20 @@ class Tweet(models.Model):
         on_delete=models.CASCADE
         )
     created_at = models.DateTimeField(auto_now_add=True)
-    favorite = models.ManyToManyField('Favorite',
-                                      related_name='favorited_tweet',
-                                      blank=True)
-    parent = models.ManyToManyField('Reply',
-                                    related_name='child_tweet',
-                                    blank=True)
-    child = models.ManyToManyField('Reply',
-                                   related_name='parent_tweet',
-                                   blank=True)
 
     def __str__(self):
         return self.tweet
 
     @property
-    def fav_user(self):
+    def favorited_users(self):
+        pass
+
+    @property
+    def parent_tweet(self):
+        pass
+
+    @property
+    def child_tweets(self):
         pass
 
 
