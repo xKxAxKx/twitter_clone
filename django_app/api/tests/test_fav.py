@@ -18,6 +18,8 @@ class TestFavorite(TestCaseBase):
         self.tweet_1_2 = TweetFactory(user=self.user_1)
         self.tweet_2_1 = TweetFactory(user=self.user_2)
         self.tweet_2_2 = TweetFactory(user=self.user_2)
+        self.fav1 = FavoriteFactory(tweet=self.tweet_1_1, user=self.user_1)
+        self.fav2 = FavoriteFactory(tweet=self.tweet_1_1, user=self.user_2)
 
     def test_add_fav(self):
         token = self.get_user_token()

@@ -16,15 +16,15 @@ class Tweet(models.Model):
 
     @property
     def favorited_users(self):
-        pass
+        return Favorite.objects.filter(tweet=self).values('user')
 
     @property
     def parent_tweet(self):
-        pass
+        return Reply.objects.filter(child=self).values('parent')
 
     @property
     def child_tweets(self):
-        pass
+        return Reply.objects.filter(parent=self).values('child')
 
 
 class Favorite(models.Model):
