@@ -1,6 +1,5 @@
 import os
 import json
-from unittest.mock import MagicMock, patch
 
 from rest_framework import status
 
@@ -9,7 +8,7 @@ from api.tests.test_utils import TestCaseBase
 from api.tests.factory import AccountFactory, TweetFactory
 
 
-class TestTweetGet(TestCaseBase):
+class TestTweet(TestCaseBase):
     api_url = '/api'
 
     def create_data(self):
