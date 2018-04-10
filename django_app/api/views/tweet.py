@@ -1,20 +1,14 @@
-import json
-
-from django.contrib.auth import authenticate
+# coding: utf-8
 from django.shortcuts import get_object_or_404
 from django.db import transaction
 from django.http import HttpResponse, Http404, HttpResponseBadRequest
 
 from rest_framework import (authentication, permissions, generics,
                             status, viewsets, filters)
-from rest_framework_jwt.settings import api_settings
-from rest_framework.exceptions import AuthenticationFailed
 from rest_framework.response import Response
-from rest_framework.views import APIView
 
 from api.serializers.tweet import (TweetSerializer, TweetOnlySerializer,
                                    FavoriteSerializer, TweetPostSerializer)
-from api.serializers.user import AccountSerializer
 from api.models.tweet import Tweet, Favorite, Reply
 from api.models.user import Account, Follow
 from api.utils.pagenation import TweetListPagenation
@@ -66,16 +60,16 @@ class TweetListGetByUserIdView(generics.ListAPIView):
         """
         params
             - name: user
-              descrption: userのidを指定し、そのユーザのツイート一覧を取得する
+              description: userのidを指定し、そのユーザのツイート一覧を取得する
               required: True
               type: int
             - name: get_follow_tweet
-              descrption: userで指定したユーザがフォローしているユーザのツイート一覧を取得する
+              description: userで指定したユーザがフォローしているユーザのツイート一覧を取得する
               required: False
               type: boolean
         """
         target_user = self.request.GET.get('user', None)
-        get_follow_tweet = self.request.GET.get('get_follow_tweet', False)
+        get_follow_tweet = self.request.GET.get('get_follo_tweet', False)
 
         users = []
         if target_user:
