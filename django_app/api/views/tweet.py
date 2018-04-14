@@ -139,8 +139,8 @@ class FavoriteTweetAddView(generics.CreateAPIView):
             return Response(data={"message": "already fav!"},
                             status=status.HTTP_400_BAD_REQUEST)
         else:
-            add_fav = Favorite.objects.create(tweet=tweet, user=request.user)
-            serializer = FavoriteSerializer(add_fav)
+            serializer = FavoriteSerializer(Favorite.add_fav(tweet,
+                                                             request.user))
             return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 

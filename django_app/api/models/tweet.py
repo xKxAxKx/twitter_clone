@@ -40,6 +40,9 @@ class Favorite(models.Model):
         )
     created_at = models.DateTimeField(auto_now_add=True)
 
+    def add_fav(tweet, user):
+        return Favorite.objects.create(tweet=tweet, user=user)
+
     def __str__(self):
         return str(self.created_at)
 
