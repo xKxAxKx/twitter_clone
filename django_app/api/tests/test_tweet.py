@@ -29,8 +29,7 @@ class TestTweet(TestCaseBase):
     def test_tweet_post_success(self):
         token = self.get_user_token()
         tweet_post_url = os.path.join(self.api_url, 'tweet/post/')
-        request_tweet = {'tweet': 'this is test tweet',
-                         'parent_tweet': None}
+        request_tweet = {'tweet': 'this is test tweet'}
         result = self.post(tweet_post_url,
                            request_tweet,
                            token)
@@ -49,8 +48,7 @@ class TestTweet(TestCaseBase):
     def test_tweet_delete_success(self):
         token = self.get_user_token()
         tweet_post_url = os.path.join(self.api_url, 'tweet/post/')
-        request_tweet = {'tweet': 'this is test tweet',
-                         'parent_tweet': None}
+        request_tweet = {'tweet': 'this is test tweet'}
         post_result = self.post(tweet_post_url,
                                 request_tweet,
                                 token)

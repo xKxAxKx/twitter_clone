@@ -20,7 +20,7 @@ class Tweet(models.Model):
 
     @property
     def parent_tweet(self):
-        return Reply.objects.filter(child=self).values('parent')
+        return Reply.objects.filter(child=self)
 
     @property
     def child_tweets(self):
