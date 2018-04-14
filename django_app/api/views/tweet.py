@@ -7,7 +7,7 @@ from rest_framework import (authentication, permissions, generics,
                             status, viewsets, filters)
 from rest_framework.response import Response
 
-from api.serializers.tweet import (TweetSerializer, TweetOnlySerializer,
+from api.serializers.tweet import (TweetSerializer, TweetMinimumSerializer,
                                    FavoriteSerializer, TweetPostSerializer)
 from api.models.tweet import Tweet, Favorite, Reply
 from api.models.user import Account, Follow
@@ -111,7 +111,7 @@ class TweetGetByTweetIdView(generics.RetrieveAPIView):
 # ツイート削除のView(DELETE)
 class TweetDeleteView(generics.DestroyAPIView):
     permission_classes = (permissions.IsAuthenticated,)
-    serializer_class = TweetOnlySerializer
+    serializer_class = TweetMinimumSerializer
 
     def get_object(self, queryset=None):
         tweet_id = self.kwargs['tweet_id']

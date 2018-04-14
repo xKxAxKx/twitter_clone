@@ -24,7 +24,7 @@ class Tweet(models.Model):
 
     @property
     def child_tweets(self):
-        return Reply.objects.filter(parent=self).values('child')
+        return Reply.objects.filter(parent=self)
 
 
 class Favorite(models.Model):

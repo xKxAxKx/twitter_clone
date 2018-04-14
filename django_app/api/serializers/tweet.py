@@ -14,7 +14,7 @@ class TweetPostSerializer(serializers.ModelSerializer):
         fields = ('tweet', 'user')
 
 
-class TweetOnlySerializer(serializers.ModelSerializer):
+class TweetMinimumSerializer(serializers.ModelSerializer):
     user = AccountSerializer()
 
     class Meta:
@@ -31,7 +31,7 @@ class FavoriteUserSerializer(serializers.ModelSerializer):
 
 
 class ParentTweetSerializer(serializers.ModelSerializer):
-    parent = TweetOnlySerializer()
+    parent = TweetMinimumSerializer()
 
     class Meta:
         model = Reply
@@ -39,7 +39,7 @@ class ParentTweetSerializer(serializers.ModelSerializer):
 
 
 class ChildTweetSerializer(serializers.ModelSerializer):
-    child = TweetOnlySerializer()
+    child = TweetMinimumSerializer()
 
     class Meta:
         model = Reply
@@ -50,10 +50,8 @@ class TweetSerializer(serializers.ModelSerializer):
     user = AccountSerializer()
     favorited_user = FavoriteUserSerializer(source='favorited_tweet',
                                             many=True, read_only=True)
-    parent = ParentTweetSerializer(source='child_tweet',
-                                   many=True, read_only=True)
-    children = ChildTweetSerializer(source='parent_tweet',
-                                    many=True, read_only=True)
+    parent = ParentTweetSerializer(many=True, source='child_tweet')
+    children = ChildTweetSerializer(many=True, source='parent_tweet')
 
     class Meta:
         model = Tweet
