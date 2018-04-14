@@ -135,19 +135,13 @@ class FavoriteTweetAddView(generics.CreateAPIView):
         tweet = get_object_or_404(Tweet, id=tweet_id)
 
         # すでにユーザがツイートをfavしていないか確認
-        try:
-            already_fav = Favorite.objects.get(tweet=tweet, user=request.user)
-            not_yet_fav = False
-        except Favorite.DoesNotExist:
-            not_yet_fav = True
-
-        if not_yet_fav:
+        if tweet.favorited_users.filter(user=request.user):
+            return Response(data={"message": "already fav!"},
+                            status=status.HTTP_400_BAD_REQUEST)
+        else:
             add_fav = Favorite.objects.create(tweet=tweet, user=request.user)
             serializer = FavoriteSerializer(add_fav)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
-        else:
-            return Response(data={"message": "already fav!"},
-                            status=status.HTTP_400_BAD_REQUEST)
 
 
 # お気に入りツイート削除のView(DELETE)

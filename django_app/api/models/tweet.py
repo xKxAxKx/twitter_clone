@@ -16,7 +16,7 @@ class Tweet(models.Model):
 
     @property
     def favorited_users(self):
-        return Favorite.objects.filter(tweet=self).values('user')
+        return Favorite.objects.filter(tweet=self)
 
     @property
     def parent_tweet(self):

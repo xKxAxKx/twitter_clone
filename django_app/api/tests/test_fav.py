@@ -31,3 +31,9 @@ class TestFavorite(TestCaseBase):
                            None,
                            token)
         self.assertEqual(status.HTTP_201_CREATED, result.status_code)
+
+        # 既にfavしたツイートにfavして失敗する
+        result = self.post(fav_add_url,
+                           None,
+                           token)
+        self.assertEqual(status.HTTP_400_BAD_REQUEST, result.status_code)
