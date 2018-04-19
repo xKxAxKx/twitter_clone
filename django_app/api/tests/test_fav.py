@@ -33,3 +33,26 @@ class TestFavorite(TestCaseBase):
                            None,
                            token)
         self.assertEqual(status.HTTP_400_BAD_REQUEST, result.status_code)
+
+    def test_delete_fav(self):
+        token = self.get_user_token()
+        self.create_data()
+        fav_add_url = os.path.join(self.api_url,
+                                   'favorite/add',
+                                   str(self.tweet_1_1.id))
+        self.post(fav_add_url, None, token)
+
+        fav_delete_url = os.path.join(self.api_url,
+                                      'favorite/delete',
+                                      str(self.tweet_1_1.id))
+        success_result = self.delete(fav_delete_url, None, token)
+        self.assertEqual(status.HTTP_204_NO_CONTENT,
+                         success_result.status_code)
+
+        # favしていないツイートにdeleteして失敗する
+        fav_delete_url = os.path.join(self.api_url,
+                                      'favorite/delete',
+                                      str(self.tweet_1_2.id))
+        failed_result = self.delete(fav_delete_url, None, token)
+        self.assertEqual(status.HTTP_404_NOT_FOUND,
+                         success_result.status_code)
