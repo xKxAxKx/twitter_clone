@@ -50,6 +50,7 @@ class TweetPostView(generics.CreateAPIView):
 
 
 # 指定したユーザidのツイートもしくはフォローしているユーザーのツイートをGETする
+# todo:ページネーションして取得するようにする
 class TweetListGetByUserIdView(generics.ListAPIView):
     permission_classes = (permissions.AllowAny,)
     queryset = Tweet.objects.all()
