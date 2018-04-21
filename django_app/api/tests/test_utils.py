@@ -6,8 +6,6 @@ from django.conf import settings
 
 from rest_framework.test import APITestCase
 
-from api.models import Tweet, Favorite, Reply, Account, Follow
-
 
 class TestCaseBase(APITestCase):
     _token = ''
