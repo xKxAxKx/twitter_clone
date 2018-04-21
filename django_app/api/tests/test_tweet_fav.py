@@ -9,13 +9,8 @@ class TestFavorite(TestCaseBase):
 
     def create_data(self):
         self.user_1 = AccountFactory(username='user_1')
-        self.user_2 = AccountFactory(username='user_2')
         self.tweet_1_1 = TweetFactory(user=self.user_1)
         self.tweet_1_2 = TweetFactory(user=self.user_1)
-        self.tweet_2_1 = TweetFactory(user=self.user_2)
-        self.tweet_2_2 = TweetFactory(user=self.user_2)
-        self.fav1 = FavoriteFactory(tweet=self.tweet_1_1, user=self.user_1)
-        self.fav2 = FavoriteFactory(tweet=self.tweet_1_1, user=self.user_2)
 
     def test_add_fav(self):
         token = self.get_user_token()
@@ -55,4 +50,4 @@ class TestFavorite(TestCaseBase):
                                       str(self.tweet_1_2.id))
         failed_result = self.delete(fav_delete_url, None, token)
         self.assertEqual(status.HTTP_404_NOT_FOUND,
-                         success_result.status_code)
+                         failed_result.status_code)

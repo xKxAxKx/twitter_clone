@@ -10,11 +10,7 @@ class TestReply(TestCaseBase):
 
     def create_data(self):
         self.user_1 = AccountFactory(username='user_1')
-        self.user_2 = AccountFactory(username='user_2')
         self.tweet_1_1 = TweetFactory(user=self.user_1)
-        self.tweet_1_2 = TweetFactory(user=self.user_1)
-        self.tweet_2_1 = TweetFactory(user=self.user_2)
-        self.tweet_2_2 = TweetFactory(user=self.user_2)
 
     def test_reply(self):
         token = self.get_user_token()

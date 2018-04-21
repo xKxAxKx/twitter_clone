@@ -65,7 +65,6 @@ def get_user_token(client):
     response = client.post('/api/user/login/',
                            {'email': 'test_user@example.com',
                             'password': 'password'}, format='json')
-    print(response, response.data)
     token = response.data['token']
     return token
 
