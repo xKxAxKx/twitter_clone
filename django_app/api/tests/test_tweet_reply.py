@@ -25,10 +25,9 @@ class TestReply(TestCaseBase):
                            request_tweet,
                            token)
         self.assertEqual(status.HTTP_201_CREATED, result.status_code)
-        # 返り値が冗長すぎるのでfixすること!
         self.assertEqual(self.tweet_1_1.id,
                          result.data['parent'][0]['parent']['id'])
-        # 理想の返り返り値は以下になると思う
+        # todo:以下でテスト通るようにやっていく
         # self.assertEqual(self.tweet_1_1.id, result.data['parent']['id'])
 
         tweet_get_url = os.path.join(self.api_url,
@@ -37,6 +36,6 @@ class TestReply(TestCaseBase):
         parent_result = self.get(tweet_get_url, None)
         self.assertEqual(result.data['id'],
                          parent_result.data['children'][0]['child']['id'])
-        # ここもこうしたい
+        # todo:以下でテスト通るようにやっていく
         # self.assertEqual(result.data['id'],
         #                  parent_result.data['children'][0]['id'])
