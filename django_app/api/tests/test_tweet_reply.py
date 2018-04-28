@@ -15,10 +15,15 @@ class TestReply(TestCaseBase):
     def test_reply(self):
         token = self.get_user_token()
         self.create_data()
-        tweet_reply_url = os.path.join(self.api_url, 'tweet/post/?parent=')
-        request_tweet = {'tweet': 'this is test tweet'}
-        result = self.post(tweet_reply_url + str(self.tweet_1_1.id),
-                           request_tweet,
+        tweet_get_url = os.path.join(self.api_url,
+                                     'tweet',
+                                     str(self.tweet_1_1.id))
+        parent = self.get(tweet_get_url, None)
+        tweet_reply_url = os.path.join(self.api_url, 'tweet/post/')
+        request_data = {'tweet': 'this is test tweet',
+                        'parent_tweet': parent.data}
+        result = self.post(tweet_reply_url,
+                           request_data,
                            token)
         self.assertEqual(status.HTTP_201_CREATED, result.status_code)
         self.assertEqual(self.tweet_1_1.id,
