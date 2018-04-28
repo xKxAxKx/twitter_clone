@@ -25,19 +25,13 @@ class TweetPostView(generics.CreateAPIView):
         """
         uri
             - /api/tweet/post/
-        params
-            - name: parent
-              descrption: リプライ元のツイートのidを指定する
-              required: False
-              type: int
         """
         save_tweet = Tweet.objects.create(tweet=request.data['tweet'],
                                           user=request.user)
-        parent_tweet_id = request.query_params.get('parent')
-        if parent_tweet_id:
+        if request.data['parent_tweet']:
             try:
                 parent_tweet = get_object_or_404(Tweet,
-                                                 id=int(parent_tweet_id))
+                                                 id=request.data['parent_tweet']['id'])
             except ValueError:
                 return HttpResponseBadRequest(
                     content='パラメーターが不正です'
