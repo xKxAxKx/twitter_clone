@@ -80,6 +80,22 @@ class Account(AbstractBaseUser):
     def is_superuser(self):
         return self.is_admin
 
+    @property
+    def follower_users(self):
+        follow_object = Follow.objects.filter(following=self)
+        follower_users = []
+        for obj in follow_object:
+            import pdb; pdb.set_trace()
+        return follower_users
+
+    @property
+    def follow_users(self):
+        follow_object = Follow.objects.filter(follower=self)
+        follow_users = []
+        for obj in follow_object:
+            import pdb; pdb.set_trace()
+        return follow_users
+
     class Meta:
         db_table = 'api_user'
         swappable = 'AUTH_USER_MODEL'
