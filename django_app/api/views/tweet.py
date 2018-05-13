@@ -148,8 +148,8 @@ class FavoriteTweetDeleteView(generics.DestroyAPIView):
     def get_object(self, queryset=None):
         tweet_id = self.kwargs['tweet_id']
         fav_tweet = get_object_or_404(Favorite,
-                                      tweet__id=tweet_id,
-                                      user=self.request.user)
+                                  tweet__id=tweet_id,
+                                  user=self.request.user)
         return fav_tweet
 
 
