@@ -97,6 +97,11 @@ class Account(AbstractBaseUser):
             follow_users.append(obj.following)
         return follow_users
 
+    @property
+    def favorite_tweets(self):
+        # Userのお気に入りのツイートを取得する
+        pass
+
     class Meta:
         db_table = 'api_user'
         swappable = 'AUTH_USER_MODEL'
