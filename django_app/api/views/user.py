@@ -1,14 +1,11 @@
 from django.db import transaction
-from django.http import HttpResponse, Http404, JsonResponse
-from django.contrib.auth import authenticate
+from django.http import Http404, JsonResponse
 from django.conf import settings
 
-from rest_framework import authentication, permissions, generics
+from rest_framework import permissions, generics
 from rest_framework_jwt.settings import api_settings
-from rest_framework.exceptions import AuthenticationFailed
 from rest_framework.response import Response
-from rest_framework import status, viewsets, filters
-from rest_framework.views import APIView
+from rest_framework import status
 
 from api.serializers.user import (AccountSerializer, FollowSerializer,
                                   PasswordChangeSerializer)
