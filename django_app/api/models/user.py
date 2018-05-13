@@ -81,19 +81,21 @@ class Account(AbstractBaseUser):
         return self.is_admin
 
     @property
-    def follower_users(self):
+    def followers(self):
+        # Userをフォローしているユーザを返す
         follow_object = Follow.objects.filter(following=self)
         follower_users = []
         for obj in follow_object:
-            import pdb; pdb.set_trace()
+            follower_users.append(obj.follower)
         return follower_users
 
     @property
-    def follow_users(self):
+    def follows(self):
+        # Userがフォローしているユーザを返す
         follow_object = Follow.objects.filter(follower=self)
         follow_users = []
         for obj in follow_object:
-            import pdb; pdb.set_trace()
+            follow_users.append(obj.following)
         return follow_users
 
     class Meta:
