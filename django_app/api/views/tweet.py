@@ -1,10 +1,9 @@
 # coding: utf-8
 from django.shortcuts import get_object_or_404
 from django.db import transaction
-from django.http import HttpResponse, Http404, HttpResponseBadRequest
+from django.http import Http404, HttpResponseBadRequest
 
-from rest_framework import (authentication, permissions, generics,
-                            status, viewsets, filters)
+from rest_framework import permissions, generics, status
 from rest_framework.response import Response
 
 from api.serializers.tweet import (TweetSerializer, TweetMinimumSerializer,
@@ -30,8 +29,9 @@ class TweetPostView(generics.CreateAPIView):
                                           user=request.user)
         if request.data.get('parent_tweet', None):
             try:
+                parent_tweet_id = request.data['parent_tweet']['id']
                 parent_tweet = get_object_or_404(Tweet,
-                                                 id=request.data['parent_tweet']['id'])
+                                                 id=parent_tweet_id)
             except ValueError:
                 return HttpResponseBadRequest(
                     content='パラメーターが不正です'
@@ -126,7 +126,7 @@ class FavoriteTweetAddView(generics.CreateAPIView):
     def create(self, request, *args, **kwargs):
         tweet_id = int(kwargs['tweet_id'])
 
-        #ツイート自体が存在するか確認
+        # ツイート自体が存在するか確認
         tweet = get_object_or_404(Tweet, id=tweet_id)
 
         # すでにユーザがツイートをfavしていないか確認
@@ -162,8 +162,9 @@ class FavoriteTweetGetByUserIdView(generics.RetrieveAPIView):
     def get(self, request, user_id):
         user = Account.objects.filter(id=user_id)
         try:
+            users_fav_tweet = Favorite.objects.filter(user__in=user)
             tweet = (Tweet.objects
-                          .filter(favorited_tweet__in=Favorite.objects.filter(user__in=user))
+                          .filter(favorited_tweet__in=users_fav_tweet)
                           .order_by('-id'))
         except Favorite.DoesNotExist:
             raise Http404
