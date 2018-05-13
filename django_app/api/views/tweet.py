@@ -64,7 +64,7 @@ class TweetListGetByUserIdView(generics.ListAPIView):
               type: boolean
         """
         target_user = self.request.GET.get('user', None)
-        get_follow_tweet = self.request.GET.get('get_follo_tweet', False)
+        get_follow_tweet = self.request.GET.get('get_follow_tweet', False)
 
         users = []
         if target_user:
