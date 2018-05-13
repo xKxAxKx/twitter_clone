@@ -1,24 +1,30 @@
-In development.
+## これは何か
+xKxAxKxが勉強用に作っているTwitterのクローンアプリです
+サーバサイドはDjango、フロントはAngularで作ってるけど
+今いじっている最中なのでマトモに動きません（特にフロント）
 
-## Twitter_Clone
-It is a Twitter clone application made by Django and Angular.
+将来的にはLaravel,Rails,React,Vueのバージョンも作りたい
 
-## Environment
-
-install Angular-CLI
+## 環境
+### Django
+Python: 3.6.2
+#### インストール
 ```
-$ npm install -g @angular/cli
+$ pip install -r  django_app/requirement_pip.txt
 ```
 
-install node Module
+### Angular
+Node: 6.14.1
+npm: 3.10.10
+#### インストールとかセッティングとか
 ```
+$ cd ngApp
 $ npm install
-$ npm install --save bootstrap ng2-bootstrap
 $ npm i -S auth0-lock angular2-jwt
 $ npm i -D @types/auth0-lock
 ```
 
-Edit /ngApp/.angular-cli.json
+/ngApp/.angular-cli.jsonの編集
 ```
 "apps": [
   {
@@ -27,9 +33,4 @@ Edit /ngApp/.angular-cli.json
       "styles.scss",
       "../node_modules/bootstrap/dist/css/bootstrap.css"
     ],
-```
-
-install pip Module
-```
-$ pip install -r requirement_pip.txt
 ```
