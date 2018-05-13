@@ -160,8 +160,8 @@ class UserInfoGetView(generics.RetrieveAPIView):
             'profile': serializer.data['profile'],
             'is_follow': is_follow,
             'is_followed': is_followed,
-            'follow_list': serializer.data['follows'],
-            'follower_list': serializer.data['followers']
+            'follows': serializer.data['follows'],
+            'followers': serializer.data['followers']
             },
             status=status.HTTP_200_OK)
 

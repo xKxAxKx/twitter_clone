@@ -44,10 +44,10 @@ export class UserpageComponent {
       this.userService.fetchUserInfo(params['user_id']);
 
       this.isFavList = false;
-      if(this.router.url.includes('follower_list')) {
+      if(this.router.url.includes('followers')) {
         this.isTweetlist = false;
         this.followFollowerTitle = "Follower List";
-      } else if(this.router.url.includes('follow_list')) {
+      } else if(this.router.url.includes('follows')) {
         this.isTweetlist = false;
         this.followFollowerTitle = "Follow List";
       } else if(this.router.url.includes('fav_list')) {

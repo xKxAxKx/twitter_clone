@@ -69,6 +69,7 @@ export class UserStore {
     // 指定したidのユーザーの情報を格納する
     this.userService.successUserInfoSubjct.subscribe(
       (res) => {
+        console.log(res.json());
         this.fetchUserInfo = res.json();
       }
     );

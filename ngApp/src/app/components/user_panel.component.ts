@@ -19,11 +19,11 @@ import { IModal } from '../models';
       <div class="panel-body">
         <p class="user-profile-in-panel">{{ userStore.fetchUserInfo.profile }}</p>
         <div class="ProfileCardStats">
-          <a *ngIf="userStore.fetchUserInfo.follow_list" routerLink="/user/{{userStore.fetchUserInfo.id}}/follow_list">
-            {{ userStore.fetchUserInfo.follow_list.length }} Follow
+          <a *ngIf="userStore.fetchUserInfo.follows" routerLink="/user/{{userStore.fetchUserInfo.id}}/follows">
+            {{ userStore.fetchUserInfo.follows.length }} Follow
           </a>
-          <a *ngIf="userStore.fetchUserInfo.follower_list" routerLink="/user/{{userStore.fetchUserInfo.id}}/follower_list">
-            {{ userStore.fetchUserInfo.follower_list.length }} Follower
+          <a *ngIf="userStore.fetchUserInfo.followers" routerLink="/user/{{userStore.fetchUserInfo.id}}/follwers">
+            {{ userStore.fetchUserInfo.followers.length }} Follower
           </a>
           <a routerLink="/user/{{userStore.fetchUserInfo.id}}/fav_list">
             Favorites

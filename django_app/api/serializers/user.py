@@ -13,7 +13,7 @@ import jwt
 class AccountDataSerializer(serializers.ModelSerializer):
     class Meta:
         model = Account
-        fields = ('id', 'username', 'profile')
+        fields = ('id', 'username', 'email', 'profile')
 
 
 class FollowSerializer(serializers.ModelSerializer):
@@ -27,10 +27,8 @@ class FollowSerializer(serializers.ModelSerializer):
 
 class AccountSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True, required=False)
-    follows = FollowSerializer(source='who_is_followed',
-                               many=True, read_only=True)
-    followers = FollowSerializer(source='who_follows',
-                                 many=True, read_only=True)
+    follows = AccountDataSerializer(many=True, read_only=True)
+    followers = AccountDataSerializer(many=True, read_only=True)
     favorite_tweet = FollowSerializer(source='favorited_user',
                                       many=True, read_only=True)
 
