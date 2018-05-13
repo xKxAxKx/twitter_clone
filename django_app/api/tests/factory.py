@@ -1,8 +1,7 @@
 import factory
-from factory.fuzzy import (FuzzyText, FuzzyFloat, FuzzyDateTime,
-                           FuzzyInteger)
+from factory.fuzzy import FuzzyText
 
-from api.models import Tweet, Favorite, Reply, Account, Follow
+from api.models import Tweet, Favorite, Account, Follow
 
 
 class AccountFactory(factory.DjangoModelFactory):
@@ -33,3 +32,11 @@ class FavoriteFactory(factory.DjangoModelFactory):
 
     tweet = factory.SubFactory(TweetFactory)
     user = factory.SubFactory(AccountFactory)
+
+
+class FollowFactory(factory.DjangoModelFactory):
+    class Meta:
+        model = Follow
+
+    following = factory.SubFactory(AccountFactory)
+    follower = factory.SubFactory(AccountFactory)
