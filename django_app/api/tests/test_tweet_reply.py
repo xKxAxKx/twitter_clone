@@ -6,7 +6,6 @@ from api.tests.factory import AccountFactory, TweetFactory
 
 
 class TestReply(TestCaseBase):
-    api_url = '/api'
 
     def create_data(self):
         self.user_1 = AccountFactory(username='user_1')
@@ -15,11 +14,11 @@ class TestReply(TestCaseBase):
     def test_reply(self):
         token = self.get_user_token()
         self.create_data()
-        tweet_get_url = os.path.join(self.api_url,
+        tweet_get_url = os.path.join(self.api_base_url,
                                      'tweet',
                                      str(self.tweet_1_1.id))
         parent = self.get(tweet_get_url, None)
-        tweet_reply_url = os.path.join(self.api_url, 'tweet/post/')
+        tweet_reply_url = os.path.join(self.api_base_url, 'tweet/post/')
         request_data = {'tweet': 'this is test tweet',
                         'parent_tweet': parent.data}
         result = self.post(tweet_reply_url,
@@ -31,7 +30,7 @@ class TestReply(TestCaseBase):
         # todo:以下でテスト通るようにやっていく
         # self.assertEqual(self.tweet_1_1.id, result.data['parent']['id'])
 
-        tweet_get_url = os.path.join(self.api_url,
+        tweet_get_url = os.path.join(self.api_base_url,
                                      'tweet',
                                      str(self.tweet_1_1.id))
         parent_result = self.get(tweet_get_url, None)

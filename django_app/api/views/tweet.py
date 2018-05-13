@@ -28,7 +28,7 @@ class TweetPostView(generics.CreateAPIView):
         """
         save_tweet = Tweet.objects.create(tweet=request.data['tweet'],
                                           user=request.user)
-        if request.data['parent_tweet']:
+        if request.data.get('parent_tweet', None):
             try:
                 parent_tweet = get_object_or_404(Tweet,
                                                  id=request.data['parent_tweet']['id'])

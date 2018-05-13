@@ -9,6 +9,7 @@ from rest_framework.test import APITestCase
 
 class TestCaseBase(APITestCase):
     _token = ''
+    api_base_url = '/api'
 
     def setUp(self):
         management.call_command('flush', interactive=False)

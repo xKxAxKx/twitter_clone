@@ -5,7 +5,6 @@ from api.tests.factory import AccountFactory, TweetFactory, FavoriteFactory
 
 
 class TestFavorite(TestCaseBase):
-    api_url = '/api'
 
     def create_data(self):
         self.user_1 = AccountFactory(username='user_1')
@@ -15,7 +14,7 @@ class TestFavorite(TestCaseBase):
     def test_add_fav(self):
         token = self.get_user_token()
         self.create_data()
-        fav_add_url = os.path.join(self.api_url,
+        fav_add_url = os.path.join(self.api_base_url,
                                    'favorite/add',
                                    str(self.tweet_1_1.id))
         result = self.post(fav_add_url,
@@ -32,12 +31,12 @@ class TestFavorite(TestCaseBase):
     def test_delete_fav(self):
         token = self.get_user_token()
         self.create_data()
-        fav_add_url = os.path.join(self.api_url,
+        fav_add_url = os.path.join(self.api_base_url,
                                    'favorite/add',
                                    str(self.tweet_1_1.id))
         self.post(fav_add_url, None, token)
 
-        fav_delete_url = os.path.join(self.api_url,
+        fav_delete_url = os.path.join(self.api_base_url,
                                       'favorite/delete',
                                       str(self.tweet_1_1.id))
         success_result = self.delete(fav_delete_url, None, token)
@@ -45,7 +44,7 @@ class TestFavorite(TestCaseBase):
                          success_result.status_code)
 
         # favしていないツイートにdeleteして失敗する
-        fav_delete_url = os.path.join(self.api_url,
+        fav_delete_url = os.path.join(self.api_base_url,
                                       'favorite/delete',
                                       str(self.tweet_1_2.id))
         failed_result = self.delete(fav_delete_url, None, token)
