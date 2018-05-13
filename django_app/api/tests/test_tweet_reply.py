@@ -14,6 +14,7 @@ class TestReply(TestCaseBase):
     def test_reply(self):
         token = self.get_user_token()
         self.create_data()
+
         tweet_get_url = os.path.join(self.api_base_url,
                                      'tweet',
                                      str(self.tweet_1_1.id))

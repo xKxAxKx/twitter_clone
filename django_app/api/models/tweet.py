@@ -18,13 +18,23 @@ class Tweet(models.Model):
     def favorited_users(self):
         return Favorite.objects.filter(tweet=self)
 
+    # なんかうまくいかん
     @property
     def parent_tweet(self):
-        return Reply.objects.filter(child=self)
+        reply_obj = Reply.objects.filter(child=self)
+        parent_tweet = []
+        for obj in reply_obj:
+            parent_tweet.append(obj.parent)
+        return parent_tweet
 
+    # これもなんかうまくいかん
     @property
     def child_tweets(self):
-        return Reply.objects.filter(parent=self)
+        reply_obj = Reply.objects.filter(parent=self)
+        child_tweets = []
+        for obj in reply_obj:
+            child_tweets.append(obj.child)
+        return child_tweets
 
 
 class Favorite(models.Model):

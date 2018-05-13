@@ -6,7 +6,6 @@ from rest_framework import permissions, generics
 from rest_framework_jwt.settings import api_settings
 from rest_framework.response import Response
 from rest_framework import status
-
 from api.serializers.user import (AccountSerializer, FollowSerializer,
                                   PasswordChangeSerializer)
 from api.models.user import Account, AccountManager, Follow
