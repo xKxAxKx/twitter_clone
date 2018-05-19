@@ -1,6 +1,5 @@
 import os
 from rest_framework import status
-from api.models.tweet import Tweet
 from api.tests.test_utils import TestCaseBase
 from api.tests.factory import AccountFactory, TweetFactory
 

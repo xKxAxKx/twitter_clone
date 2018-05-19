@@ -23,7 +23,13 @@ class TweetPostView(generics.CreateAPIView):
     def create(self, request, *args, **kwargs):
         """
         uri
-            - /api/tweet/post/
+            - POST: /api/tweet/post/
+        request_data
+            - tweet: string
+                - ツイートの内容(必須)
+            - parent_tweet_id: int
+                - リプライ元のツイートのID(任意)
+                - todo:今はobjectを送ってもらっているので直す
         """
         save_tweet = Tweet.objects.create(tweet=request.data['tweet'],
                                           user=request.user)
@@ -148,8 +154,8 @@ class FavoriteTweetDeleteView(generics.DestroyAPIView):
     def get_object(self, queryset=None):
         tweet_id = self.kwargs['tweet_id']
         fav_tweet = get_object_or_404(Favorite,
-                                  tweet__id=tweet_id,
-                                  user=self.request.user)
+                                      tweet__id=tweet_id,
+                                      user=self.request.user)
         return fav_tweet
 
 
