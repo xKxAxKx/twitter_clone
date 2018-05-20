@@ -5,6 +5,7 @@ from django.contrib.auth.models import (
 from django.utils.translation import ugettext_lazy as _
 from django.utils import timezone
 from django.conf import settings
+from .tweet import Favorite
 
 
 class AccountManager(BaseUserManager):
@@ -81,7 +82,6 @@ class Account(AbstractBaseUser):
 
     @property
     def followers(self):
-        # Userをフォローしているユーザを返す
         follow_object = Follow.objects.filter(following=self)
         follower_users = []
         for obj in follow_object:
@@ -90,7 +90,6 @@ class Account(AbstractBaseUser):
 
     @property
     def follows(self):
-        # Userがフォローしているユーザを返す
         follow_object = Follow.objects.filter(follower=self)
         follow_users = []
         for obj in follow_object:
@@ -99,8 +98,11 @@ class Account(AbstractBaseUser):
 
     @property
     def favorite_tweets(self):
-        # Userのお気に入りのツイートを取得する
-        pass
+        favorite_object = Favorite.objects.filter(user=self)
+        favorite_tweets = []
+        for obj in favorite_object:
+            favorite_tweets.append(obj.following)
+        return favorite_tweets
 
     class Meta:
         db_table = 'api_user'

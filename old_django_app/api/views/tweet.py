@@ -29,7 +29,6 @@ class TweetPostView(generics.CreateAPIView):
                 - ツイートの内容(必須)
             - parent_tweet_id: int
                 - リプライ元のツイートのID(任意)
-                - todo:今はobjectを送ってもらっているので直す
         """
         save_tweet = Tweet.objects.create(tweet=request.data['tweet'],
                                           user=request.user)
@@ -44,6 +43,8 @@ class TweetPostView(generics.CreateAPIView):
                 )
             Reply.objects.create(parent=parent_tweet,
                                  child=save_tweet)
+        import pdb;
+        pdb.set_trace()
         tweet_serializer = TweetSerializer(save_tweet)
         return Response(tweet_serializer.data,
                         status=status.HTTP_201_CREATED)

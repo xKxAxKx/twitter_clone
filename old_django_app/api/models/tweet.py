@@ -6,7 +6,6 @@ class Tweet(models.Model):
     tweet = models.CharField(max_length=140, blank=False)
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
-        verbose_name='ユーザー',
         on_delete=models.CASCADE
         )
     created_at = models.DateTimeField(auto_now_add=True)
@@ -18,15 +17,21 @@ class Tweet(models.Model):
     def favorited_users(self):
         return Favorite.objects.filter(tweet=self)
 
-    # 指定したtweetの親ツイートを返す
     @property
     def parent_tweet(self):
-        return Reply.objects.filter(child_id=self.id)
+        reply_obj = Reply.objects.filter(child=self)
+        parent_tweet = []
+        for obj in reply_obj:
+            parent_tweet.append(obj)
+        return parent_tweet
 
-    # これもなんかうまくいかん
     @property
     def child_tweets(self):
-        return Reply.objects.filter(parent_id=self.id)
+        reply_obj = Reply.objects.filter(parent=self)
+        child_tweets = []
+        for obj in reply_obj:
+            child_tweets.append(obj)
+        return child_tweets
 
 
 class Favorite(models.Model):

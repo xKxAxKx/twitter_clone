@@ -1,6 +1,5 @@
 import os
 from rest_framework import status
-from api.models.user import Account
 from api.tests.test_utils import TestCaseBase
 from api.tests.factory import AccountFactory, FollowFactory
 
@@ -25,7 +24,8 @@ class TestUserInfoGet(TestCaseBase):
         user_get_url = os.path.join(self.api_base_url,
                                     'user',
                                     str(self.user_1.id))
-        result = self.get(user_get_url, None)
+        result = self.get(user_get_url, None, token)
+        print(result.data)
         self.assertStatus(status.HTTP_200_OK, result)
         self.assertEqual(result.data['id'], self.user_1.id)
         self.assertEqual(result.data['email'], self.user_1.email)

@@ -133,20 +133,6 @@ class UserInfoGetView(generics.RetrieveAPIView):
         except Account.DoesNotExist:
             raise Http404
 
-        already_follow = Follow.objects.filter(follower=request.user.id,
-                                               following=user_id)
-        if already_follow:
-            is_follow = True
-        else:
-            is_follow = False
-
-        already_followed = Follow.objects.filter(follower=user_id,
-                                                 following=request.user.id)
-        if already_followed:
-            is_followed = True
-        else:
-            is_followed = False
-
         serializer = AccountSerializer(user)
 
         return Response(data={
@@ -154,10 +140,9 @@ class UserInfoGetView(generics.RetrieveAPIView):
             'username': serializer.data['username'],
             'email': serializer.data['email'],
             'profile': serializer.data['profile'],
-            'is_follow': is_follow,
-            'is_followed': is_followed,
             'follows': serializer.data['follows'],
-            'followers': serializer.data['followers']
+            'followers': serializer.data['followers'],
+            'favorite_tweets': serializer.data['favorite_tweets']
             },
             status=status.HTTP_200_OK)
 
@@ -178,10 +163,7 @@ class FollowAddView(generics.CreateAPIView):
                 status=status.HTTP_400_BAD_REQUEST)
         else:
             following = Account.objects.get(id=request.data["id"])
-            follow_results = Follow.objects.create(
-                following=following,
-                follower=request.user,
-            )
+            Follow.objects.create(following=following, follower=request.user)
             return Response(data={
                 "message": "followed!"
                 },
@@ -195,8 +177,8 @@ class FollowRemoveView(generics.DestroyAPIView):
     queryset = Follow.objects.all()
 
     def delete(self, request, user_id):
-        already_follow = Follow.objects.filter(follower=request.user.id,
-                                               following=user_id)
+        already_follow = Follow.objects.get(follower=request.user.id,
+                                            following=user_id)
         if already_follow:
             already_follow.delete()
             return Response(data={
