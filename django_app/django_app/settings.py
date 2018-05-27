@@ -53,8 +53,6 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-AUTH_USER_MODEL = 'user.User'
-
 ROOT_URLCONF = 'django_app.urls'
 
 TEMPLATES = [
@@ -124,3 +122,17 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# 認証に使うUserモデル
+AUTH_USER_MODEL = 'user.User'
+
+# 全てのXMLHTMLを許可する
+CORS_ORIGIN_ALLOW_ALL = True
+
+# JWTの認証追加
+JWT_AUTH = {
+    # トークンの期限をここでは無効にしてみる
+    'JWT_VERIFY_EXPIRATION': False,
+    'JWT_AUTH_HEADER_PREFIX': 'JWT',
+    'JWT_ALLOW_REFRESH': True,
+}
