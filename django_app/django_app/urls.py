@@ -6,5 +6,5 @@ API_PATH = 'api'
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    url(r'^{}/user'.format(API_PATH), include('user.urls')),
+    url(r'^{}/user/'.format(API_PATH), include('user.urls')),
 ]
