@@ -1,15 +1,53 @@
+from django.core import management
+from django.conf import settings
 from django.test import TestCase
-from user.models import User
 
 class TwitterTestCase(TestCase):
 
-    def setUp(self):
-        for i in range(0, 3):
-            email = 'test_{}@test.com'.format(str(i))
-            username = 'test_{}'.format(str(i))
-            profile = 'test_{}'.format(str(i))
-            User.objects.create(email=email,
-                                username=username,
-                                profile=profile)
+    _token = ''
 
-        self.users = User.objects.all()
+    def setUp(self):
+        management.call_command('flush', interactive=False)
+        settings.DEBUG = True
+        # todo:ここにユーザ作成とトークン作成を追加する
+
+    def assertStatus(self, status_expected, result, msg=''):
+        if status_expected != result.status_code:
+            if hasattr(result, 'data'):
+                if 'detail' in result.data:
+                    msg += ' ' + result.data['detail']
+                else:
+                    msg += ' ' + str(result.data)
+        self.assertEqual(status_expected, result.status_code, msg)
+
+    def post(self, url, data, token=None, **kwargs):
+        if not token:
+            token = self._token
+        result = self.client.post(url, data=data,
+                                  HTTP_AUTHORIZATION='JWT ' + token,
+                                  format='json', **kwargs)
+        return result
+
+    def put(self, url, data, token=None):
+        if not token:
+            token = self._token
+        result = self.client.put(url, data=data,
+                                 HTTP_AUTHORIZATION='JWT ' + token,
+                                 format='json')
+        return result
+
+    def get(self, url, data, token=None, **kwargs):
+        if not token:
+            token = self._token
+        result = self.client.get(url, data=data,
+                                 HTTP_AUTHORIZATION='JWT ' + token,
+                                 format='json', **kwargs)
+        return result
+
+    def delete(self, url, data, token=None):
+        if not token:
+            token = self._token
+        result = self.client.delete(url, data=data,
+                                    HTTP_AUTHORIZATION='JWT ' + token,
+                                    format='json')
+        return result
