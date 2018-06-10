@@ -7,5 +7,5 @@ urlpatterns = [
     url(r'^login$', obtain_jwt_token),
     url(r'^token_refresh$', refresh_jwt_token),
     url(r'^token_verify$', verify_jwt_token),
-    url(r'^create_user$', CreateUser.as_view()),
+    url(r'^register$', CreateUser.as_view()),
 ]
