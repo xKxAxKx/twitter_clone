@@ -1,7 +1,4 @@
-import { Component,Input } from '@angular/core';
-import { Router, ActivatedRoute, Params }   from '@angular/router';
-
-import { CommonStore } from '../stores/common.store';
+import { Component } from '@angular/core';
 import { UserStore } from '../stores/user.store';
 import { UserService } from '../services/user.service';
 

@@ -3,9 +3,6 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 
 import { UserStore } from '../stores/user.store';
 import { UserService } from '../services/user.service';
-import { Modal }  from '../utils/modal';
-
-import { IModal } from '../models';
 
 @Component({
   selector: 'follow-follower',
