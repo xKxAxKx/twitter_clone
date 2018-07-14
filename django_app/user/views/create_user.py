@@ -1,16 +1,14 @@
-from rest_framework import permissions, generics
+from rest_framework.views import APIView
+from rest_framework import permissions
 from rest_framework.response import Response
 from rest_framework import status
-from user.models import User
 from user.serializers import UserCreateSerializer
 
 
-class CreateUser(generics.CreateAPIView):
+class CreateUser(APIView):
     permission_classes = (permissions.AllowAny,)
-    queryset = User.objects.all()
-    serializer_class = UserCreateSerializer
 
-    def post(self, request, format=None):
+    def post(self, request):
         serializer = UserCreateSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
