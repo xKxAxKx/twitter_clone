@@ -9,7 +9,10 @@ class TwitterTestCase(TestCase):
     def setUp(self):
         management.call_command('flush', interactive=False)
         settings.DEBUG = True
-        # todo:ここにユーザ作成とトークン作成を追加する
+
+    def get_user_token(self):
+        self._token = get_user_token(self.client)
+        return self._token
 
     def assertStatus(self, status_expected, result, msg=''):
         if status_expected != result.status_code:
@@ -51,3 +54,20 @@ class TwitterTestCase(TestCase):
                                     HTTP_AUTHORIZATION='JWT ' + token,
                                     format='json')
         return result
+
+def get_user_token(client):
+    create_account(client)
+    response = client.post('/api/user/login',
+                           {'email': 'test_user@example.com',
+                            'password': 'password'},
+                           format='json')
+    print(response.data)
+    token = response.data['token']
+    return token
+
+def create_account(client):
+    url = "/api/user/register"
+    data = {'email': 'test_user@example.com',
+            'username': 'test_user',
+            'password': 'password'}
+    client.post(url, data, format='json')
