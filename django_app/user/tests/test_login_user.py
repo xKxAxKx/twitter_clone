@@ -1,4 +1,6 @@
 from utils.tests import TwitterTestCase
+from rest_framework import status
+
 
 class TestLoginUser(TwitterTestCase):
 
@@ -16,5 +18,5 @@ class TestLoginUser(TwitterTestCase):
         result = self.client.post('/api/user/login',
                                   data,
                                   format='json')
-        import pdb;
-        pdb.set_trace()
+        self.assertEqual(result.status_code, status.HTTP_200_OK)
+        self.assertEqual('token' in result.data.keys(), True)
