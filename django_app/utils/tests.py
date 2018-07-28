@@ -68,5 +68,6 @@ def create_account(client):
     url = "/api/user/register"
     data = {'email': 'test_user@example.com',
             'username': 'test_user',
-            'password': 'password'}
+            'password': 'password',
+            'profile': 'profile'}
     client.post(url, data, format='json')
