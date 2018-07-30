@@ -9,4 +9,4 @@ class TestEditUserInfo(TwitterTestCase):
         result = self.put(url='/api/user/edit_user_info',
                           data=data,
                           token=self.token)
- 
+        
