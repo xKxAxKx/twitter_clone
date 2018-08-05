@@ -31,12 +31,12 @@ class TwitterTestCase(TestCase):
                                   format='json', **kwargs)
         return result
 
-    def put(self, url, data, token=None):
+    def put(self, url, data, token=None, **kwargs):
         if not token:
             token = self._token
         result = self.client.put(url, data=data,
                                  HTTP_AUTHORIZATION='JWT ' + token,
-                                 format='json')
+                                 format='json', **kwargs)
         return result
 
     def get(self, url, data, token=None, **kwargs):
