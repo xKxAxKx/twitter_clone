@@ -36,6 +36,7 @@ class TwitterTestCase(TestCase):
             token = self._token
         result = self.client.put(url, data=data,
                                  HTTP_AUTHORIZATION='JWT ' + token,
+                                 content_type='application/x-www-form-urlencoded',
                                  format='json', **kwargs)
         return result
 

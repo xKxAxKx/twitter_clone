@@ -7,8 +7,6 @@ from user.serializers import UserBaseSerializer
 class EditUserInfo(APIView):
 
     def put(self, request):
-        import pdb;
-        pdb.set_trace()
         serializer = UserBaseSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
