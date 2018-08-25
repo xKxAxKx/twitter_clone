@@ -7,8 +7,19 @@ from user.serializers import UserBaseSerializer
 class EditUserInfo(APIView):
 
     def put(self, request):
-        serializer = UserBaseSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        user = request.user
+
+        if request.data.get('username'):
+            user.username = request.data.get('username')
+
+        if request.data.get('profile'):
+            user.profile = request.data.get('profile')
+
+        # Todo:emailの場合はjwtトークンを再発行するようにする
+        # if request.data.get('email'):
+        #     user.email = request.data.get('email')
+
+        user.save()
+
+        serializer = UserBaseSerializer(user)
+        return Response(serializer.data, status=status.HTTP_200_OK)
