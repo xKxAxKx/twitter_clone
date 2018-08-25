@@ -10,5 +10,6 @@ class TestEditUserInfo(TwitterTestCase):
         result = self.put(url='/api/user/edit_user_info',
                           data=data,
                           token=self.token)
-        import pdb;
-        pdb.set_trace()
+
+        self.assertEqual(result.status_code, status.HTTP_200_OK)
+        self.assertEqual(result.data["profile"], "profile2")
